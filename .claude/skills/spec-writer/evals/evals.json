@@ -1,0 +1,42 @@
+{
+  "skill_name": "spec-writer",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "simple-intent-no-policies",
+      "prompt": "Here is INTENT.md:\n\n# Intent: Self-serve invoice download\nStatus: accepted\nAuthor: Marcus Lee, Finance Ops\nSource: PROJ-142\nDate: 2026-06-01\n\n## Problem\nCustomers keep emailing Finance asking for copies of their invoices. Finance spends about a day a week on this. \"We need a way for them to get invoices themselves.\"\n\n## Desired outcome\nCustomers can retrieve their own invoices without contacting Finance.\n\n## Affected users and systems\nAll customers with billing accounts; the billing page.\n\n## Constraints\nMust work for customers on the EU plan.\n\n## Out of scope\nHistorical invoices older than 2 years.\n\n## Open questions\nDo non-EU customers have different invoice requirements?\n\nWrite the spec for this. Save it to SPEC.md. There are no policy-* skills in this repo.",
+      "expected_output": "SPEC.md with all template sections, Status draft, Intent pointing at the source, Policies applied says none found, requirements trace to the intent's desired outcome and constraints, EU constraint addressed in Design, the 2-year exclusion carried into Out of scope, the non-EU open question carried forward.",
+      "files": [],
+      "assertions": [
+        "Has all eight template sections (Summary, Requirements, Design, Policies applied, Flagged concerns, Open questions, Out of scope, Traceability)",
+        "Header has Status: draft (not accepted or signed off)",
+        "Header has an Intent line pointing back to INTENT.md or PROJ-142",
+        "Policies applied says none found / none available, does not fabricate a policy",
+        "Requirements are derived from the intent's desired outcome and constraints, not invented from scratch",
+        "Design section proposes a concrete approach (e.g. an endpoint, page, or download mechanism) rather than restating the problem",
+        "Flagged concerns is explicitly 'None' rather than omitted",
+        "The EU-plan constraint from the intent is addressed somewhere in Design or Requirements",
+        "Out of scope carries forward the 2-year historical invoice exclusion from the intent",
+        "Open questions carries forward the non-EU customer question from the intent, or explains it was resolved",
+        "Does not mark Status as accepted or otherwise sign off on its own work"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "conflicting-policies-flagged-not-resolved",
+      "prompt": "INTENT.md (accepted) says: \"Add a public API endpoint that returns a customer's full order history, including line-item pricing, so a partner integration can display it.\" There are two policy skills loaded: `policy-security` requires that any endpoint exposing line-item pricing must be authenticated with OAuth and rate-limited; `policy-api-design` requires that all public endpoints be unauthenticated and cacheable at the CDN edge for partner ease-of-use. Write the spec.",
+      "expected_output": "SPEC.md that applies both policies, notices they directly contradict on authentication, and puts this in Flagged concerns naming both policies and who should resolve it, rather than silently picking one policy over the other.",
+      "files": [],
+      "assertions": [
+        "Has all eight template sections (Summary, Requirements, Design, Policies applied, Flagged concerns, Open questions, Out of scope, Traceability)",
+        "Header has Status: draft",
+        "Policies applied section names both policy-security and policy-api-design and what each requires",
+        "Flagged concerns explicitly identifies the authentication contradiction between the two policies",
+        "Flagged concerns names who should resolve it (e.g. policy owners) rather than silently deciding",
+        "Design section does not unilaterally pick authenticated-only or unauthenticated-only as the final answer without flagging the conflict",
+        "Does not drop or ignore either policy's requirement to make the spec simpler",
+        "Requirements reflect the intent (public API, full order history, line-item pricing for a partner integration)"
+      ]
+    }
+  ]
+}
