@@ -1,0 +1,38 @@
+{
+  "skill_name": "plan-writer",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "requirement-coverage-and-dependency-order",
+      "prompt": "Here is SPEC.md:\n\n# Spec: Self-serve invoice download\nStatus: draft\nIntent: PROJ-142\nAuthor: Marcus Lee, Finance Ops\nDate: 2026-06-10\n\n## Summary\nLet customers download their own invoices from the billing page.\n\n## Requirements\n1. Customers can list their own invoices on the billing page.\n2. Customers can download a PDF for any listed invoice.\n3. EU-plan invoices must show a VAT ID field.\n\n## Design\nAdd a `GET /api/invoices` endpoint backed by a new `invoice_pdf_url` column on the `invoices` table (populated by a migration backfilling existing rows), and a \"Download PDF\" button on the billing page that calls it.\n\n## Policies applied\nNone found.\n\n## Flagged concerns\nNone.\n\n## Open questions\nNone.\n\n## Out of scope\nHistorical invoices older than 2 years.\n\n## Traceability\nPROJ-142\n\nThis is a Rails app; tests live in spec/ and run with `bundle exec rspec`. Write the plan and save it to PLAN.md.",
+      "expected_output": "PLAN.md with all eight template sections, Status draft, Spec pointing at PROJ-142/SPEC.md, all three requirements visibly covered across Files to change / Order of work, the DB migration ordered before the code that reads the new column, Verification naming rspec rather than a generic or invented test framework.",
+      "files": [],
+      "assertions": [
+        "Has all eight template sections (Summary, Files to change, Order of work, Risks, Verification, Out of scope, Open questions, Traceability)",
+        "Header has Status: draft (not approved)",
+        "Header has a Spec line pointing back to SPEC.md or PROJ-142",
+        "All three spec requirements (list invoices, download PDF, EU VAT ID field) are visibly addressed somewhere in Files to change or Order of work",
+        "Order of work places the database migration/backfill before the endpoint or UI work that depends on the new column, rather than listing steps in arbitrary order",
+        "Verification references rspec / spec/ (the repo's actual test setup) rather than an invented or generic test framework",
+        "Out of scope carries forward the 2-year historical invoice exclusion from the spec",
+        "Does not mark Status as approved or otherwise sign off on its own work",
+        "Does not invent files, endpoints, or schema details beyond what the spec's Design describes"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "unresolved-flagged-concern-carried-forward",
+      "prompt": "SPEC.md (Status: draft) has this Flagged concerns section, still unresolved:\n\n## Flagged concerns\npolicy-security requires OAuth + rate limiting on this endpoint; policy-api-design requires it be unauthenticated and CDN-cacheable. Contradiction not yet resolved by policy owners.\n\nThe rest of the spec describes a public API endpoint returning a customer's order history for a partner integration. Write the plan and save it to PLAN.md.",
+      "expected_output": "PLAN.md that does not silently pick a side of the unresolved policy contradiction, surfaces it prominently in Risks (and/or Open questions), and either asks the user how to proceed or clearly marks the affected work as blocked pending resolution rather than planning it as settled.",
+      "files": [],
+      "assertions": [
+        "Has all eight template sections (Summary, Files to change, Order of work, Risks, Verification, Out of scope, Open questions, Traceability)",
+        "Header has Status: draft",
+        "Risks (or Open questions) explicitly names the unresolved OAuth-vs-unauthenticated contradiction from the spec",
+        "Does not present the authentication approach as a settled design decision - does not silently choose OAuth-only or unauthenticated-only without flagging it",
+        "Either asks the user how to proceed, or marks the endpoint's authentication-dependent work as blocked/pending in Order of work rather than sequencing it as ready to build",
+        "Does not drop the flagged concern from the spec without carrying it into this plan"
+      ]
+    }
+  ]
+}
