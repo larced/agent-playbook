@@ -1,0 +1,62 @@
+{
+  "skill_name": "intent-writer",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "vague-idea-no-invention",
+      "prompt": "our customers keep complaining that the export is slow and honestly it's embarrassing in front of the enterprise accounts. can you write up an intent for fixing it? Raised by Dana (support lead). Save it to INTENT.md",
+      "expected_output": "INTENT.md with all template sections, Author Dana, Source conversation, status draft, no invented metrics; open questions ask how slow/what target/which export.",
+      "files": [],
+      "assertions": [
+        "Has all six template sections (Problem, Desired outcome, Affected users and systems, Constraints, Out of scope, Open questions)",
+        "Header has Status: draft (not accepted)",
+        "Header has Author, Source and Date lines",
+        "No empty sections: any section without content says 'None' or similar",
+        "Author is Dana (support lead)",
+        "Source is 'conversation' (no ticket ID invented)",
+        "Does not invent numeric metrics (no seconds/minutes/percentages/customer counts that are not in the prompt)",
+        "Open questions ask how slow / what target, or which export is affected",
+        "Does not prescribe a technical solution (caching, async job, pagination, etc.) as the requirement",
+        "Keeps the originator's wording visible (e.g. quotes or closely paraphrases 'embarrassing in front of the enterprise accounts')"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "merge-two-tickets-solution-leak",
+      "prompt": "Turn these two tickets into a single INTENT.md.\n\nPROJ-142 (reporter: Marcus Lee, Finance Ops): \"Customers keep emailing us asking for copies of their invoices. Finance spends about a day a week on this. We need a way for them to get invoices themselves.\"\n\nPROJ-158 (reporter: Priya Nair, Support): \"Add a 'Download PDF' button on the billing page. Enterprise customers on the EU plan must get invoices that show VAT ID, per legal. Needed before the Q3 audit.\"",
+      "expected_output": "One INTENT.md merging both tickets; Source lists PROJ-142 and PROJ-158; problem framed as customers needing self-serve invoice access (not the button); EU VAT + Q3 audit as Constraints; originator wording quoted; the button is not presented as the requirement.",
+      "files": [],
+      "assertions": [
+        "Has all six template sections (Problem, Desired outcome, Affected users and systems, Constraints, Out of scope, Open questions)",
+        "Header has Status: draft (not accepted)",
+        "Header has Author, Source and Date lines",
+        "No empty sections: any section without content says 'None' or similar",
+        "Produces a single merged intent that cites both PROJ-142 and PROJ-158 in Source",
+        "Problem is framed as customers being unable to get invoices themselves, not as 'add a Download PDF button'",
+        "Constraints include EU-plan invoices showing VAT ID and the Q3 audit deadline",
+        "Credits both reporters (Marcus Lee and Priya Nair) as author/originators",
+        "Preserves originator wording, e.g. quotes 'a day a week' or 'get invoices themselves'",
+        "Does not invent facts (invoice volumes, payment providers, non-EU requirements)",
+        "Open questions include at least one real gap (e.g. non-EU customers, past invoices, who counts as 'customers')"
+      ]
+    },
+    {
+      "id": 3,
+      "eval_name": "incident-style-thin-input",
+      "prompt": "write an intent for this: \"users sometimes get logged out randomly\"",
+      "expected_output": "Either asks a small number of concise clarifying questions, or writes a draft that is mostly Open questions with nothing fabricated (no invented causes, frequency, or affected systems).",
+      "files": [],
+      "assertions": [
+        "Has all six template sections (Problem, Desired outcome, Affected users and systems, Constraints, Out of scope, Open questions)",
+        "Header has Status: draft (not accepted)",
+        "Header has Author, Source and Date lines",
+        "No empty sections: any section without content says 'None' or similar",
+        "Either asks at most three concise clarifying questions, or writes a draft that is mostly Open questions",
+        "Does not invent a cause, frequency, affected platform, or system (e.g. does not claim 'session token expiry')",
+        "Source is 'conversation' and Author is 'unknown' (or equivalent), not a made-up person",
+        "Problem quotes or closely paraphrases 'users sometimes get logged out randomly'",
+        "Open questions cover how often, which users/clients, and what the impact is"
+      ]
+    }
+  ]
+}
