@@ -1,0 +1,36 @@
+{
+  "skill_name": "tdd-implementer",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "one-behavior-at-a-time-red-before-green",
+      "prompt": "PLAN.md's Files to change says: add a `parse_duration(text: str) -> int` function to `duration.py` that converts strings like \"1h30m\", \"45m\", or \"2h\" into total seconds. Verification says: pytest tests in `test_duration.py` covering hours-only, minutes-only, and combined hours+minutes. This is a fresh Python repo with pytest installed and no existing duration.py. Implement it.",
+      "expected_output": "Implements parse_duration one behavior (test case) at a time: for each of the three cases, a test is written and run first (observed failing, e.g. ModuleNotFoundError or AssertionError, for the right reason), then the minimum code added to pass it, then the suite re-run green, before moving to the next case. Final public interface is just parse_duration(text) -> int; tests call only that function.",
+      "files": [],
+      "assertions": [
+        "The transcript shows a test being run and failing before the corresponding implementation code is written, for at least the first behavior",
+        "Failures are read/acknowledged as failing for the right reason (missing function/behavior), not glossed over",
+        "Tests are added and made to pass incrementally (one case at a time) rather than all three test cases being written in one batch before any implementation",
+        "Final implementation exposes only parse_duration(text) as the public interface - no internal helper functions (e.g. a separate exported parse_hours/parse_minutes) are part of the public surface",
+        "Tests call only parse_duration and assert on its return value - they do not import or call any internal/private helper",
+        "Covers all three required cases (hours-only, minutes-only, combined) by the end",
+        "Does not add untested functionality beyond what Files to change / Verification asked for (e.g. no unrequested support for days or seconds-only input)"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "deep-seam-for-rate-limited-client",
+      "prompt": "PLAN.md asks for rate limiting to be added to an existing `ApiClient.fetch(url)` method: no more than 5 requests per second; callers should not need to change how they call fetch. Verification says: tests proving a 6th call within a second waits or fails as designed, existing fetch tests should keep passing. Repo uses pytest. Implement it with tests first.",
+      "expected_output": "Keeps the public seam as ApiClient.fetch(url) unchanged from the caller's perspective (rate limiting handled internally, e.g. inside fetch or a private helper it calls), writes a test first that exercises fetch behavior under rate limiting (not one that mocks or asserts on an internal token bucket/queue's private state), sees it fail before implementing, then implements the minimum to pass.",
+      "files": [],
+      "assertions": [
+        "Public interface of ApiClient is unchanged - fetch(url) is still the only method callers use; no new required parameters added to fetch to support rate limiting",
+        "No new rate-limiting-specific method or parameter is exposed on the public interface that callers must now know about or opt into",
+        "The test for rate limiting exercises ApiClient.fetch as a caller would (e.g. calling fetch 6 times and observing timing/behavior), rather than asserting on internal state like a private token-bucket counter or queue length",
+        "The test is written/run and observed failing before the rate-limiting implementation is added",
+        "Existing fetch tests are not modified in ways that weaken their original assertions just to make the new behavior pass",
+        "Rate-limiting complexity (timing, counting, waiting) lives inside the client rather than being pushed out to the caller"
+      ]
+    }
+  ]
+}

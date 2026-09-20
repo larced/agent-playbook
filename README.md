@@ -38,6 +38,12 @@ produces the next one.
 | Plan | [`intent-writer`](.claude/skills/intent-writer/SKILL.md) | idea / ticket(s) → `INTENT.md` |
 | Design | [`spec-writer`](.claude/skills/spec-writer/SKILL.md) | `INTENT.md` (+ policy skills) → `SPEC.md` |
 | Build | [`plan-writer`](.claude/skills/plan-writer/SKILL.md) | `SPEC.md` → `PLAN.md` |
+| Build | [`tdd-implementer`](.claude/skills/tdd-implementer/SKILL.md) | `PLAN.md` → code + tests, via red-green TDD against deep-module seams |
+
+`tdd-implementer` isn't on the reference doc's candidate skill map - the map
+named `PLAN.md`, `CLAUDE.md`, subagents and hooks as Build-stage artifacts
+but left "then code + tests" itself unnamed. We added it because that step
+needed a skill too.
 
 ### Still to define
 
