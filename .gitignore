@@ -1,0 +1,3 @@
+# Scratch output from skill-creator eval runs (transcripts, metrics, generated
+# artifacts per iteration) - not permanent repo content.
+.claude/skills/*-workspace/
