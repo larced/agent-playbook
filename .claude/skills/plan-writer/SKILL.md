@@ -14,7 +14,7 @@ The next stage (build) reads `PLAN.md` and executes against it, and the engineer
 ## Workflow
 
 1. **Find the upstream spec.** Look for `SPEC.md` (or a path the user gives) and read it in full, including `Flagged concerns` and `Open questions`. If there are several candidate specs, ask which one. If the spec's `Status` is not signed off, or it has unresolved `Flagged concerns`, say so and confirm the user still wants a plan drafted against it — proceed if they do, but carry the unresolved items into this plan's Risks or Open questions rather than dropping them.
-2. **Read the codebase.** Find the actual files, modules, and tests the spec's Design touches. Check `CLAUDE.md` and any `verification-setup`-style conventions for how this repo builds and tests, so Verification names real commands instead of generic ones.
+2. **Read the codebase.** Find the actual files, modules, and tests the spec's Design touches. Check `CLAUDE.md` and any `verification-setup`-style conventions for how this repo builds and tests, so Verification names real commands instead of generic ones. Also look for `features/*.feature` next to the spec — a `gherkin-writer` artifact, if one exists. Treat its scenarios as the primary source for this plan's Verification section rather than writing acceptance criteria from scratch.
 3. **Map every requirement.** Walk the spec's `Requirements` and make sure each one lands somewhere in Files to change or Order of work. A requirement the plan doesn't visibly address is a gap — call it out rather than silently leaving it uncovered.
 4. **Decide whether to ask before writing.** Ask only when something essential is genuinely ambiguous from the spec and the codebase together — for example, two existing modules could plausibly own the same responsibility and the spec doesn't say which. Ask at most three short questions in one message. Everything else becomes a flagged risk or open question in the draft.
 5. **Write `PLAN.md`** using the template below. Save it next to the spec it came from, or where the user asks; default to `PLAN.md` in the current directory.
@@ -52,8 +52,10 @@ standard engineer approval.
 ## Verification
 How the result gets proven to work: the tests to add or run (naming real
 test files/commands from this repo, not generic ones), and how each maps
-back to a requirement from the spec. If a requirement can't be verified by
-an automated test, say how it will be checked instead.
+back to a requirement from the spec. If `features/*.feature` scenarios
+exist, name the relevant file/tag and how it will be run (e.g.
+`cucumber features/`) instead of restating the scenario. If a requirement
+can't be verified by an automated test, say how it will be checked instead.
 
 ## Out of scope
 Carried from the spec, refined further if the plan narrows it.

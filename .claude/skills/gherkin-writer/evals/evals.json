@@ -1,0 +1,37 @@
+{
+  "skill_name": "gherkin-writer",
+  "evals": [
+    {
+      "id": 1,
+      "eval_name": "simple-spec-single-feature",
+      "prompt": "Here is SPEC.md:\n\n# Spec: Self-serve invoice download\nStatus: draft\nIntent: PROJ-142\nAuthor: Marcus Lee\nDate: 2026-06-01\n\n## Summary\nCustomers can download their own invoices as PDF instead of emailing Finance.\n\n## Requirements\nA signed-in customer can request one of their own invoices and receive it as a PDF containing invoice number, date, and amount. A customer must not be able to access another customer's invoice. Invoices older than 2 years are not available for download.\n\n## Design\nA GET /invoices/:id/pdf endpoint, authenticated, scoped to the requesting customer's account, checks invoice age before generating the PDF.\n\n## Policies applied\nNone found.\n\n## Flagged concerns\nNone.\n\n## Open questions\nNone.\n\n## Out of scope\nHistorical invoices older than 2 years.\n\n## Traceability\nPROJ-142\n\nWrite the Gherkin acceptance criteria for this spec.",
+      "expected_output": "One or more .feature files with valid Gherkin syntax (single Feature per file), scenarios tagged @req-<id> tracing to the spec's three requirements (own invoice download, cross-customer access denial, 2-year age cutoff), each scenario using concrete example values, and a report noting these are draft until reviewed.",
+      "files": [],
+      "assertions": [
+        "Output is valid Gherkin: each file has exactly one Feature:, and scenarios use Given/When/Then (Scenario or Scenario Outline with Examples)",
+        "A scenario covers a customer downloading their own invoice and receiving a PDF with invoice number, date, and amount",
+        "A scenario covers a customer being denied access to another customer's invoice",
+        "A scenario or Scenario Outline covers the 2-year age cutoff on invoice availability",
+        "Scenarios are tagged for traceability back to a requirement id (e.g. @req-R1) rather than left untagged",
+        "Example values are concrete (specific dates, amounts, ids) rather than placeholders like 'some invoice' or 'a value'",
+        "No scenario invents a business rule or numeric threshold not stated in the spec (e.g. does not invent a different cutoff than 2 years)",
+        "Report or output states these are draft acceptance criteria pending review, not already-passing tests"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "non-functional-requirement-not-faked",
+      "prompt": "Here is SPEC.md:\n\n# Spec: Search latency improvement\nStatus: draft\nIntent: PROJ-88\nAuthor: unknown\nDate: 2026-06-10\n\n## Summary\nSearch results must return fast enough that users don't abandon the search.\n\n## Requirements\nA search query for a product name returns matching results ordered by relevance. The search endpoint must handle 5,000 requests per second at p95 latency under 200ms. Search must be available 99.9% of the month.\n\n## Design\nElasticsearch-backed search index, autoscaled search service tier.\n\n## Policies applied\nNone found.\n\n## Flagged concerns\nNone.\n\n## Open questions\nNone.\n\n## Out of scope\nTypo correction and fuzzy matching.\n\n## Traceability\nPROJ-88\n\nWrite the Gherkin acceptance criteria for this spec.",
+      "expected_output": "A .feature file with a scenario for the functional relevance-ordering requirement, and the throughput/latency and 99.9% availability requirements explicitly listed as not covered by Gherkin with an alternative verification method named (e.g. load test, uptime monitoring), rather than a fabricated Given/When/Then for them.",
+      "files": [],
+      "assertions": [
+        "A scenario covers a product name search returning relevance-ordered matching results, with concrete example query/results",
+        "The 5,000 req/s at p95 < 200ms requirement is explicitly named as not expressible as a Gherkin scenario, with an alternative verification method suggested (e.g. load/performance test)",
+        "The 99.9% availability requirement is explicitly named as not expressible as a Gherkin scenario, with an alternative verification method suggested (e.g. uptime/SLO monitoring)",
+        "No scenario fabricates a Given/When/Then that pretends to test throughput, latency, or availability numerically",
+        "Scenarios that are written are tagged for traceability to a requirement id",
+        "Typo correction / fuzzy matching (Out of scope in the spec) is not given a scenario"
+      ]
+    }
+  ]
+}

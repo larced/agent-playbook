@@ -37,7 +37,8 @@ produces the next one.
 |---|---|---|
 | Plan | [`intent-writer`](.claude/skills/intent-writer/SKILL.md) | idea / ticket(s) → `INTENT.md` |
 | Design | [`spec-writer`](.claude/skills/spec-writer/SKILL.md) | `INTENT.md` (+ policy skills) → `SPEC.md` |
-| Build | [`plan-writer`](.claude/skills/plan-writer/SKILL.md) | `SPEC.md` → `PLAN.md` |
+| Design | [`gherkin-writer`](.claude/skills/gherkin-writer/SKILL.md) | `SPEC.md` → `features/*.feature` (Gherkin acceptance criteria) |
+| Build | [`plan-writer`](.claude/skills/plan-writer/SKILL.md) | `SPEC.md` (+ `features/*.feature`) → `PLAN.md` |
 
 ### Still to define
 
