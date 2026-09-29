@@ -1,6 +1,6 @@
 ---
 name: intent-from-signal
-description: "Intent from an operational signal - alert, band breach, incident, scan finding, error spike or support thread: writes INTENT.md separating observations from hypotheses. Use when a signal needs to become planned work."
+description: "Alert, incident, band breach, error spike, scan finding or cluster of support tickets -> INTENT.md, with observations kept apart from hypotheses. Use when an operational signal should become planned work."
 ---
 
 # Intent from signal

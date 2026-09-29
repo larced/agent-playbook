@@ -1,6 +1,6 @@
 ---
 name: plan-writer
-description: "Plan from an accepted SPEC.md: writes PLAN.md with files to change, dependency-ordered work, risks and verification. Use when a spec needs its implementation sequenced before coding."
+description: "PLAN.md from an accepted SPEC.md: files to change, order, risks, verification. Use when a spec is accepted and the next question is what to change and in what order."
 ---
 
 # Plan writer

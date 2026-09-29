@@ -1,6 +1,6 @@
 ---
 name: eval-builder
-description: "Eval case from an incident or recurring agent mistake: realistic prompt, expected outcome, checkable assertions, added to the evals file. Use when agent behaviour caused a problem that must not recur."
+description: "Eval case for an agent mistake: realistic prompt, expected outcome, checkable assertions, added to the evals file. Use when an agent did something wrong that must not happen again."
 ---
 
 # Eval builder

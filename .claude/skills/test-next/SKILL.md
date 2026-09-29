@@ -1,6 +1,6 @@
 ---
 name: test-next
-description: "Red step of the TDD loop: triage the review inbox, pick the next case in TEST_PLAN.md, and write one test that fails for the right reason. Seeds TEST_PLAN.md from SPEC.md on first run. Use when running the TDD loop."
+description: "Next red test (TDD red step): triage the review inbox, pick the next TEST_PLAN.md case, write one test that fails for the right reason; seeds TEST_PLAN.md from SPEC.md. Use when running the TDD loop."
 ---
 
 # Test next (red)

@@ -1,6 +1,6 @@
 ---
 name: verification-report
-description: "Verification evidence: run the plan's checks on a pinned commit and map every spec requirement to evidence in VERIFICATION.md. Use when implementation is done and needs proving before review."
+description: "Prove the spec is met: run the plan's checks on a pinned commit and map every requirement to evidence in VERIFICATION.md. Use when implementation is done and needs proof before review."
 ---
 
 # Verification report

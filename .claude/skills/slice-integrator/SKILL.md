@@ -1,6 +1,6 @@
 ---
 name: slice-integrator
-description: "Run a sliced build: dispatch ready slices to small-model workers, check each result deterministically, merge in dependency order, escalate failures, review, then plan-sync. Use when SLICES.md is accepted."
+description: "Start the sliced build: dispatch slices to small-model workers, check each result, merge in dependency order, escalate, review, plan-sync. Use when SLICES.md is accepted."
 ---
 
 # Slice integrator

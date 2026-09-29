@@ -1,6 +1,6 @@
 ---
 name: sdlc-orchestrator
-description: "Status and next step for a piece of work: reads its artifacts and statuses, names the next skill or the human gate it waits on. Use when asked what's next, where work stands, or which skill applies."
+description: "What's next, or where does this work stand: reads the artifacts and statuses, names the next skill or the human gate. Use when asked for status, the next step, or which skill applies."
 ---
 
 # SDLC orchestrator

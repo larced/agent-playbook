@@ -1,6 +1,6 @@
 ---
 name: traceability-linker
-description: "Cross-link tickets, artifacts, commits and PRs in both directions. Use when linking work to a tracker ticket, before closing one, or when checking the audit trail."
+description: "Link a ticket to its artifacts, commits and PR in both directions. Use before closing a ticket or when checking the audit trail."
 ---
 
 # Traceability linker

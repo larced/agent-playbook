@@ -1,6 +1,6 @@
 ---
 name: slice-implementer
-description: "Implement one slice brief (slices/S<nn>-*.md) inside its allowlist until its frozen tests pass, or stop with a report. For small-model workers dispatched by slice-integrator."
+description: "Slice brief (slices/S<nn>-*.md): implement it inside its allowlist until its frozen tests pass, or stop with a report. Use when given a slice brief to build."
 ---
 
 # Slice implementer

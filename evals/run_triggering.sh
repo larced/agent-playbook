@@ -39,10 +39,10 @@ for id in $ids; do
   rm -rf "$copy" && cp -r "$REPO" "$copy" && rm -rf "$copy/evals"
   log="$WORK/logs/$MODEL-$id.jsonl"
   (cd "$copy" && timeout 180 claude -p "$prompt" --model "$MODEL" --max-turns 1 \
-      --output-format stream-json --verbose > "$log" 2>&1)
+      --output-format stream-json --verbose < /dev/null > "$log" 2> "${log%.jsonl}.err")
 
   # First tool_use in the stream: its skill name if it's a Skill call, else none.
-  got=$(jq -r 'select(.type=="assistant") | .message.content[]? | select(.type=="tool_use")
+  got=$(jq -R -r 'fromjson? | select(.type=="assistant") | .message.content[]? | select(.type=="tool_use")
                | if .name=="Skill" then (.input.skill // .input.command // "none") else "none" end' \
         "$log" 2>/dev/null | head -1)
   got="${got:-none}"

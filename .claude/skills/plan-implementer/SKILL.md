@@ -1,6 +1,6 @@
 ---
 name: plan-implementer
-description: "Implement an accepted PLAN.md step by step: tests with each step, traceable commits, blocked steps left alone, deviations via plan-sync, checkpoint review before handoff. Also fixes review findings. Use when the plan is accepted and code should be written."
+description: "Write the code for an accepted PLAN.md step by step, with tests and traceable commits; also fixes review findings. Use when the plan is approved and coding should start."
 ---
 
 # Plan implementer

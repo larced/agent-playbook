@@ -1,6 +1,6 @@
 ---
 name: grill-artifact
-description: "Grill a draft artifact's open questions and flagged concerns (INTENT.md, SPEC.md, PLAN.md, TEST_PLAN.md) with the human in rounds, each with a recommended answer, and write the answers back. Use when the user wants to grill, resolve open questions, or get a draft ready for its gate."
+description: "Open questions in a draft INTENT.md, SPEC.md, PLAN.md or TEST_PLAN.md: take the human through them in rounds, each with a recommended answer, and write the answers back. Use when the user wants to go through, grill or close out open questions."
 ---
 
 # Grill artifact

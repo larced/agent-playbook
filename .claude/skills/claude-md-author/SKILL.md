@@ -1,6 +1,6 @@
 ---
 name: claude-md-author
-description: "Write or tighten a repo's CLAUDE.md: verified commands, layout, conventions, recurring corrections, under a page. Use when setting up CLAUDE.md or when an agent keeps repeating a mistake."
+description: "CLAUDE.md: write or tighten it (verified commands, layout, conventions, recurring corrections, under a page). Use when setting one up, or when an agent repeats the same mistake across sessions."
 ---
 
 # CLAUDE.md author

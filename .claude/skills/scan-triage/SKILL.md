@@ -1,6 +1,6 @@
 ---
 name: scan-triage
-description: "Triage security, dependency or static-analysis scan findings into bounded fixes, intents, or justified not-applicable proposals, in a triage report. Use when a scan produces findings."
+description: "Scan findings (Snyk, Dependabot, SAST, static analysis): sort them into bounded fixes, intents, or justified not-applicable proposals, in a triage report. Use when a scanner reports findings."
 ---
 
 # Scan triage

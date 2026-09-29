@@ -1,6 +1,6 @@
 ---
 name: change-review
-description: "Review committed changes since a fixed point on three separate axes - correctness & security, standards (with the smell baseline), spec - in parallel read-only sub-agents, reported side by side. Use for review checkpoints in builds or when asked to review work since a commit."
+description: "Review commits since a SHA or checkpoint on three axes - correctness & security, standards, spec - in parallel read-only sub-agents. Use for 'review my commits since X' and build checkpoints; for a PR or someone else's branch use pr-reviewer."
 ---
 
 # Change review

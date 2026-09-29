@@ -1,6 +1,6 @@
 ---
 name: plan-sync
-description: "Sync PLAN.md with the actual diff: mark progress, record deviations, flag when re-approval or a spec change is needed. Use when implementation drifted from the plan or before opening a PR."
+description: "Update PLAN.md to match the actual diff: progress, deviations, re-approval flags. Use when the code drifted from the plan, or before opening a PR."
 ---
 
 # Plan sync

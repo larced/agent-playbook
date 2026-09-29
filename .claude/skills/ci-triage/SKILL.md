@@ -1,6 +1,6 @@
 ---
 name: ci-triage
-description: "Diagnose a failed CI run, read-only: failing step, first real error, cause (this change, base, flaky with evidence, infra) and next action. Use when CI fails."
+description: "CI failed or pipeline red: find the failing step, first real error, cause (this change, base, flaky with evidence, infra) and next action, read-only. Use before touching code when a CI run fails."
 ---
 
 # CI triage

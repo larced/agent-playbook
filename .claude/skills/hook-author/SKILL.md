@@ -1,6 +1,6 @@
 ---
 name: hook-author
-description: "Hook for a rule that must always hold during agent work (protected paths, formatting, secrets, no self-acceptance): script plus settings entry, tested. Use when the user says Claude must never or always do something. Approval routing is gate-author."
+description: "Claude must always / never do X: enforce it with a hook (script plus settings entry, tested) instead of promising to comply. Use when the user states a standing rule for the agent (protected paths, formatting, secrets). Approval routing is gate-author."
 ---
 
 # Hook author

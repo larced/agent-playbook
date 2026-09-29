@@ -1,6 +1,6 @@
 ---
 name: spec-writer
-description: "Spec from an accepted INTENT.md: writes SPEC.md with numbered requirements, design, applied policy-* skills and flagged conflicts. Use when an intent needs a design before planning."
+description: "SPEC.md from an accepted INTENT.md: numbered requirements, design, applied policy-* skills, flagged conflicts. Use when an accepted intent needs designing."
 ---
 
 # Spec writer

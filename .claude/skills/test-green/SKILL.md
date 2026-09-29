@@ -1,6 +1,6 @@
 ---
 name: test-green
-description: "Green step of the TDD loop: make the one next test in TEST_PLAN.md pass with the least code, refactor with the full suite green, record the result. Use when running the TDD loop after test-next."
+description: "Make the failing test pass (TDD green step): least code for the next TEST_PLAN.md case, refactor on green, record it. Use when the next test is red and needs to pass."
 ---
 
 # Test green

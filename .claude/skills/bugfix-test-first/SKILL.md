@@ -1,6 +1,6 @@
 ---
 name: bugfix-test-first
-description: "Bugfix, test first: reproduce the bug as a failing test, commit it, then fix without touching the test. Use when the user reports a bug or regression, or pastes a bug ticket or stack trace."
+description: "Bug or regression reported (error, stack trace, bug ticket): reproduce it as a failing test, commit it, then fix without touching the test. Use before reading or editing code for a reported bug."
 ---
 
 # Bugfix, test first

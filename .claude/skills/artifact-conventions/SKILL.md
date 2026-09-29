@@ -1,6 +1,6 @@
 ---
 name: artifact-conventions
-description: "Naming, location, header, status vocabulary and slug rules for SDLC artifacts (INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md and the rest). Use when writing, moving or changing the status of an artifact, or when asked how artifacts are named or what a status means."
+description: "Artifact naming, location, header, status and slug rules (INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md and the rest). Use when asked how an artifact is named, where it lives or what a status means; skills that write artifacts load it by name."
 ---
 
 # Artifact conventions
