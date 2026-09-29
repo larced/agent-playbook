@@ -208,5 +208,10 @@
     "id": "user-policy",
     "prompt": "our security lead wants their password-storage rules turned into something agents follow, with them as owner",
     "expect": "none|sdlc-orchestrator"
+  },
+  {
+    "id": "user-setup",
+    "prompt": "we just cloned the playbook skills into our repo, how do we get it configured for our jira and team?",
+    "expect": "none|sdlc-orchestrator"
   }
 ]

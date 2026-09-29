@@ -7,7 +7,7 @@ description: "Artifact naming, location, header, status and slug rules (INTENT.m
 
 The single source of truth for how SDLC artifacts are named, located, and labelled. Every other skill in this playbook writes artifacts that follow these rules, so downstream skills (and `sdlc-orchestrator`) can find them and tell whether they are allowed to proceed.
 
-A repo may override any of this in its own `CLAUDE.md` or a `docs/sdlc-conventions.md`. If it does, the repo wins; say which rule you followed.
+A repo may override any of this in `docs/sdlc-conventions.md` (written by `/sdlc-setup`) or its instruction file (`AGENTS.md` or `CLAUDE.md`). If it does, the repo wins; say which rule you followed.
 
 ## The artifacts
 

@@ -13,7 +13,7 @@ Answer "what happens next for this piece of work?" by reading its artifacts, not
 2. **Read every artifact's header.** Status, `Accepted-by`, upstream link. Also check for a branch/PR referencing the slug or ticket.
 3. **Walk the chain** with the table below and stop at the first stage that isn't complete.
 4. **Check for staleness.** An upstream artifact changed after the downstream one was written (compare git log dates), or reset to `draft` after a material edit: the downstream artifact needs revisiting.
-5. **Report** in the format below. If the user asks you to proceed, run the named skill; if the next step is a human gate, say who and stop.
+5. **Report** in the format below. If the user asks you to proceed, run the named skill; if the next step is a human gate, say who (from the Gates table in `docs/sdlc-conventions.md` when it exists) and stop.
 
 ## The chain
 
@@ -64,6 +64,7 @@ These run only when a person types them, so they cost no context in everyday ses
 
 | Missing | Command |
 |---|---|
+| `docs/sdlc-conventions.md` (tracker, artifact location, who accepts), or a check on adoption status | `/sdlc-setup` |
 | Reliable build/test commands | `/verification-setup` |
 | A policy an owner wants enforced | `/policy-author` |
 | `REVIEW.md` | `/review-policy-author` |

@@ -9,7 +9,7 @@ Make every piece of work traceable from ticket to production and back. In the AI
 
 ## Decide the source of truth first
 
-Check `CLAUDE.md` or `docs/sdlc-conventions.md` for which is authoritative:
+Read `Source-of-truth:` in `docs/sdlc-conventions.md`, or the instruction file (`AGENTS.md` or `CLAUDE.md`), for which is authoritative:
 
 - **Repo is source of truth**: artifacts hold the content; the ticket holds a link and status mirror.
 - **Tracker is source of truth**: the ticket holds the content; artifacts reference the ticket and don't duplicate its fields.

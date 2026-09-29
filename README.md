@@ -23,6 +23,12 @@ Claude Code reads skills from `.claude/skills/`, so cloning this repo and
 opening it in Claude Code makes every skill available. To use a skill in
 another project, copy its folder into that project's `.claude/skills/`.
 
+GitHub Copilot (coding agent, CLI and VS Code) also reads skills from
+`.claude/skills/` and honours `disable-model-invocation`, so the same folders
+work there. For repo-wide instructions, `AGENTS.md` is the file both read;
+Claude Code reads it only when there is no `CLAUDE.md`, so `/sdlc-setup` adds
+an `@AGENTS.md` import to an existing `CLAUDE.md`.
+
 Tools that discover skills in `.agents/skills/` instead can be pointed at this
 repo with a symlink:
 
@@ -70,6 +76,7 @@ produces the next one, with a human gate in between. Every artifact follows
 | Maintain | [`band-config-author`](.claude/skills/band-config-author/SKILL.md) | one metric → `bands/<metric>.yaml` (+ deterministic checker script) |
 | Maintain | [`postmortem-writer`](.claude/skills/postmortem-writer/SKILL.md) | incident thread → `POSTMORTEM.md` + `LESSONS.md` entry + follow-up `INTENT.md`s |
 | Maintain | [`scan-triage`](.claude/skills/scan-triage/SKILL.md) | scan findings → triage report, bounded-fix PRs or `INTENT.md`s |
+| Cross-cutting | [`sdlc-setup`](.claude/skills/sdlc-setup/SKILL.md) | repo → `docs/sdlc-conventions.md` (tracker, artifact location, who accepts) + Agent skills block in `AGENTS.md`/`CLAUDE.md` + adoption status |
 | Cross-cutting | [`artifact-conventions`](.claude/skills/artifact-conventions/SKILL.md) | — → shared naming, location, header and status rules |
 | Cross-cutting | [`traceability-linker`](.claude/skills/traceability-linker/SKILL.md) | ticket / artifacts / commits / PR → cross-links in both directions |
 | Cross-cutting | [`sdlc-orchestrator`](.claude/skills/sdlc-orchestrator/SKILL.md) | work folder → next skill or human gate |
@@ -79,9 +86,10 @@ produces the next one, with a human gate in between. Every artifact follows
 yours with `policy-author` (see [`docs/examples/policy-api-design.md`](docs/examples/policy-api-design.md)
 for the shape).
 
-Six setup skills are user-invoked (`disable-model-invocation: true`) so they
-cost no context in everyday sessions: `verification-setup`, `policy-author`,
-`review-policy-author`, `subagent-author`, `gate-author`, `band-config-author`.
+Seven setup skills are user-invoked (`disable-model-invocation: true`) so they
+cost no context in everyday sessions: `sdlc-setup`, `verification-setup`,
+`policy-author`, `review-policy-author`, `subagent-author`, `gate-author`,
+`band-config-author`. Start a new repo with `/sdlc-setup`.
 Type them as slash commands; `sdlc-orchestrator` and
 [`workflows/adoption.md`](workflows/adoption.md) say when.
 
