@@ -5,59 +5,72 @@ description: Turn a rough idea, free-form description, or one or more tracker ti
 
 # Intent writer
 
-Produce an `INTENT.md` that says **what problem needs solving and why**, in a form a product owner can correct and a spec-writing agent can act on. Intent is deliberately upstream of design: it describes the problem and the outcome, not the solution.
+Produce an `INTENT.md` that says **what problem needs solving and why**, in a form a product owner can correct in five minutes and a spec-writing agent can act on. Intent is deliberately upstream of design: it records the problem and the outcome, never the solution.
 
 ## Why this artifact exists
 
-The next stage (spec) reads `INTENT.md` and nothing else about the original conversation. Anything wrong or invented here gets baked into the spec, the plan and the code. So the two jobs of this skill are to capture the originator's meaning faithfully and to make gaps visible rather than papering over them.
+`spec-writer` reads `INTENT.md` and nothing else from the original conversation. Anything invented here becomes the premise of the spec, the plan and the code; anything left out is silently lost. So this skill has exactly two jobs: capture the originator's meaning faithfully, and make every gap visible instead of filling it.
+
+## Pick the right intake
+
+| Input | Use |
+|---|---|
+| A person's idea, request, ticket(s), bug report | This skill |
+| An alert, incident, band breach, scan finding, support/Slack thread | `intent-from-signal` (same output format, separates observations from hypotheses) |
+| A trivial, unambiguous bug the user wants fixed now | Say so, and offer `bugfix-test-first` directly; an intent is optional |
 
 ## Workflow
 
-1. **Gather the input.** It may be a free-form description, pasted ticket text, ticket IDs/URLs, or a mix. If a tracker is reachable via tools available to you and the user gave IDs, read the tickets; otherwise work from what was pasted. Multiple tickets that describe one problem merge into a single intent; tickets that describe different problems should become separate intents (say so and ask, or produce one file per problem).
-2. **Decide whether to ask before writing.** Ask only when something essential is missing: you can't tell what the problem is, or who it affects. Ask at most three short questions in one message. For everything else, write the draft and put the gap in *Open questions*. A draft with visible gaps is more useful than an interview the user has to sit through.
-3. **Write `INTENT.md`** using the template below. Save it where the user asks; default to `INTENT.md` in the current directory, or `intent/<slug>/INTENT.md` if an `intent/` folder already exists.
-4. **Report back briefly:** where the file is, what the open questions are, and that it is `draft` until the product owner accepts it.
+1. **Gather the input.** Pasted text, ticket IDs/URLs, or a description. If the user gave ticket IDs and a tracker is reachable with the tools you have, read the tickets (including comments: the real need is often there). Otherwise work from what was pasted and don't pretend to have read what you haven't.
+2. **Group into problems.** Tickets that describe one underlying problem merge into one intent. Tickets that describe different problems become separate intents: say so, and ask or write one file per problem. A ticket that proposes a solution ("add a Download PDF button") is evidence of a problem ("customers can't get invoices themselves"); record the problem.
+3. **Decide whether to ask first.** Ask only if you can't tell *what* the problem is or *who* has it. Then ask at most three short questions in one message. Everything else goes into the draft as an open question. A draft with visible gaps is faster for the owner than an interview.
+4. **Write `INTENT.md`** with the template below. Location per `artifact-conventions`: `intent/<slug>/INTENT.md` if an `intent/` folder exists, otherwise where the user says, otherwise `INTENT.md` in the current directory.
+5. **Hand off.** Tell the user, in a few lines: the path, the open questions that most need an answer, and that it stays `draft` until the product owner edits it and sets `Status: accepted` and `Accepted-by`. The next step after acceptance is `spec-writer`.
 
 ## Template
 
 ```markdown
-# Intent: <short title>
+# Intent: <short title naming the problem>
 Status: draft
-Author: <name / role, or "unknown">
-Source: <ticket IDs/URLs, alert, or "conversation">
+Author: <originator(s): name / role; "unknown" if not stated>
+Source: <every ticket ID/URL used, or "conversation">
 Date: <YYYY-MM-DD>
+Accepted-by:
 
 ## Problem
-What can't be done today, who is affected, and how we know.
+What can't be done today, who is affected, and how we know. Quote the
+originator where their words carry meaning: "a day a week chasing invoices" (PROJ-142).
 
 ## Desired outcome
-What better looks like, in the originator's own terms.
+What better looks like, in the originator's terms. Preferences go here.
 
 ## Affected users and systems
-Who and what this touches.
+Who and what this touches, as stated or clearly implied by the input.
 
 ## Constraints
-Hard limits: security, compliance, performance, deadlines, existing systems.
+Hard limits only: compliance, deadlines, existing systems that must be used,
+contractual commitments. Each with its source.
 
 ## Out of scope
-What this deliberately does not include.
+What the input explicitly excludes. "None stated" if nothing is.
 
 ## Open questions
-Unresolved items the spec stage must answer or carry forward.
+- Q1: <gap the spec stage must answer or carry forward>
+- Q2: ...
 ```
 
 ## Rules of thumb (and why)
 
-- **Keep the originator's wording visible.** Quote or closely paraphrase the ticket or user for the problem and outcome, e.g. `"customers keep emailing us for invoices" (PROJ-142)`. Rewriting into generic requirements language loses the nuance a spec author needs.
-- **Never invent facts.** No made-up metrics, deadlines, users or systems. If the input says "slow", don't write "p95 above 2s". Put "How slow? What's the target?" in Open questions.
-- **Stay out of the solution.** If the input proposes a solution ("add a dropdown"), record the underlying need under Problem and note the suggestion as a hint in Open questions or Constraints only if it is a genuine constraint. Design belongs to the spec stage.
-- **Separate constraints from wishes.** Only real limits (compliance, deadlines, existing systems) go under Constraints. Preferences go in Desired outcome.
-- **Fill Out of scope only from evidence.** Use things the input explicitly excludes, or adjacent work you are flagging as a question ("Does this include mobile?"). Otherwise write "None stated" rather than guessing.
-- **Record provenance.** Source must hold every ticket ID/URL used; if there are none, write "conversation". Author is the person who raised the need, not you. If unknown, write "unknown".
-- **Status is always `draft`.** A human accepts intents; the agent that wrote it must not mark it accepted.
-- **Use "None" for empty sections** so downstream readers can tell "nothing here" from "forgot".
-- **Keep it short.** One page is the goal. If it's longer, it is probably describing a solution.
+- **Never invent facts.** No metrics, deadlines, users, volumes or systems that aren't in the input. "Slow" stays "slow", and "how slow, and what's the target?" goes in Open questions. An invented number looks exactly like a real one downstream.
+- **Keep the originator's words visible.** Quote or closely paraphrase the phrases that carry nuance, with the ticket ID. Generic requirements language loses exactly the detail a spec author needs.
+- **Problem, not solution.** Proposed solutions from the input are hints, not requirements. Mention them in Open questions ("PROJ-158 suggests a download button; is that a requirement or an idea?") unless they are a real constraint.
+- **Constraints are limits, not wishes.** "Must pass the Q3 audit" is a constraint; "would be nice on mobile" is a desired outcome.
+- **Credit every originator.** With several tickets or people, list them all under Author; Source lists every ticket.
+- **Number the open questions** (`Q1`, `Q2`, …) so the spec can say which it answered and which it carried forward.
+- **Write `None` / `None stated` in empty sections**, never delete a heading: downstream readers must tell "nothing" from "forgot".
+- **Status is always `draft`.** The product owner accepts; the agent that wrote it never does (see `artifact-conventions`).
+- **One page.** A longer intent is usually describing a solution.
 
 ## Advisory, not enforced
 
-This skill makes a well-formed intent likely; it doesn't guarantee one. If intents must always have a Source and a non-empty Open questions section, back this with a CI check.
+This skill makes a well-formed intent likely, not certain. If intents must always carry a Source and must never be accepted by an agent, back that with a CI check or a `hook-author` hook.
