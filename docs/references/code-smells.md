@@ -5,10 +5,7 @@ for, and that the refactor steps in `test-green`, `plan-implementer` and
 `slice-integrator` use as their checklist. It applies even when a repo
 documents no standards of its own.
 
-The smell names come from Martin Fowler's *Refactoring* (2nd ed., ch. 3). The
-idea of carrying a small baseline inside a review, with the two rules below,
-comes from Matt Pocock's `code-review` skill
-(github.com/mattpocock/skills, MIT). Descriptions here are our own.
+Smell names are Martin Fowler's (*Refactoring*, 2nd ed., ch. 3); sources in `ACKNOWLEDGEMENTS.md`.
 
 ## Two rules
 

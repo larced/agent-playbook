@@ -9,8 +9,6 @@ How to write a document an agent will *act on*, so it takes the same process eve
 
 Records written mainly for humans (`INTENT.md`, `SPEC.md`, `VERIFICATION.md`, `POSTMORTEM.md`) follow their own skills' rules instead: originator wording, evidence, blamelessness.
 
-Adapted from Matt Pocock's `writing-for-agents` skill (github.com/mattpocock/skills, MIT), in our own words.
-
 ## Pointers and the two budgets
 
 A **pointer** is text in the agent's context that names material outside it and says when to reach for it: a skill's `description`, a `CLAUDE.md` line naming a doc, "see `artifact-conventions`". Its *wording* decides whether the agent reaches the material, so a weak pointer to must-have material is a reliability bug. Sharpen the wording first; inline the material only if sharpening fails.

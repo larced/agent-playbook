@@ -7,8 +7,6 @@ description: "Grill a draft artifact's open questions and flagged concerns (INTE
 
 Work through a draft artifact's open questions (`Q1…`) and flagged concerns (`F1…`) with the human until each is answered, carried forward on purpose, or routed to the person who must decide. Answers go straight back into the artifact. The draft reaches its gate with its decisions made, rather than the gate being where they get made.
 
-Adapted from Matt Pocock's `grilling` skill (github.com/mattpocock/skills, MIT): the question tree, rounds over the frontier, recommended answers, and the split between facts and decisions.
-
 ## Facts are yours, decisions are theirs
 
 - **A fact** can be settled by looking: the codebase, config, docs, the tracker, a policy skill. Find it yourself, with a read-only sub-agent where it takes digging. Ask the human for facts only when nothing reachable holds them.
