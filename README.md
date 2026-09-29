@@ -50,6 +50,8 @@ produces the next one, with a human gate in between. Every artifact follows
 | Build | [`plan-slicer`](.claude/skills/plan-slicer/SKILL.md) | accepted `PLAN.md` → scaffold + pre-written tests + `SLICES.md` + `slices/S<nn>-*.md` briefs (strong model) |
 | Build | [`slice-implementer`](.claude/skills/slice-implementer/SKILL.md) | one slice brief → one commit that passes its frozen tests (small model; ships `slice_guard.py`) |
 | Build | [`slice-integrator`](.claude/skills/slice-integrator/SKILL.md) | accepted `SLICES.md` → dispatched, checked and merged slices, then `plan-sync` (strong model) |
+| Build | [`test-next`](.claude/skills/test-next/SKILL.md) | `TEST_PLAN.md` + review findings → one right-reason failing test (red step of the TDD loop; seeds `TEST_PLAN.md` from `SPEC.md`) |
+| Build | [`test-green`](.claude/skills/test-green/SKILL.md) | `TEST_PLAN.md` `next` case → least code to green + refactor (green step; small models welcome) |
 | Build | [`plan-sync`](.claude/skills/plan-sync/SKILL.md) | diff + `PLAN.md` → updated `PLAN.md` (progress, deviations) |
 | Build | [`claude-md-author`](.claude/skills/claude-md-author/SKILL.md) | repo → `CLAUDE.md` |
 | Build | [`subagent-author`](.claude/skills/subagent-author/SKILL.md) | recurring job → `.claude/agents/<name>.md` |
@@ -88,7 +90,9 @@ Several skills were added beyond the map because the chain needed them:
 later checks assume), `pr-author` (a PR that carries the chain to review), and
 the slicing trio `plan-slicer` / `slice-implementer` / `slice-integrator`
 (a strong model writes tests and interfaces up front so smaller models can
-build self-contained vertical slices, in parallel where independent).
+build self-contained vertical slices, in parallel where independent), and the
+TDD pair `test-next` / `test-green` (a two-agent red/green loop for designs
+that emerge as you go).
 
 ## Workflows
 
@@ -96,7 +100,9 @@ build self-contained vertical slices, in parallel where independent).
 gates between them:
 [adoption](workflows/adoption.md) (setup order for a repo),
 [feature](workflows/feature.md), [bugfix](workflows/bugfix.md),
-[incident](workflows/incident.md) and [scheduled scan](workflows/scheduled-scan.md).
+[incident](workflows/incident.md), [scheduled scan](workflows/scheduled-scan.md)
+and the [TDD loop](workflows/tdd-loop.md) (including when to choose it over
+`plan-implementer` or slicing).
 [`docs/metrics.md`](docs/metrics.md) has git one-liners for measuring each stage.
 
 ## License

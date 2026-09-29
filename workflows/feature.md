@@ -11,6 +11,8 @@ idea / ticket
      or, for large plans:
      plan-slicer (strong: scaffold, tests, SLICES.md) ⛔ Gate: engineer accepts SLICES.md
      → slice-integrator (strong) dispatching slice-implementer (small models, parallel waves)
+     or, when the design should emerge test by test:
+     test-next ⇄ test-green loop (see tdd-loop.md)
   → verification-report (verifier subagent) → VERIFICATION.md
   → pr-author → PR (traceability-linker for ticket links)
   → pr-reviewer (fresh context), ci-triage on failures
