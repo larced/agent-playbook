@@ -7,6 +7,8 @@ description: "Review committed changes since a fixed point on three separate axe
 
 Review a committed diff along three axes, each in its own context, and report them side by side. Separate contexts stop one axis from colouring another (a tidy diff looking correct, a correct diff excusing its mess), and separate reports stop a strong axis from hiding a failing one.
 
+Adapted from Matt Pocock's `code-review` skill (github.com/mattpocock/skills, MIT), which reviews on two axes (standards, spec); we added correctness & security. See `ACKNOWLEDGEMENTS.md`.
+
 | Axis | Question | Sources |
 |---|---|---|
 | **Correctness & security** | Does the code work, and is it safe? | The diff, surrounding code, tests; `policy-security` if present |

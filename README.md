@@ -120,6 +120,13 @@ and the [TDD loop](workflows/tdd-loop.md) (including when to choose it over
 `plan-implementer` or slicing).
 [`docs/metrics.md`](docs/metrics.md) has git one-liners for measuring each stage.
 
+## Acknowledgements
+
+Several skills adapt ideas from Matt Pocock's
+[mattpocock/skills](https://github.com/mattpocock/skills) (MIT), and the
+artifact chain comes from Anthropic's AI-native SDLC playbook. See
+[ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md) for what came from where.
+
 ## License
 
 [MIT](LICENSE)
