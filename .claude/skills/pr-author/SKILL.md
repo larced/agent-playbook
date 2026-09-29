@@ -1,6 +1,6 @@
 ---
 name: pr-author
-description: Open (or update) a pull request for a finished piece of SDLC work so the reviewer and code owner have everything in one place - a title with the ticket ID, links to the INTENT/SPEC/PLAN/VERIFICATION chain, requirement coverage by ID, the verification result for the head commit, deviations from the plan, risk level and the approval needed. Use this whenever implementation and verification are done and the user says "open a PR", "raise the pull request", "get this ready for review", or when the PR description is stale after new commits.
+description: "Open or update a PR carrying the artifact chain, requirement coverage and the verification result; draft when not ready. Use when implementation and verification are done."
 ---
 
 # PR author

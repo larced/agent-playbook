@@ -4,6 +4,7 @@
 idea / ticket
   → intent-writer            → INTENT.md        ⛔ Gate: product owner accepts
   → spec-writer (+ policy-*) → SPEC.md
+  → grill-artifact (optional) resolves open questions / flagged concerns with the owners
   → spec-reviewer (optional, fresh context) → SPEC-REVIEW.md
                                                ⛔ Gate: product owner accepts; policy owners clear flags
   → plan-writer              → PLAN.md          ⛔ Gate: engineer accepts (tech lead if higher-risk)

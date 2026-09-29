@@ -1,6 +1,6 @@
 ---
 name: traceability-linker
-description: Keep ticket IDs, SDLC artifacts, commits and PRs cross-referenced so the audit trail is complete in both directions - artifacts carry ticket IDs and upstream paths, commits and PRs carry ticket IDs, and the tracker ticket (Jira, Linear, GitHub issue) links back to the artifacts, PR and merge SHA. Use this whenever a legacy tracker stays the system of record, when the user asks to "link this to the ticket", "update the ticket with the PR", "check traceability", before closing a ticket, or when an artifact chain has missing or broken links.
+description: "Cross-link tickets, artifacts, commits and PRs in both directions. Use when linking work to a tracker ticket, before closing one, or when checking the audit trail."
 ---
 
 # Traceability linker
@@ -47,7 +47,7 @@ Merged: <SHA> on <YYYY-MM-DD>   (omit until merged)
 ## Rules of thumb (and why)
 
 - **Links, not copies.** Copying ticket content into artifacts (or vice versa) creates two versions that drift.
-- **Don't rewrite history.** Missing IDs on merged commits are reported, not fixed with a rebase.
+- **History stays as it is.** Missing IDs on merged commits are reported for a human to handle; the audit trail is the commits as they landed.
 - **Ask before writing to the tracker.** It's an external system other people watch; post only when the user asked.
 - **One ticket can map to many artifacts and vice versa.** Merged intents list every ticket; split intents each reference the shared ticket.
 

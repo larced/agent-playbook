@@ -1,6 +1,6 @@
 ---
 name: ci-triage
-description: Read a failed CI build or test log and return a short, read-only diagnosis - which step failed, the first real error, whether the cause is this change, the base branch, a flaky test or infrastructure, and the next action. Use this whenever the user pastes a CI failure, links a failed GitHub Actions/Jenkins/CircleCI run, asks "why did CI fail", "is this my change or flaky", or when a pipeline failure needs a first look before a human or fixer picks it up. Diagnoses only; never pushes, re-runs or changes anything.
+description: "Diagnose a failed CI run, read-only: failing step, first real error, cause (this change, base, flaky with evidence, infra) and next action. Use when CI fails."
 ---
 
 # CI triage

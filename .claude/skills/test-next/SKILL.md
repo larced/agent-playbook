@@ -1,6 +1,6 @@
 ---
 name: test-next
-description: The red step of a two-agent red/green TDD loop - triage pending review findings into TEST_PLAN.md (tests, refactor notes, or spec questions), pick the next test case by a fixed rule, and write exactly one failing test that fails for the right reason, leaving the implementation to a different agent running test-green. Creates TEST_PLAN.md from SPEC.md/PLAN.md on first use. Use this whenever the user says "write the next test", "next red test", "register these review findings as tests", "run the red step", or is running the TDD loop. Never implements behaviour.
+description: "Red step of the TDD loop: triage the review inbox, pick the next case in TEST_PLAN.md, and write one test that fails for the right reason. Seeds TEST_PLAN.md from SPEC.md on first run. Use when running the TDD loop."
 ---
 
 # Test next (red)
@@ -31,7 +31,7 @@ If the work folder (per `artifact-conventions`) has no `TEST_PLAN.md`, create it
 4. **Write the test.** One test, in the repo's existing test style and location for that area, named for the behaviour. Assert the behaviour the case describes, nothing broader.
 5. **Keep the build green.** In compiled languages a test that references a missing type or member breaks the whole test project. Add signature-only stubs in production code (the method throws "not implemented" or returns a default, e.g. `throw new NotImplementedException()`). No logic in stubs; they exist so exactly one test fails.
 6. **Prove it's the right red.** Run the new test: it must fail on its assertion or the not-implemented stub, not on a build error, fixture problem or unrelated exception. Run the full test suite: every other test keeps its previous result. Show both outputs.
-7. **Update `TEST_PLAN.md`:** set the case to `next` with its test name, and rewrite the `## Next` contract block (below) for it.
+7. **Update `TEST_PLAN.md`:** `test-green` follows the case row as its instruction, so write the case as a behaviour with a checkable outcome (see `writing-for-agents`); set the case to `next` with its test name, and rewrite the `## Next` contract block (below) for it.
 8. **Commit** the test, any stubs and `TEST_PLAN.md`: `test(<slug>): <case id> <case title> (red)`.
 9. **Report** (format below) and stop.
 
@@ -92,8 +92,8 @@ done: dotnet test --filter "FullyQualifiedName~RejectsDuplicateKeys"
 
 - **One test per cycle.** Small steps keep the green step small enough for a cheaper model and keep design decisions visible.
 - **Right-reason red, and only one red.** Anything else hands the implementer a different problem than the one you meant.
-- **Never implement behaviour.** Stubs have signatures only. If you wrote logic, the test proves nothing about the green step.
-- **Never guess past a spec gap.** A test that encodes a guess makes the guess the spec. Questions go to `## Questions` with an owner.
+- **Stubs are signatures only.** The green step writes all behaviour; logic in a stub means the test proves nothing about it.
+- **Spec gaps become questions.** They go to `## Questions` with an owner; a test that encodes a guess makes the guess the spec.
 - **Every inbox item lands somewhere.** A finding that silently disappears is how review stops being worth doing.
 - **Trace every case.** `Source` is a requirement ID or a dated review, so `verification-report` can map tests to requirements later.
 

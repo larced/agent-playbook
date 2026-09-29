@@ -1,6 +1,7 @@
 ---
 name: subagent-author
-description: Turn a recurring job - verifying changes, simplifying a diff, researching a codebase question, reviewing a spec or PR, triaging CI - into a Claude Code subagent definition at .claude/agents/<name>.md with a clear delegation trigger, least-privilege tools and a fixed return format. Use this whenever the user says "make a subagent for X", "I keep asking Claude to do the same check", "create a verifier/reviewer/researcher agent", or when a workflow step needs a separate context (for example, separation of duties between author and reviewer).
+description: "Write a .claude/agents/<name>.md sub-agent: delegation trigger, least-privilege tools, fixed return format."
+disable-model-invocation: true
 ---
 
 # Subagent author
@@ -21,7 +22,7 @@ Produce `.claude/agents/<name>.md`: a subagent the main session delegates a well
    - Jobs that change code (simplifier, fixer): add `Edit, Write`.
    Omitting `tools` grants everything; don't omit it.
 3. **Write the description as a delegation trigger.** It's how the main session decides to call the subagent: say what it does and when to use it ("Use after implementing a change and before opening a PR to…"). Add "use proactively" only if it truly should run without being asked.
-4. **Write the system prompt:** role in one line, the steps, what not to do, and the exact return format. Point at existing skills (`pr-reviewer`, `ci-triage`, `verification-report`) rather than duplicating their content.
+4. **Write the system prompt:** role in one line, the steps, the guardrails (each paired with what to do instead), and the exact return format. Apply `writing-for-agents`. Point at existing skills (`pr-reviewer`, `ci-triage`, `verification-report`) rather than duplicating their content.
 5. **Save** to `.claude/agents/<name>.md` (project) unless the user wants it personal (`~/.claude/agents/`). Name in kebab-case, describing the job (`change-verifier`, not `helper`).
 6. **Report back:** path, tools granted and why, how to invoke it ("ask Claude to use the change-verifier subagent" or let it delegate from the description).
 

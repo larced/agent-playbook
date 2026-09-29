@@ -44,6 +44,7 @@ produces the next one, with a human gate in between. Every artifact follows
 | Plan | [`intent-from-signal`](.claude/skills/intent-from-signal/SKILL.md) | alert / incident / scan finding / support thread → `INTENT.md` |
 | Design | [`spec-writer`](.claude/skills/spec-writer/SKILL.md) | `INTENT.md` (+ policy skills) → `SPEC.md` |
 | Design | [`policy-author`](.claude/skills/policy-author/SKILL.md) | policy owner's source of truth → `.claude/skills/policy-<name>/SKILL.md` |
+| Design | [`grill-artifact`](.claude/skills/grill-artifact/SKILL.md) | draft `INTENT.md` / `SPEC.md` / `PLAN.md` / `TEST_PLAN.md` → open questions and flagged concerns resolved with the human, answers written back |
 | Design | [`spec-reviewer`](.claude/skills/spec-reviewer/SKILL.md) | `SPEC.md` + `INTENT.md` (+ policies) → `SPEC-REVIEW.md` |
 | Build | [`plan-writer`](.claude/skills/plan-writer/SKILL.md) | `SPEC.md` → `PLAN.md` |
 | Build | [`plan-implementer`](.claude/skills/plan-implementer/SKILL.md) | accepted `PLAN.md` (+ `SPEC.md`, policies) → commits on a branch, step by step; also fixes review findings |
@@ -72,10 +73,20 @@ produces the next one, with a human gate in between. Every artifact follows
 | Cross-cutting | [`artifact-conventions`](.claude/skills/artifact-conventions/SKILL.md) | — → shared naming, location, header and status rules |
 | Cross-cutting | [`traceability-linker`](.claude/skills/traceability-linker/SKILL.md) | ticket / artifacts / commits / PR → cross-links in both directions |
 | Cross-cutting | [`sdlc-orchestrator`](.claude/skills/sdlc-orchestrator/SKILL.md) | work folder → next skill or human gate |
+| Cross-cutting | [`writing-for-agents`](.claude/skills/writing-for-agents/SKILL.md) | any document an agent follows (skills, `CLAUDE.md`, briefs, `PLAN.md` steps, prompts) → rules for writing it: short pointers, completion criteria, positive rules, pruning |
 
 `policy-*` skills themselves are org-specific and aren't shipped here; write
 yours with `policy-author` (see [`docs/examples/policy-api-design.md`](docs/examples/policy-api-design.md)
 for the shape).
+
+Six setup skills are user-invoked (`disable-model-invocation: true`) so they
+cost no context in everyday sessions: `verification-setup`, `policy-author`,
+`review-policy-author`, `subagent-author`, `gate-author`, `band-config-author`.
+Type them as slash commands; `sdlc-orchestrator` and
+[`workflows/adoption.md`](workflows/adoption.md) say when.
+
+`grill-artifact` and `writing-for-agents` adapt Matt Pocock's `grilling` and
+`writing-for-agents` skills ([mattpocock/skills](https://github.com/mattpocock/skills), MIT).
 
 Evals: `intent-writer`, `spec-writer` and `plan-writer` have `evals/evals.json`
 (written against their first versions; the rewrites keep the same template

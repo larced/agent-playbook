@@ -1,6 +1,6 @@
 ---
 name: spec-reviewer
-description: Review a SPEC.md against the INTENT.md it came from (and any policy-* skills) before the product owner signs off, and write SPEC-REVIEW.md with ranked findings - requirements that don't solve the stated problem, dropped constraints, open questions that silently vanished, invented facts, unflagged policy conflicts. Use this whenever the user asks to "review the spec", "check this SPEC.md", "does this design actually solve the intent", or wants a second pass on a spec before the design gate. Should run in a different session or subagent from the one that wrote the spec.
+description: "Spec review against its INTENT.md and policies, before the design gate: writes SPEC-REVIEW.md with ranked findings. Use when asked to review or check a spec; run in a fresh session."
 ---
 
 # Spec reviewer
@@ -71,8 +71,8 @@ Use `None` under a severity with no findings.
 
 - **Judge against the intent, not your own taste.** A different design you'd prefer is not a finding unless the spec's design fails the intent, a policy, or buildability.
 - **Quote the spec.** Findings the author can't locate get ignored.
-- **Don't fix the spec.** Editing it would make the reviewer an author and blur who decided what. Suggest the fix in one line.
-- **Never change the spec's status.** Acceptance is the product owner's.
+- **Findings, not edits.** Suggest each fix in one line and leave the spec to its author; a reviewer who edits becomes an author and blurs who decided what.
+- **Status belongs to the product owner.** The review informs acceptance; it never changes `Status`.
 
 ## Advisory, not enforced
 

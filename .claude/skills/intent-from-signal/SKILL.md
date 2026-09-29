@@ -1,6 +1,6 @@
 ---
 name: intent-from-signal
-description: Turn a production or operational signal - a monitoring alert, a band breach, an incident, a security or dependency scan finding, an error spike, or a support/Slack thread - into an INTENT.md that re-enters the SDLC at the Plan stage. Use this whenever the user pastes an alert, incident channel excerpt, scan result, error log or customer complaint thread and wants to know "what do we actually need to fix here", says "turn this alert into an intent", "open work for this incident", or when a Maintain-stage skill (band breach, postmortem, scan triage) hands off work that is bigger than a single bounded fix.
+description: "Intent from an operational signal - alert, band breach, incident, scan finding, error spike or support thread: writes INTENT.md separating observations from hypotheses. Use when a signal needs to become planned work."
 ---
 
 # Intent from signal
@@ -63,7 +63,7 @@ data, owner if unknown, and whether this should be split.
 ## Rules of thumb (and why)
 
 - **Observations in Problem, hypotheses in Open questions.** Mid-incident theories are often wrong; if one lands in Problem it becomes the spec's premise and the durable fix targets the wrong thing.
-- **Never invent numbers.** If the alert says "p99 > 2s", don't write "p99 3.4s". If you don't have the baseline, ask for it.
+- **Numbers come from the signal.** If the alert says "p99 > 2s", write "p99 > 2s". If you don't have the baseline, ask for it.
 - **Redact.** Signals often carry tokens, emails, customer IDs and IPs. Replace them with placeholders; the intent is committed to the repo.
 - **Title the problem, not the alert.** "Checkout latency exceeds band under peak load" beats "HighLatencyAlert fired".
 - **Link, don't paste.** A short excerpt plus a link beats 200 lines of log; the intent should still fit on a page.

@@ -1,6 +1,6 @@
 ---
 name: pr-reviewer
-description: Review a pull request or branch diff at the code-owner gate - runs change-review's three separate axes (correctness & security, standards with a code smell baseline, spec compliance against SPEC.md and PLAN.md) in parallel sub-agents, then adds what only the gate needs - VERIFICATION.md evidence for the head commit, severity per REVIEW.md, a compliance table by requirement ID, and a verdict. Use this whenever the user asks to "review this PR", "review my branch", "check this diff against the plan", or when a change is ready for the code-owner gate. Must not be used to review a change written in the same session, and never approves or merges.
+description: "Review a PR at the code-owner gate: change-review's three axes plus evidence for the head commit, severity per REVIEW.md, compliance table and verdict. Use when asked to review a PR or branch; never for a change written in the same session."
 ---
 
 # PR reviewer
@@ -14,7 +14,7 @@ If this session wrote the change, stop and say so: recommend a fresh session or 
 ## Workflow
 
 1. **Get the diff and context.** The PR (via available GitHub tools) or the branch. The fixed point is the merge-base with the target branch. Read the PR description and linked tickets.
-2. **Find the chain.** `REVIEW.md` at the repo root; the work folder's `SPEC.md`, `PLAN.md`, `VERIFICATION.md` (per `artifact-conventions`, links in the PR, or ticket IDs); applicable `policy-*` skills. No `REVIEW.md` → default severities below, and suggest `review-policy-author`. No spec/plan → the spec axis is skipped and the verdict says compliance couldn't be checked.
+2. **Find the chain.** `REVIEW.md` at the repo root; the work folder's `SPEC.md`, `PLAN.md`, `VERIFICATION.md` (per `artifact-conventions`, links in the PR, or ticket IDs); applicable `policy-*` skills. No `REVIEW.md` → default severities below, and suggest the user run `/review-policy-author`. No spec/plan → the spec axis is skipped and the verdict says compliance couldn't be checked.
 3. **Run `change-review`** with all three axes against the merge-base, passing the whole chain: requirements text, plan files and deviations, `REVIEW.md` passes and skip list, policies, and the smell baseline (`docs/references/code-smells.md`). Any extra passes `REVIEW.md` defines go to the axis they belong to (a migrations pass to correctness, a naming rule to standards).
 4. **Verify every finding** the axes return. Re-read the code, trace callers, run a test if you can. Drop what doesn't hold; downgrade what you can't confirm to a question. A false positive costs the author more than a missed nit.
 5. **Check the evidence.** `VERIFICATION.md` present; its `Commit:` matches the PR head; no requirement left unverified without explanation. Missing or stale evidence is a blocking finding.

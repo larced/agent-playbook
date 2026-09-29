@@ -1,6 +1,6 @@
 ---
 name: artifact-conventions
-description: The shared rules every AI-native SDLC artifact follows - file names, where the chain for one piece of work lives, the header block (status, author, upstream link, source), the status vocabulary and who may change it, and slug naming. Use this whenever you are writing, moving, renaming, or changing the status of an INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md, POSTMORTEM.md or similar artifact, when another skill says "follow artifact-conventions", or when the user asks how artifacts should be named, where they go, or what a status means.
+description: "Naming, location, header, status vocabulary and slug rules for SDLC artifacts (INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md and the rest). Use when writing, moving or changing the status of an artifact, or when asked how artifacts are named or what a status means."
 ---
 
 # Artifact conventions
@@ -94,6 +94,7 @@ Rules:
 
 - Write `None` (or `None found` / `None stated` where the template says so) in empty sections, never delete the heading. Downstream readers need to tell "nothing here" from "forgot".
 - Every artifact ends with a `## Traceability` section (except `INTENT.md`, whose `Source` line plays that role) carrying ticket IDs and upstream paths forward. `traceability-linker` keeps these current.
+- **Names with IDs.** Wherever a human reads it (reports, summaries, PR descriptions, hand-offs), write an ID with its name: "R3 (EU VAT field shown)", "F1 (SEC-3 vs API-2)". Tables that carry the name in another column are fine as they are.
 - Keep the originator's wording visible where it matters; quote with the source in parentheses.
 
 ## Commits

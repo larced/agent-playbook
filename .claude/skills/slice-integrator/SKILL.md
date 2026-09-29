@@ -1,6 +1,6 @@
 ---
 name: slice-integrator
-description: Run a sliced build end to end on a strong model - dispatch ready slices from an accepted SLICES.md to small-model workers (in parallel worktrees where slices are independent), check each result deterministically (done command, frozen tests untouched, diff within the allowlist), merge passing slices in dependency order, retry or escalate failures, then run the full check and plan-sync and hand off to verification-report. Use this whenever the user says "run the slices", "build the sliced plan", "dispatch to Haiku", or SLICES.md is accepted and implementation should start.
+description: "Run a sliced build: dispatch ready slices to small-model workers, check each result deterministically, merge in dependency order, escalate failures, review, then plan-sync. Use when SLICES.md is accepted."
 ---
 
 # Slice integrator
@@ -50,7 +50,7 @@ Update `SLICES.md` after every state change, and commit it with the integration,
 
 - **Trust checks, not reports.** A worker saying "done" is a claim; `check-diff` plus the done command is evidence.
 - **Two attempts, then escalate.** Retrying a small model a third time on the same brief rarely works; better context or a stronger model does.
-- **Never loosen a contract to get green.** Frozen tests and allowlists are what make small-model output trustworthy.
+- **Contracts hold; code changes.** Frozen tests and allowlists are what make small-model output trustworthy, so a failing slice gets better context or a stronger model, not a looser contract.
 - **Merge in dependency order and re-check after each merge.** Parallel slices that pass alone can still break together.
 - **Record the lessons.** First-pass rate and escalation reasons are how slice size gets tuned (`docs/metrics.md`); put them in the handoff.
 

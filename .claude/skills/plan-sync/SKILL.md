@@ -1,6 +1,6 @@
 ---
 name: plan-sync
-description: Keep PLAN.md aligned with the actual implementation as code changes - compare the current diff or branch against the plan, mark steps done, record deviations (files touched that the plan didn't mention, steps skipped, approach changed), and say when a deviation is big enough that the plan needs re-approval or the spec needs revisiting. Use this whenever the user asks "is the plan still accurate", "sync the plan", "update PLAN.md with what we did", before opening a PR from planned work, or when implementation has drifted from what was approved.
+description: "Sync PLAN.md with the actual diff: mark progress, record deviations, flag when re-approval or a spec change is needed. Use when implementation drifted from the plan or before opening a PR."
 ---
 
 # Plan sync
@@ -37,7 +37,7 @@ Why comes from commit messages, code comments, or the user. If you can't tell wh
 ## Rules of thumb (and why)
 
 - **Append, don't rewrite.** The approved plan is part of the audit trail. Rewriting it to match the code makes the gate meaningless; recording the deviation keeps both what was approved and what happened.
-- **Never downgrade a material deviation to minor to avoid re-approval.** When unsure, call it material and let the engineer decide.
+- **When unsure, it's material.** Call it material and let the engineer decide; downgrading to dodge re-approval empties the gate.
 - **Spec problems go upstream.** Don't adjust requirements in the plan to match the code.
 - **Only record what the diff shows.** Don't mark a step done because a file exists; check the change actually does what the step says.
 

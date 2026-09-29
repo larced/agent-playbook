@@ -1,6 +1,6 @@
 ---
 name: bugfix-test-first
-description: Fix a bug by first reproducing it as an automated test, confirming the test fails for the right reason, committing it, and only then changing code until it passes - without weakening the test. Use this whenever the user reports a bug, pastes a bug ticket or stack trace, says "fix this bug", "X is broken", "regression in Y", or when a small bug intent/plan is being implemented. Skip only if the user explicitly says not to write a test.
+description: "Bugfix, test first: reproduce the bug as a failing test, commit it, then fix without touching the test. Use when the user reports a bug or regression, or pastes a bug ticket or stack trace."
 ---
 
 # Bugfix, test first

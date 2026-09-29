@@ -1,6 +1,7 @@
 ---
 name: gate-author
-description: Turn a list of required human approvals - who must approve pushes to main, production deploys, database migrations, infrastructure changes, dependency upgrades, changes to protected areas - into approval gates an agent can't bypass - Claude Code PreToolUse hooks with allow/ask/deny logic and messages that explain the route to approval, plus the matching CODEOWNERS and branch-protection settings for the repo side. Use this whenever the user says "Claude shouldn't be able to deploy without approval", "require sign-off for X", "set up approval gates", or is preparing to automate CI/CD with agents.
+description: "Set up human approval gates: allow/ask/deny hooks for deploys, pushes and protected areas, plus CODEOWNERS and branch-protection settings."
+disable-model-invocation: true
 ---
 
 # Gate author

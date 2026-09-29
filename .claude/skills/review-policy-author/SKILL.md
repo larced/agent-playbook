@@ -1,6 +1,7 @@
 ---
 name: review-policy-author
-description: Turn a team's code review standards - what they block on, what they consider nits, what reviewers should skip - into a REVIEW.md at the repo root that pr-reviewer and human reviewers apply consistently, with defined review passes (bugs, security, spec/plan compliance, policy), severity levels and a skip list. Use this whenever the user wants to "write our review guidelines", "set up REVIEW.md", "make AI review match how we review", complains that automated review is too noisy or misses things, or is setting up PR review automation.
+description: "Write REVIEW.md: review passes by axis, severity levels and a skip list for pr-reviewer and humans."
+disable-model-invocation: true
 ---
 
 # Review policy author
@@ -14,7 +15,7 @@ Produce `REVIEW.md`: the rules a reviewer (agent or human) applies to every PR i
 3. **Define the passes** (template below). Keep the four standard passes unless the team explicitly drops one; add repo-specific ones (e.g. "migrations", "public API") only when they have distinct rules.
 4. **Define severity** with this repo's own examples, so "important" isn't left to taste.
 5. **Write the skip list.** Things the reviewer must not comment on: formatting handled by tooling, generated files, vendored code, style preferences not in the standards. This is the main lever against noise.
-6. **Write `REVIEW.md`** at the repo root. If one exists, preserve its rules and restructure only with the user's agreement.
+6. **Write `REVIEW.md`** at the repo root. Apply `writing-for-agents`: an agent follows it as instructions. If one exists, preserve its rules and restructure only with the user's agreement.
 7. **Report back:** passes defined, severity rules, the skip list, and anything in the team's standards that was ambiguous.
 
 ## Template

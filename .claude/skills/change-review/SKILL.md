@@ -1,6 +1,6 @@
 ---
 name: change-review
-description: Review the committed changes since a fixed point (commit, branch, tag, merge-base) along three separate axes, each in its own parallel read-only sub-agent - correctness & security (bugs, edge cases, error handling, security), standards (documented repo standards plus a code smell baseline), and spec (missing or partial requirements, unasked-for behaviour, wrong implementations, unplanned files) - and report the axes side by side without merging them. Used as a checkpoint inside plan-implementer, slice-integrator and the TDD loop, and as the core of pr-reviewer. Use it whenever the user asks to "review since X", "review this step/slice/cycle", "check the work so far", or a build skill reaches a review checkpoint.
+description: "Review committed changes since a fixed point on three separate axes - correctness & security, standards (with the smell baseline), spec - in parallel read-only sub-agents, reported side by side. Use for review checkpoints in builds or when asked to review work since a commit."
 ---
 
 # Change review
@@ -52,7 +52,7 @@ Axes: correctness & security · standards · spec   (or which ran, and why other
 ### Spec
 ...
 
-**Summary:** correctness 2 (worst: unhandled empty list in `parse()`, important) · standards 3 (worst: possible Duplicated Code) · spec 1 (worst: R4 partial)
+**Summary:** correctness 2 (worst: unhandled empty list in `parse()`, important) · standards 3 (worst: possible Duplicated Code) · spec 1 (worst: R4 (EU VAT field shown) partial)
 ```
 
 ## Routing findings

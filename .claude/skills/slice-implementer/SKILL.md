@@ -1,6 +1,6 @@
 ---
 name: slice-implementer
-description: Implement exactly one slice brief (slices/S<nn>-<name>.md written by plan-slicer) - change only the allowlisted files until the pre-written frozen tests and the slice's done command pass, or stop and write a short report. Designed for smaller, cheaper models such as Claude Haiku running one slice per session or subagent, often in parallel worktrees. Use this whenever the user or slice-integrator says "implement slice S03", "run this slice", or hands over a slice brief. Not for whole plans (use plan-implementer).
+description: "Implement one slice brief (slices/S<nn>-*.md) inside its allowlist until its frozen tests pass, or stop with a report. For small-model workers dispatched by slice-integrator."
 ---
 
 # Slice implementer
@@ -17,12 +17,12 @@ Make one slice's frozen tests pass by changing only the files the slice allows. 
 6. **Stop when done passes.** Also run the repo's fast check if the brief names one. Then commit (below) and report.
 7. **Stop when stuck.** After two honest attempts at the same failure, or if the slice seems impossible within the allowlist, or a frozen test looks wrong: write the report (below) and stop. Stopping with a clear report is a good outcome; guessing is not.
 
-## Never
+## Guardrails
 
-- Edit, skip, delete or weaken a frozen test, or add code that detects the test and special-cases it.
-- Add dependencies, change configuration, build files or CI.
-- Touch files outside `allow` by any route, including shell commands (`sed -i`, `mv`, redirects). The integrator checks the final diff and rejects the slice if you do.
-- Mark anything accepted, merge, or push to a shared branch.
+- **Frozen tests pass because the code is right.** Change production code; editing, skipping or special-casing a test is never the route to done.
+- **Use what exists.** Dependencies, configuration, build files and CI stay as they are.
+- **The allowlist covers every route.** Shell commands (`sed -i`, `mv`, redirects) count too; the integrator checks the final diff and rejects out-of-scope changes.
+- **Commit to your slice branch and stop.** Accepting, merging and pushing to shared branches belong to the integrator and humans.
 
 ## Commit
 

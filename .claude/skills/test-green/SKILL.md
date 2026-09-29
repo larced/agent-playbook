@@ -1,6 +1,6 @@
 ---
 name: test-green
-description: The green-and-refactor step of a two-agent red/green TDD loop - make the single test marked next in TEST_PLAN.md pass with the least code, without touching any test, then refactor the new and directly touched code with the full suite green, record the result and hand back to test-next. Suitable for smaller models such as Claude Haiku, run in a fresh session each cycle. Use this whenever the user says "make the next test green", "run the green step", "implement the red test", or is running the TDD loop after test-next.
+description: "Green step of the TDD loop: make the one next test in TEST_PLAN.md pass with the least code, refactor with the full suite green, record the result. Use when running the TDD loop after test-next."
 ---
 
 # Test green
@@ -9,7 +9,7 @@ You are the implementer in a red/green loop. A different agent wrote one failing
 
 ## Rules
 
-- **Never edit, skip, delete or weaken any test.** If you believe the `next` test is wrong, stop and write why under `## Review inbox` in `TEST_PLAN.md`; don't work around it.
+- **Tests are frozen: change production code until they pass.** If you believe the `next` test is wrong, stop and write why under `## Review inbox` in `TEST_PLAN.md`. Editing, skipping or weakening a test is never the route to green.
 - **Only what the `next` test needs.** Even if the spec describes more, the rest gets its own test in a later cycle.
 - **Only files the `## Next` contract allows.** If the `slice_guard.py` hook is active it will block anything else; its message says what to do instead.
 
