@@ -22,9 +22,9 @@ Answer "what happens next for this piece of work?" by reading its artifacts, not
 | Plan | `INTENT.md` exists and is `accepted` | Missing → `intent-writer` / `intent-from-signal`. Draft → **gate:** product owner (service owner for signals) accepts. |
 | Design | `SPEC.md` is `accepted` and has no unresolved *Flagged concerns* | Missing → `spec-writer`. Draft → optionally `spec-reviewer`, then **gate:** product owner accepts; policy owners resolve flags. |
 | Build (plan) | `PLAN.md` is `accepted` | Missing → `plan-writer`. Draft → **gate:** engineer accepts (tech lead if the plan says higher-risk). |
-| Build (code) | Branch exists with commits; `plan-sync` shows no unapproved material deviations | Implement against the plan (`bugfix-test-first` for bugs); run `plan-sync` before PR. Material deviations → back to plan gate. |
+| Build (code) | Branch exists with commits; `plan-sync` shows no unapproved material deviations | `plan-implementer` (`bugfix-test-first` for bugs); it runs `plan-sync` on deviations and before handoff. Material deviations → back to plan gate. |
 | Test | `VERIFICATION.md` exists, `Commit:` matches PR head, result not `failing` | `verification-report` (ideally via a verifier subagent). Missing commands → `verification-setup`. |
-| Deploy (review) | PR open, `pr-reviewer` run, no open blocking findings | `pr-reviewer` in a fresh context; CI failures → `ci-triage`. Then **gate:** code owner approval. |
+| Deploy (review) | PR open, `pr-reviewer` run, no open blocking findings | No PR → `pr-author`. Then `pr-reviewer` in a fresh context; findings → `plan-implementer`; CI failures → `ci-triage`. Then **gate:** code owner approval. |
 | Deploy (release) | Merged and released | **gate:** release authorization per `gate-author` gates. |
 | Maintain | Released; bands in place if this changed a monitored path | Consider `band-config-author` for new metrics. Incidents → `postmortem-writer` → `eval-builder`. |
 

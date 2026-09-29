@@ -56,6 +56,7 @@ Return exactly:
 | `pr-review-agent` | Read, Grep, Glob, Bash (read-only git) | Apply `pr-reviewer` to a diff it didn't write. |
 | `spec-review-agent` | Read, Grep, Glob | Apply `spec-reviewer` in a fresh context. |
 | `ci-triager` | Read, Grep, Glob, Bash (read-only) | Apply `ci-triage` to a failed log. |
+| `plan-builder` | Read, Grep, Glob, Bash, Edit, Write | Apply `plan-implementer` to an accepted plan in its own context. |
 | `code-researcher` | Read, Grep, Glob | Answer "where/how does X work" with file:line references. |
 
 ## Rules of thumb (and why)

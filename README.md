@@ -46,6 +46,7 @@ produces the next one, with a human gate in between. Every artifact follows
 | Design | [`policy-author`](.claude/skills/policy-author/SKILL.md) | policy owner's source of truth → `.claude/skills/policy-<name>/SKILL.md` |
 | Design | [`spec-reviewer`](.claude/skills/spec-reviewer/SKILL.md) | `SPEC.md` + `INTENT.md` (+ policies) → `SPEC-REVIEW.md` |
 | Build | [`plan-writer`](.claude/skills/plan-writer/SKILL.md) | `SPEC.md` → `PLAN.md` |
+| Build | [`plan-implementer`](.claude/skills/plan-implementer/SKILL.md) | accepted `PLAN.md` (+ `SPEC.md`, policies) → commits on a branch, step by step; also fixes review findings |
 | Build | [`plan-sync`](.claude/skills/plan-sync/SKILL.md) | diff + `PLAN.md` → updated `PLAN.md` (progress, deviations) |
 | Build | [`claude-md-author`](.claude/skills/claude-md-author/SKILL.md) | repo → `CLAUDE.md` |
 | Build | [`subagent-author`](.claude/skills/subagent-author/SKILL.md) | recurring job → `.claude/agents/<name>.md` |
@@ -55,6 +56,7 @@ produces the next one, with a human gate in between. Every artifact follows
 | Test | [`bugfix-test-first`](.claude/skills/bugfix-test-first/SKILL.md) | bug report → failing test commit, then fix commit |
 | Test | [`eval-builder`](.claude/skills/eval-builder/SKILL.md) | incident / recurring agent failure → eval case in `evals/*.json` |
 | Deploy | [`review-policy-author`](.claude/skills/review-policy-author/SKILL.md) | team standards → `REVIEW.md` |
+| Deploy | [`pr-author`](.claude/skills/pr-author/SKILL.md) | branch + artifact chain → PR with chain links, requirement coverage and verification result |
 | Deploy | [`pr-reviewer`](.claude/skills/pr-reviewer/SKILL.md) | PR + `REVIEW.md` + `SPEC.md` + `PLAN.md` + `VERIFICATION.md` → ranked findings |
 | Deploy | [`gate-author`](.claude/skills/gate-author/SKILL.md) | required approvals → approval-gate hooks + CODEOWNERS / branch-protection settings |
 | Deploy | [`ci-triage`](.claude/skills/ci-triage/SKILL.md) | failed CI log → short read-only diagnosis |
@@ -76,9 +78,14 @@ sections but haven't been re-run). The other skills are drafts without evals yet
 ### Still to define
 
 None. Every row of the reference doc's candidate skill map has a draft skill.
-Two skills were added beyond the map because the chain needed them:
-`policy-author` (the map lists `policy-*` skills but not how to write them)
-and `verification-report` (the Test stage's evidence artifact had no writer).
+Four skills were added beyond the map because the chain needed them:
+`policy-author` (the map lists `policy-*` skills but not how to write them),
+`verification-report` (the Test stage's evidence artifact had no writer),
+`plan-implementer` (building from an accepted plan with the discipline the
+later checks assume) and `pr-author` (a PR that carries the chain to review).
+
+Next idea under discussion: splitting a plan into self-contained vertical
+slices that smaller models can implement one at a time.
 
 ## Workflows
 

@@ -7,10 +7,11 @@ idea / ticket
   → spec-reviewer (optional, fresh context) → SPEC-REVIEW.md
                                                ⛔ Gate: product owner accepts; policy owners clear flags
   → plan-writer              → PLAN.md          ⛔ Gate: engineer accepts (tech lead if higher-risk)
-  → implement (code + tests), plan-sync as it drifts
+  → plan-implementer (code + tests, step by step; plan-sync on deviations)
   → verification-report (verifier subagent) → VERIFICATION.md
-  → open PR (traceability-linker for ticket links)
+  → pr-author → PR (traceability-linker for ticket links)
   → pr-reviewer (fresh context), ci-triage on failures
+  → plan-implementer addresses findings → verification-report again
                                                ⛔ Gate: code owner approves
   → merge
   → release                                    ⛔ Gate: release authorization (gate-author hooks)
@@ -32,13 +33,16 @@ All artifacts live in `intent/<slug>/` (see `artifact-conventions`).
 4. **Plan.** Every spec requirement must visibly land in the plan. Use Claude
    Code plan mode; the accepted `PLAN.md` is what moves you from planning to
    building. If the plan flags itself higher-risk, route it to a tech lead.
-5. **Build.** Implement against the plan. When the code departs from it, run
-   `plan-sync`: minor deviations are logged, material ones send the plan back
-   to its gate, spec-level ones go back to the product owner.
+5. **Build.** `plan-implementer` works the plan step by step: tests with each
+   step, one traceable commit per step, blocked steps left alone. When the
+   code departs from the plan it runs `plan-sync`: minor deviations are
+   logged, material ones send the plan back to its gate, spec-level ones go
+   back to the product owner.
 6. **Verify.** `verification-report` runs the plan's checks on a pinned commit
    and maps each requirement to evidence. Unverified requirements are stated,
    not hidden.
-7. **Review.** `pr-reviewer` checks correctness and security *and* compliance
+7. **Review.** `pr-author` opens the PR with the chain linked and coverage
+   by requirement. `pr-reviewer` checks correctness and security *and* compliance
    with the spec and plan, using `REVIEW.md`. The code owner approves with the
    findings and `VERIFICATION.md` in front of them.
 8. **Release.** Deploys go through the gates `gate-author` set up. The agent
