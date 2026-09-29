@@ -59,7 +59,7 @@ When `pr-reviewer` (or a human) has left findings on the branch:
 
 ## Choosing a model
 
-Implementing a whole plan in one session suits a strong model: it has to hold the spec, plan and codebase in context and judge deviations. For large plans, the steps can be split into smaller self-contained units for cheaper models; that isn't covered by this skill yet.
+Implementing a whole plan in one session suits a strong model: it has to hold the spec, plan and codebase in context and judge deviations. For large plans, `plan-slicer` splits the work into self-contained slices with pre-written tests, `slice-implementer` runs each on a smaller model, and `slice-integrator` coordinates them; this skill's discipline still applies to the strong slices.
 
 ## Advisory, not enforced
 

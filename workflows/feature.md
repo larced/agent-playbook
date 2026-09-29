@@ -8,6 +8,9 @@ idea / ticket
                                                ⛔ Gate: product owner accepts; policy owners clear flags
   → plan-writer              → PLAN.md          ⛔ Gate: engineer accepts (tech lead if higher-risk)
   → plan-implementer (code + tests, step by step; plan-sync on deviations)
+     or, for large plans:
+     plan-slicer (strong: scaffold, tests, SLICES.md) ⛔ Gate: engineer accepts SLICES.md
+     → slice-integrator (strong) dispatching slice-implementer (small models, parallel waves)
   → verification-report (verifier subagent) → VERIFICATION.md
   → pr-author → PR (traceability-linker for ticket links)
   → pr-reviewer (fresh context), ci-triage on failures
@@ -38,6 +41,11 @@ All artifacts live in `intent/<slug>/` (see `artifact-conventions`).
    code departs from the plan it runs `plan-sync`: minor deviations are
    logged, material ones send the plan back to its gate, spec-level ones go
    back to the product owner.
+   For large plans, `plan-slicer` has the strong model write the interfaces
+   and tests up front and cut the work into small vertical slices;
+   `slice-integrator` runs them on smaller models (in parallel where
+   independent), checks each against its contract with `slice_guard.py`, and
+   escalates failures back to the strong model.
 6. **Verify.** `verification-report` runs the plan's checks on a pinned commit
    and maps each requirement to evidence. Unverified requirements are stated,
    not hidden.

@@ -47,6 +47,9 @@ produces the next one, with a human gate in between. Every artifact follows
 | Design | [`spec-reviewer`](.claude/skills/spec-reviewer/SKILL.md) | `SPEC.md` + `INTENT.md` (+ policies) → `SPEC-REVIEW.md` |
 | Build | [`plan-writer`](.claude/skills/plan-writer/SKILL.md) | `SPEC.md` → `PLAN.md` |
 | Build | [`plan-implementer`](.claude/skills/plan-implementer/SKILL.md) | accepted `PLAN.md` (+ `SPEC.md`, policies) → commits on a branch, step by step; also fixes review findings |
+| Build | [`plan-slicer`](.claude/skills/plan-slicer/SKILL.md) | accepted `PLAN.md` → scaffold + pre-written tests + `SLICES.md` + `slices/S<nn>-*.md` briefs (strong model) |
+| Build | [`slice-implementer`](.claude/skills/slice-implementer/SKILL.md) | one slice brief → one commit that passes its frozen tests (small model; ships `slice_guard.py`) |
+| Build | [`slice-integrator`](.claude/skills/slice-integrator/SKILL.md) | accepted `SLICES.md` → dispatched, checked and merged slices, then `plan-sync` (strong model) |
 | Build | [`plan-sync`](.claude/skills/plan-sync/SKILL.md) | diff + `PLAN.md` → updated `PLAN.md` (progress, deviations) |
 | Build | [`claude-md-author`](.claude/skills/claude-md-author/SKILL.md) | repo → `CLAUDE.md` |
 | Build | [`subagent-author`](.claude/skills/subagent-author/SKILL.md) | recurring job → `.claude/agents/<name>.md` |
@@ -78,14 +81,14 @@ sections but haven't been re-run). The other skills are drafts without evals yet
 ### Still to define
 
 None. Every row of the reference doc's candidate skill map has a draft skill.
-Four skills were added beyond the map because the chain needed them:
+Several skills were added beyond the map because the chain needed them:
 `policy-author` (the map lists `policy-*` skills but not how to write them),
 `verification-report` (the Test stage's evidence artifact had no writer),
 `plan-implementer` (building from an accepted plan with the discipline the
-later checks assume) and `pr-author` (a PR that carries the chain to review).
-
-Next idea under discussion: splitting a plan into self-contained vertical
-slices that smaller models can implement one at a time.
+later checks assume), `pr-author` (a PR that carries the chain to review), and
+the slicing trio `plan-slicer` / `slice-implementer` / `slice-integrator`
+(a strong model writes tests and interfaces up front so smaller models can
+build self-contained vertical slices, in parallel where independent).
 
 ## Workflows
 

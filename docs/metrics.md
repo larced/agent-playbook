@@ -37,6 +37,19 @@ Long waits here mean the gate, not the agent, is the bottleneck.
 review. Read from your forge's API; in git alone, a proxy is the number of
 commits on a branch after the PR's first review.
 
+**Slice first-pass rate** (sliced builds). Share of `Model: small` slices
+that reached `done` on attempt 1, from each `SLICES.md` table:
+
+```bash
+for f in intent/*/SLICES.md; do
+  awk -F'|' -v f="$f" '$6 ~ /small/ {n++; if ($7 ~ /done/ && $8+0 == 1) ok++}
+    END {if (n) printf "%s first-pass=%d/%d\n", f, ok, n}' "$f"
+done
+```
+
+Target at least 80%. Lower means slices are too big or briefs lack context;
+near 100% means slices could be larger (see `plan-slicer`'s size defaults).
+
 ## Lagging indicators
 
 **Spec rework after planning started.** Commits to `SPEC.md` after `PLAN.md`

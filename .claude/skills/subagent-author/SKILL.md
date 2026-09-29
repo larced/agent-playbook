@@ -57,6 +57,7 @@ Return exactly:
 | `spec-review-agent` | Read, Grep, Glob | Apply `spec-reviewer` in a fresh context. |
 | `ci-triager` | Read, Grep, Glob, Bash (read-only) | Apply `ci-triage` to a failed log. |
 | `plan-builder` | Read, Grep, Glob, Bash, Edit, Write | Apply `plan-implementer` to an accepted plan in its own context. |
+| `slice-worker` | Read, Grep, Glob, Edit, Write, Bash; `model: haiku` | Apply `slice-implementer` to one slice brief (definition in that skill). |
 | `code-researcher` | Read, Grep, Glob | Answer "where/how does X work" with file:line references. |
 
 ## Rules of thumb (and why)

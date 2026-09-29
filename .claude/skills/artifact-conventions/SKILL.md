@@ -17,6 +17,7 @@ A repo may override any of this in its own `CLAUDE.md` or a `docs/sdlc-conventio
 | `SPEC.md` | Design | `spec-writer` | Product owner; policy owners clear their flags |
 | `SPEC-REVIEW.md` | Design | `spec-reviewer` | Nobody - review notes, not a gate artifact |
 | `PLAN.md` | Build | `plan-writer`, kept current by `plan-sync` | Engineer; tech lead for higher-risk changes |
+| `SLICES.md` + `slices/S<nn>-<name>.md` | Build (optional) | `plan-slicer`; execution state kept by `slice-integrator` | Engineer who accepted the plan (the frozen tests are design decisions) |
 | `VERIFICATION.md` | Test | `verification-report` | Code owner, as part of PR review |
 | `POSTMORTEM.md` | Maintain | `postmortem-writer` | Service owner |
 
@@ -34,6 +35,8 @@ intent/<slug>/
   SPEC.md
   SPEC-REVIEW.md      (optional)
   PLAN.md
+  SLICES.md          (sliced builds only)
+  slices/            (one brief per slice, plus any S<nn>-REPORT.md)
   VERIFICATION.md
   POSTMORTEM.md       (incidents only)
 ```

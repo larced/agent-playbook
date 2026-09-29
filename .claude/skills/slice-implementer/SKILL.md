@@ -1,0 +1,88 @@
+---
+name: slice-implementer
+description: Implement exactly one slice brief (slices/S<nn>-<name>.md written by plan-slicer) - change only the allowlisted files until the pre-written frozen tests and the slice's done command pass, or stop and write a short report. Designed for smaller, cheaper models such as Claude Haiku running one slice per session or subagent, often in parallel worktrees. Use this whenever the user or slice-integrator says "implement slice S03", "run this slice", or hands over a slice brief. Not for whole plans (use plan-implementer).
+---
+
+# Slice implementer
+
+Make one slice's frozen tests pass by changing only the files the slice allows. The brief has everything you need; the tests define done. This skill is deliberately narrow so a small model can follow it reliably.
+
+## The rules
+
+1. **Read only the brief first.** `slices/S<nn>-<name>.md`. Then open the allowlisted files and any read-only references the brief lists. Don't explore the rest of the repo.
+2. **Change only files in `allow`.** Never edit a file in `frozen`. The `slice_guard.py` hook will block you if you try; the block message tells you what to do instead.
+3. **Follow the Steps in order.** Use the code examples in the brief as the pattern. Don't refactor, rename, reformat or "improve" anything the Steps don't mention.
+4. **Run the `done` command** from the contract after each meaningful change. Read the first failure carefully; fix that, then run again.
+5. **Stop when done passes.** Also run the repo's fast check if the brief names one. Then commit (below) and report.
+6. **Stop when stuck.** After two honest attempts at the same failure, or if the slice seems impossible within the allowlist, or a frozen test looks wrong: write the report (below) and stop. Stopping with a clear report is a good outcome; guessing is not.
+
+## Never
+
+- Edit, skip, delete or weaken a frozen test, or add code that detects the test and special-cases it.
+- Add dependencies, change configuration, build files or CI.
+- Touch files outside `allow` by any route, including shell commands (`sed -i`, `mv`, redirects). The integrator checks the final diff and rejects the slice if you do.
+- Mark anything accepted, merge, or push to a shared branch.
+
+## Commit
+
+One commit on the slice's branch:
+
+```
+feat(<slug>): <slice id> <slice title> (<requirement IDs>)
+```
+
+## Report
+
+Always finish with this, as your final message (and, if you stopped early, also as `slices/S<nn>-REPORT.md`):
+
+```markdown
+# Report: S03
+Result: done | stuck
+Done command: `<command>` → <pass | fail: first failing test and message>
+Files changed: <list>
+Commit: <SHA or "none">
+Notes: <if stuck: what you tried, the failing output (trimmed), and what the
+brief seems to be missing. If done: anything the integrator should know.>
+```
+
+## Running this as a small-model worker
+
+`slice-integrator` normally launches this skill, one slice per worker. For Claude Code, a subagent like this works (see `subagent-author`):
+
+```markdown
+---
+name: slice-worker
+description: Implements exactly one slice brief using the slice-implementer skill. Use when slice-integrator dispatches a slice.
+tools: Read, Grep, Glob, Edit, Write, Bash
+model: haiku
+---
+You implement one slice. Apply the slice-implementer skill to the brief path
+you are given, in the worktree you are given. Return only the Report block.
+```
+
+Other vendors' models work the same way: give them this file and the brief, in a worktree with the guard hook (or an equivalent pre-edit check) active.
+
+### Guard hook
+
+Register once in `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/skills/slice-implementer/scripts/slice_guard.py hook" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+It does nothing unless a slice is active: `slice-integrator` writes the slice path into `.slice-active` at the worktree root (add `.slice-active` to `.gitignore`), or sets `SLICE_FILE`. Shell commands aren't intercepted; the integrator's `check-diff` covers those.
+
+## Advisory, not enforced
+
+File edits are enforced by the hook; everything a shell command could change is enforced after the fact by `slice_guard.py check-diff` in `slice-integrator`. The "stop when stuck" behaviour is advisory; the integrator caps attempts regardless.
