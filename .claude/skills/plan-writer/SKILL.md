@@ -14,7 +14,7 @@ The build executes against `PLAN.md`; `plan-sync` measures drift from it; `pr-re
 ## Workflow
 
 1. **Read the spec in full**, including *Flagged concerns* and *Open questions*. If several specs are candidates, ask which. If it isn't `accepted`, or has unresolved flagged concerns, say so and confirm the user wants to proceed; if they do, carry each unresolved item into Risks and mark the work that depends on it as blocked (below).
-2. **Read the codebase.** Find the real files, modules and tests the Design touches. Read `CLAUDE.md`, especially its Verification block (`verification-setup`), so Verification names commands that exist. If there's no reliable way to run tests, say so and suggest the user run `/verification-setup`.
+2. **Read the codebase.** Find the real files, modules and tests the Design touches. Read `AGENTS.md`/`CLAUDE.md`, especially its Verification block (`verification-setup`), so Verification names commands that exist. If there's no reliable way to run tests, say so and suggest the user run `/verification-setup`.
 3. **Map every requirement.** Each spec requirement (`R1`, `R2`, … or numbered items) must land in Files to change / Order of work *and* in Verification. A requirement you can't cover is called out, not dropped.
 4. **Write steps an agent can execute.** `plan-implementer` follows *Order of work* as instructions, so apply `writing-for-agents`: each step names concrete actions and ends on a checkable completion criterion ("migration runs and `rspec spec/models/invoice_spec.rb` passes"), stated positively.
 5. **Sequence by dependency.** Migrations before code that reads new columns; interfaces before callers; feature flags before exposure. Mark what can happen in parallel.
@@ -60,7 +60,7 @@ spec flagged concern or open question that bears on the build.
 |---|---|---|
 | R1 | request spec for list endpoint (new) | `bundle exec rspec spec/requests/invoices_spec.rb` |
 | R3 | manual check: <what and how> | - |
-Plus the repo's standard check before PR: `<command from CLAUDE.md>`.
+Plus the repo's standard check before PR: `<command from AGENTS.md/CLAUDE.md>`.
 
 ## Out of scope
 Carried from the spec, narrowed further if the plan narrows it.

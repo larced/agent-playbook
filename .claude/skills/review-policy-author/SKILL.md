@@ -10,7 +10,7 @@ Produce `REVIEW.md`: the rules a reviewer (agent or human) applies to every PR i
 
 ## Workflow
 
-1. **Collect the team's standards.** Existing contributing guide, PR template, past review comments the user points to, `CLAUDE.md`, and the user's own account of "what would make you block a PR". If there's little written down, interview briefly: what should always block, what's never worth a comment, which areas are high-risk.
+1. **Collect the team's standards.** Existing contributing guide, PR template, past review comments the user points to, `AGENTS.md`/`CLAUDE.md`, and the user's own account of "what would make you block a PR". If there's little written down, interview briefly: what should always block, what's never worth a comment, which areas are high-risk.
 2. **Find the policies.** List the `policy-*` skills in the repo; the policy pass cites them rather than restating them.
 3. **Define the passes** (template below). Keep the four standard passes unless the team explicitly drops one; add repo-specific ones (e.g. "migrations", "public API") only when they have distinct rules.
 4. **Define severity** with this repo's own examples, so "important" isn't left to taste.
@@ -39,7 +39,7 @@ reported side by side.
    handling, dependency risk. Apply `policy-security` if present.
 
 **Standards**
-3. **Repo standards** - the conventions below and in `CLAUDE.md`, plus the
+3. **Repo standards** - the conventions below and in `AGENTS.md`/`CLAUDE.md`, plus the
    smell baseline (`docs/references/code-smells.md`). Smells are judgement
    calls; list any this repo endorses under *Skip* so they aren't flagged.
 4. **Policy** - applicable `policy-*` rules, cited by ID.

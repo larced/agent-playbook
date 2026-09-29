@@ -5,17 +5,17 @@ description: "Rules for writing documents an agent follows as instructions - ski
 
 # Writing for agents
 
-How to write a document an agent will *act on*, so it takes the same process every run. It applies to skills and `CLAUDE.md`, and equally to the instruction-shaped artifacts this playbook produces: `PLAN.md` steps (executed by `plan-implementer`), slice briefs, `TEST_PLAN.md` cases, policy skills, `REVIEW.md`, sub-agent definitions and the prompts `change-review` builds.
+How to write a document an agent will *act on*, so it takes the same process every run. It applies to skills and instruction files (`AGENTS.md`, `CLAUDE.md`), and equally to the instruction-shaped artifacts this playbook produces: `PLAN.md` steps (executed by `plan-implementer`), slice briefs, `TEST_PLAN.md` cases, policy skills, `REVIEW.md`, sub-agent definitions and the prompts `change-review` builds.
 
 Records written mainly for humans (`INTENT.md`, `SPEC.md`, `VERIFICATION.md`, `POSTMORTEM.md`) follow their own skills' rules instead: originator wording, evidence, blamelessness.
 
 ## Pointers and the two budgets
 
-A **pointer** is text in the agent's context that names material outside it and says when to reach for it: a skill's `description`, a `CLAUDE.md` line naming a doc, "see `artifact-conventions`". Its *wording* decides whether the agent reaches the material, so a weak pointer to must-have material is a reliability bug. Sharpen the wording first; inline the material only if sharpening fails.
+A **pointer** is text in the agent's context that names material outside it and says when to reach for it: a skill's `description`, an `AGENTS.md`/`CLAUDE.md` line naming a doc, "see `artifact-conventions`". Its *wording* decides whether the agent reaches the material, so a weak pointer to must-have material is a reliability bug. Sharpen the wording first; inline the material only if sharpening fails.
 
 Every line spends one of two budgets:
 
-- **Context load**: always-loaded text (descriptions, `CLAUDE.md`) costs tokens and attention every turn, whether or not it's used.
+- **Context load**: always-loaded text (descriptions, `AGENTS.md`/`CLAUDE.md`) costs tokens and attention every turn, whether or not it's used.
 - **Cognitive load**: what the human must remember (which skills exist, when to type them). Spend it where human judgement matters.
 
 Write pointers, including descriptions, like this:

@@ -11,8 +11,8 @@ to see where adoption stands.
 
 | Step | Skill | Produces | Why this position |
 |---|---|---|---|
-| 1 | `claude-md-author` | `CLAUDE.md` | Every later session reads it. No prerequisites. |
-| 2 | `verification-setup` | One-command checks + Verification block in `CLAUDE.md` | Sessions can check their own work; `plan-writer` and `verification-report` need real commands. |
+| 1 | `claude-md-author` | `AGENTS.md` or `CLAUDE.md` | Every later session reads it. No prerequisites. |
+| 2 | `verification-setup` | One-command checks + Verification block in `AGENTS.md`/`CLAUDE.md` | Sessions can check their own work; `plan-writer` and `verification-report` need real commands. |
 | 3 | `sdlc-setup` | `docs/sdlc-conventions.md` + Agent skills block in `AGENTS.md`/`CLAUDE.md` | Settle tracker, artifact location and who accepts each gate before artifacts pile up. |
 | 4 | `policy-author` (per policy) | `.claude/skills/policy-*/` | The design stage is only policy-aware once policies exist, each with an owner. |
 | 5 | `review-policy-author` | `REVIEW.md` | `pr-reviewer` needs it to be useful rather than noisy. |

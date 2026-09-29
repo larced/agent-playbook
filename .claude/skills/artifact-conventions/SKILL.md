@@ -22,7 +22,7 @@ A repo may override any of this in `docs/sdlc-conventions.md` (written by `/sdlc
 | `VERIFICATION.md` | Test | `verification-report` | Code owner, as part of PR review |
 | `POSTMORTEM.md` | Maintain | `postmortem-writer` | Service owner |
 
-Repo-level, long-lived documents: `CLAUDE.md` (`claude-md-author`), `REVIEW.md` (`review-policy-author`), `LESSONS.md` (`postmortem-writer`), `bands/*.yaml` (`band-config-author`), `.claude/skills/policy-*/` (`policy-author`).
+Repo-level, long-lived documents: `AGENTS.md`/`CLAUDE.md` (`claude-md-author`), `REVIEW.md` (`review-policy-author`), `LESSONS.md` (`postmortem-writer`), `bands/*.yaml` (`band-config-author`), `.claude/skills/policy-*/` (`policy-author`).
 
 Artifact file names are UPPERCASE with a `.md` extension so they stand out in a directory listing.
 

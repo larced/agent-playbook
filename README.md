@@ -19,15 +19,24 @@ each skill is a folder with a `SKILL.md` containing YAML frontmatter (`name`,
 
 ## Using a skill
 
-Claude Code reads skills from `.claude/skills/`, so cloning this repo and
-opening it in Claude Code makes every skill available. To use a skill in
-another project, copy its folder into that project's `.claude/skills/`.
+Claude Code and GitHub Copilot (cloud agent, CLI and VS Code) both read
+skills from `.claude/skills/`, so cloning this repo makes every skill
+available in either. To use a skill in another project, copy its folder into
+that project's `.claude/skills/`.
 
-GitHub Copilot (coding agent, CLI and VS Code) also reads skills from
-`.claude/skills/` and honours `disable-model-invocation`, so the same folders
-work there. For repo-wide instructions, `AGENTS.md` is the file both read;
-Claude Code reads it only when there is no `CLAUDE.md`, so `/sdlc-setup` adds
-an `@AGENTS.md` import to an existing `CLAUDE.md`.
+Both honour `disable-model-invocation`. Harness-specific output is written
+for whichever harnesses a repo uses (`Harnesses:` in
+`docs/sdlc-conventions.md`, set by `/sdlc-setup`):
+
+| | Claude Code | GitHub Copilot |
+|---|---|---|
+| Repo instructions | `CLAUDE.md`, or `AGENTS.md` when there is no `CLAUDE.md` | `AGENTS.md` (also `CLAUDE.md`, `.github/copilot-instructions.md`) |
+| Hooks | `.claude/settings.json` | `.github/hooks/*.json` (VS Code also reads `.claude/settings.json`) |
+| Sub-agents | `.claude/agents/<name>.md` | `.github/agents/<name>.agent.md` (VS Code also reads `.claude/agents/`) |
+
+`AGENTS.md` is the shared instruction file; where a `CLAUDE.md` also exists,
+it imports `@AGENTS.md`. Hook scripts (including `slice_guard.py`) read both
+harnesses' payloads, so one script serves both registrations.
 
 Tools that discover skills in `.agents/skills/` instead can be pointed at this
 repo with a symlink:
@@ -60,10 +69,10 @@ produces the next one, with a human gate in between. Every artifact follows
 | Build | [`test-next`](.claude/skills/test-next/SKILL.md) | `TEST_PLAN.md` + review findings → one right-reason failing test (red step of the TDD loop; seeds `TEST_PLAN.md` from `SPEC.md`) |
 | Build | [`test-green`](.claude/skills/test-green/SKILL.md) | `TEST_PLAN.md` `next` case → least code to green + refactor (green step; small models welcome) |
 | Build | [`plan-sync`](.claude/skills/plan-sync/SKILL.md) | diff + `PLAN.md` → updated `PLAN.md` (progress, deviations) |
-| Build | [`claude-md-author`](.claude/skills/claude-md-author/SKILL.md) | repo → `CLAUDE.md` |
-| Build | [`subagent-author`](.claude/skills/subagent-author/SKILL.md) | recurring job → `.claude/agents/<name>.md` |
-| Build | [`hook-author`](.claude/skills/hook-author/SKILL.md) | rule that must always hold → hook script + `.claude/settings.json` entry |
-| Test | [`verification-setup`](.claude/skills/verification-setup/SKILL.md) | repo → one-command checks + Verification block in `CLAUDE.md` |
+| Build | [`claude-md-author`](.claude/skills/claude-md-author/SKILL.md) | repo → `AGENTS.md` / `CLAUDE.md` |
+| Build | [`subagent-author`](.claude/skills/subagent-author/SKILL.md) | recurring job → `.claude/agents/<name>.md` and/or `.github/agents/<name>.agent.md` |
+| Build | [`hook-author`](.claude/skills/hook-author/SKILL.md) | rule that must always hold → hook script + `.claude/settings.json` and/or `.github/hooks/*.json` entry |
+| Test | [`verification-setup`](.claude/skills/verification-setup/SKILL.md) | repo → one-command checks + Verification block in `AGENTS.md` / `CLAUDE.md` |
 | Test | [`verification-report`](.claude/skills/verification-report/SKILL.md) | `PLAN.md` + `SPEC.md` + code → `VERIFICATION.md` |
 | Test | [`bugfix-test-first`](.claude/skills/bugfix-test-first/SKILL.md) | bug report → failing test commit, then fix commit |
 | Test | [`eval-builder`](.claude/skills/eval-builder/SKILL.md) | incident / recurring agent failure → eval case in `evals/*.json` |
@@ -80,7 +89,7 @@ produces the next one, with a human gate in between. Every artifact follows
 | Cross-cutting | [`artifact-conventions`](.claude/skills/artifact-conventions/SKILL.md) | — → shared naming, location, header and status rules |
 | Cross-cutting | [`traceability-linker`](.claude/skills/traceability-linker/SKILL.md) | ticket / artifacts / commits / PR → cross-links in both directions |
 | Cross-cutting | [`sdlc-orchestrator`](.claude/skills/sdlc-orchestrator/SKILL.md) | work folder → next skill or human gate |
-| Cross-cutting | [`writing-for-agents`](.claude/skills/writing-for-agents/SKILL.md) | any document an agent follows (skills, `CLAUDE.md`, briefs, `PLAN.md` steps, prompts) → rules for writing it: short pointers, completion criteria, positive rules, pruning |
+| Cross-cutting | [`writing-for-agents`](.claude/skills/writing-for-agents/SKILL.md) | any document an agent follows (skills, `AGENTS.md`/`CLAUDE.md`, briefs, `PLAN.md` steps, prompts) → rules for writing it: short pointers, completion criteria, positive rules, pruning |
 
 `policy-*` skills themselves are org-specific and aren't shipped here; write
 yours with `policy-author` (see [`docs/examples/policy-api-design.md`](docs/examples/policy-api-design.md)

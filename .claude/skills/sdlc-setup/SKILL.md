@@ -14,6 +14,9 @@ This skill records decisions and points to next steps. Policies, review rules an
 
 1. **Detect.** Read without asking:
    - **Instruction files:** `AGENTS.md`, `CLAUDE.md` (and whether it contains an `@AGENTS.md` import), `.github/copilot-instructions.md`.
+   - **Harnesses in use:**
+     - Claude Code: `CLAUDE.md`, `.claude/settings.json`, `.claude/agents/`.
+     - GitHub Copilot: `.github/copilot-instructions.md`, `.github/hooks/`, `.github/agents/`, or Copilot mentioned in CI or the README.
    - **Existing setup:** `docs/sdlc-conventions.md`, and any `## Agent skills` block in either instruction file.
    - **Git remote host:** GitHub, GitLab or other. This suggests the tracker default.
    - **Installed playbook skills** in `.claude/skills/`: which are user-invoked (`disable-model-invocation: true`), and whether `policy-*` skills exist.
@@ -38,7 +41,8 @@ This skill records decisions and points to next steps. Policies, review rules an
    | Both, no import | `AGENTS.md`, and *ask* to add `@AGENTS.md` to `CLAUDE.md` | Otherwise Claude Code never sees the block. |
 
    Leave `.github/copilot-instructions.md` as it is; Copilot reads it alongside `AGENTS.md`. Done when the target file is decided.
-3. **Ask the remaining decisions** in one message, at most three, each with your recommended answer drawn from step 1. Leave out any question the evidence or an existing `docs/sdlc-conventions.md` already answers.
+3. **Ask the remaining decisions** in one message, at most four, each with your recommended answer drawn from step 1. Leave out any question the evidence or an existing `docs/sdlc-conventions.md` already answers.
+   - **Harnesses:** only if step 1 is ambiguous. Recommend what the evidence shows, or `claude-code, copilot` when unsure: writing both formats costs little, and missing one silently drops a guardrail.
    - **Tracker and source of truth:** which tracker (recommend the remote's issues, or the tracker whose IDs lead the `intent/` slugs), and whether the repo, the tracker, or neither is authoritative (recommend `linkage`).
    - **Who accepts each gate:** a role, or a role with a name (recommend the defaults in the template).
    - **Artifact location:** only if something other than `intent/<slug>/` is in use or wanted.
@@ -59,6 +63,7 @@ Updated: 2026-09-29 (sdlc-setup)
 Local overrides for the agent-playbook skills. Anything not set here follows `artifact-conventions`.
 
 ## Instructions
+Harnesses: claude-code, copilot
 Instruction-file: AGENTS.md
 Claude-Code: CLAUDE.md imports @AGENTS.md
 
@@ -90,7 +95,8 @@ Every skill that follows `artifact-conventions` picks these up as overrides. The
 
 | Key | Values | Used for |
 |---|---|---|
-| `Instruction-file` | `AGENTS.md`, `CLAUDE.md` | Where repo-wide agent instructions go. |
+| `Harnesses` | `claude-code`, `copilot`, or both | Which formats `hook-author`, `gate-author` and `subagent-author` write: `.claude/settings.json` hooks and `.claude/agents/`, and/or `.github/hooks/` and `.github/agents/`. |
+| `Instruction-file` | `AGENTS.md`, `CLAUDE.md` | Where repo-wide agent instructions go (`claude-md-author`, `verification-setup`). |
 | `Claude-Code` | `CLAUDE.md imports @AGENTS.md`, `reads AGENTS.md`, `CLAUDE.md only` | Explaining why Claude Code does or doesn't see an instruction. |
 | `Tracker` | `github`, `gitlab`, `jira`, `linear`, `other: <name>`, `none` | Where ticket IDs resolve; `traceability-linker`'s tracker side. |
 | `Tracker-URL` | prefix a ticket ID is appended to | Links from artifacts and PRs to tickets. |
@@ -120,8 +126,8 @@ List only the user-invoked skills this repo has installed.
 | Conventions | `docs/sdlc-conventions.md` | this skill |
 | Policies | `.claude/skills/policy-*/` | `/policy-author`, per policy owner |
 | Review rules | `REVIEW.md` | `/review-policy-author` |
-| Sub-agents | `.claude/agents/` reviewer or verifier | `/subagent-author` |
-| Guardrails | hook entries in `.claude/settings.json` | `hook-author` |
+| Sub-agents | a reviewer or verifier in `.claude/agents/` or `.github/agents/`, for each harness in use | `/subagent-author` |
+| Guardrails | hook entries in `.claude/settings.json` or `.github/hooks/*.json`, for each harness in use | `hook-author` |
 | Approval gates | `CODEOWNERS`, gate hooks | `/gate-author` |
 | Bands | `bands/*.yaml` | `/band-config-author` |
 

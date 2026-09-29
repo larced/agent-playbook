@@ -48,24 +48,29 @@ brief seems to be missing. If done: anything the integrator should know.>
 
 ## Running this as a small-model worker
 
-`slice-integrator` normally launches this skill, one slice per worker. For Claude Code, a subagent like this works (see `subagent-author`):
+`slice-integrator` normally launches this skill, one slice per worker. A subagent like this works (see `subagent-author`). Claude Code, `.claude/agents/slice-worker.md`:
 
 ```markdown
 ---
 name: slice-worker
-description: Implements exactly one slice brief using the slice-implementer skill. Use when slice-integrator dispatches a slice.
+description: Implements exactly one slice brief. Use when slice-integrator dispatches a slice.
 tools: Read, Grep, Glob, Edit, Write, Bash
 model: haiku
 ---
-You implement one slice. Apply the slice-implementer skill to the brief path
-you are given, in the worktree you are given. Return only the Report block.
+You implement one slice. Read .claude/skills/slice-implementer/SKILL.md and
+follow it for the brief path you are given, in the worktree you are given.
+Return only the Report block.
 ```
 
-Other vendors' models work the same way: give them this file and the brief, in a worktree with the guard hook (or an equivalent pre-edit check) active.
+Copilot, `.github/agents/slice-worker.agent.md`: the same body, with `tools: ["read", "search", "edit", "shell"]` and no `model` line. Choose the small model where you dispatch it.
+
+Other harnesses and models work the same way: give them this file and the brief, in a worktree with the guard hook (or an equivalent pre-edit check) active.
 
 ### Guard hook
 
-Register once in `.claude/settings.json`:
+`slice_guard.py hook` answers both Claude Code and Copilot. Register it once for each harness in use.
+
+Claude Code, `.claude/settings.json`:
 
 ```json
 {
@@ -77,6 +82,19 @@ Register once in `.claude/settings.json`:
           { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/skills/slice-implementer/scripts/slice_guard.py hook" }
         ]
       }
+    ]
+  }
+}
+```
+
+Copilot, `.github/hooks/slice-guard.json` (no matcher: the script ignores tools that don't write a file):
+
+```json
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      { "type": "command", "bash": "python3 .claude/skills/slice-implementer/scripts/slice_guard.py hook", "cwd": ".", "timeoutSec": 10 }
     ]
   }
 }
