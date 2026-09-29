@@ -1,6 +1,6 @@
 ---
 name: intent-writer
-description: Turn a rough idea, free-form description, or one or more tracker tickets (Jira, GitHub issues, Linear) into an INTENT.md, the first artifact in the AI-native SDLC that the spec stage reads. Use this whenever the user wants to capture what needs to be built or fixed before design starts, says things like "write up an intent", "turn this ticket into something we can spec", "what are we actually trying to do here", or pastes a ticket, feature idea, bug report or stakeholder request and wants it shaped into a problem statement. Use it even if they never say "INTENT.md".
+description: "Intent from an idea, request or ticket(s): writes INTENT.md, the problem statement the spec stage reads. Use when the user wants to capture what to build or fix before design, or pastes a ticket or feature idea to shape."
 ---
 
 # Intent writer
@@ -23,9 +23,9 @@ Produce an `INTENT.md` that says **what problem needs solving and why**, in a fo
 
 1. **Gather the input.** Pasted text, ticket IDs/URLs, or a description. If the user gave ticket IDs and a tracker is reachable with the tools you have, read the tickets (including comments: the real need is often there). Otherwise work from what was pasted and don't pretend to have read what you haven't.
 2. **Group into problems.** Tickets that describe one underlying problem merge into one intent. Tickets that describe different problems become separate intents: say so, and ask or write one file per problem. A ticket that proposes a solution ("add a Download PDF button") is evidence of a problem ("customers can't get invoices themselves"); record the problem.
-3. **Decide whether to ask first.** Ask only if you can't tell *what* the problem is or *who* has it. Then ask at most three short questions in one message. Everything else goes into the draft as an open question. A draft with visible gaps is faster for the owner than an interview.
+3. **Decide whether to ask first.** Ask only if you can't tell *what* the problem is or *who* has it. Then ask at most three short questions in one message. Ask them the way `grill-artifact` does: in dependency order, each with your recommended answer, and only for decisions; look facts up yourself (with a sub-agent if it takes digging). Everything else goes into the draft as an open question. A draft with visible gaps is faster for the owner than an interview.
 4. **Write `INTENT.md`** with the template below. Location per `artifact-conventions`: `intent/<slug>/INTENT.md` if an `intent/` folder exists, otherwise where the user says, otherwise `INTENT.md` in the current directory.
-5. **Hand off.** Tell the user, in a few lines: the path, the open questions that most need an answer, and that it stays `draft` until the product owner edits it and sets `Status: accepted` and `Accepted-by`. The next step after acceptance is `spec-writer`.
+5. **Hand off.** Tell the user, in a few lines: the path, the open questions that most need an answer, and that it stays `draft` until the product owner edits it and sets `Status: accepted` and `Accepted-by`. The next step after acceptance is `spec-writer`. If the open questions need answers before the gate, offer `grill-artifact`.
 
 ## Template
 
@@ -61,7 +61,7 @@ What the input explicitly excludes. "None stated" if nothing is.
 
 ## Rules of thumb (and why)
 
-- **Never invent facts.** No metrics, deadlines, users, volumes or systems that aren't in the input. "Slow" stays "slow", and "how slow, and what's the target?" goes in Open questions. An invented number looks exactly like a real one downstream.
+- **Only facts from the input.** Metrics, deadlines, users, volumes and systems come from the input or a lookup. "Slow" stays "slow", and "how slow, and what's the target?" goes in Open questions. An invented number looks exactly like a real one downstream.
 - **Keep the originator's words visible.** Quote or closely paraphrase the phrases that carry nuance, with the ticket ID. Generic requirements language loses exactly the detail a spec author needs.
 - **Problem, not solution.** Proposed solutions from the input are hints, not requirements. Mention them in Open questions ("PROJ-158 suggests a download button; is that a requirement or an idea?") unless they are a real constraint.
 - **Constraints are limits, not wishes.** "Must pass the Q3 audit" is a constraint; "would be nice on mobile" is a desired outcome.

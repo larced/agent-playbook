@@ -1,6 +1,6 @@
 ---
 name: eval-builder
-description: Turn an incident, a recurring agent mistake, or a bug caused by agent behaviour into a permanent eval case that checks the agent configuration (skills, CLAUDE.md, subagents, hooks) - a realistic prompt, the expected outcome, and objectively checkable assertions - added to the relevant evals file. Use this whenever the user says "make sure Claude never does this again", "add an eval for this", "turn this incident into a regression test", after a postmortem that names agent behaviour as a factor, or when a skill keeps producing the same wrong output.
+description: "Eval case from an incident or recurring agent mistake: realistic prompt, expected outcome, checkable assertions, added to the evals file. Use when agent behaviour caused a problem that must not recur."
 ---
 
 # Eval builder

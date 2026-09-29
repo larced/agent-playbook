@@ -4,6 +4,7 @@
 idea / ticket
   → intent-writer            → INTENT.md        ⛔ Gate: product owner accepts
   → spec-writer (+ policy-*) → SPEC.md
+  → grill-artifact (optional) resolves open questions / flagged concerns with the owners
   → spec-reviewer (optional, fresh context) → SPEC-REVIEW.md
                                                ⛔ Gate: product owner accepts; policy owners clear flags
   → plan-writer              → PLAN.md          ⛔ Gate: engineer accepts (tech lead if higher-risk)
@@ -11,6 +12,8 @@ idea / ticket
      or, for large plans:
      plan-slicer (strong: scaffold, tests, SLICES.md) ⛔ Gate: engineer accepts SLICES.md
      → slice-integrator (strong) dispatching slice-implementer (small models, parallel waves)
+     or, when the design should emerge test by test:
+     test-next ⇄ test-green loop (see tdd-loop.md)
   → verification-report (verifier subagent) → VERIFICATION.md
   → pr-author → PR (traceability-linker for ticket links)
   → pr-reviewer (fresh context), ci-triage on failures

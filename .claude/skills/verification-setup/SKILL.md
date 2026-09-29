@@ -1,6 +1,7 @@
 ---
 name: verification-setup
-description: Give a repository one-command ways for an agent to check its own work - build, fast tests, full tests, lint, typecheck, and a visual check for UI changes - verified to actually run, and recorded in a Verification block in CLAUDE.md. Use this whenever the user asks to "set up verification", "make it easy for Claude to test its changes", "what command runs the tests here", when a session keeps finishing without running tests, or when plan-writer / verification-report can't find reliable commands to name.
+description: "Set up one-command build/test/lint/visual checks and record them in CLAUDE.md's Verification block."
+disable-model-invocation: true
 ---
 
 # Verification setup

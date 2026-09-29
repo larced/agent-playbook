@@ -1,6 +1,6 @@
 ---
 name: postmortem-writer
-description: Turn an incident thread, timeline, or chat log into a blameless POSTMORTEM.md, append the durable lessons to the repo's version-controlled LESSONS.md so later investigations can read them, and draft follow-up INTENT.md files for the fixes that need real design work. Use this whenever an incident is resolved and the user says "write the postmortem", "what did we learn", "capture the follow-ups", pastes an incident channel export or timeline, or when a band breach at the propose tier has been mitigated.
+description: "Postmortem from an incident thread: blameless POSTMORTEM.md, a LESSONS.md entry, and follow-up INTENT.md drafts. Use when an incident is resolved."
 ---
 
 # Postmortem writer

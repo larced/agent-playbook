@@ -14,6 +14,7 @@ If you're not sure where a piece of work stands, ask for
 | [Bugfix](bugfix.md) | A bug report | A test-first fix, plus an eval if an agent caused it |
 | [Incident](incident.md) | An alert or band breach | Mitigation, postmortem, lessons, follow-up intents |
 | [Scheduled scan](scheduled-scan.md) | Scanner output | Bounded fixes in review, intents for the rest |
+| [TDD loop](tdd-loop.md) | An accepted spec with an emerging design | Code built one red/green cycle at a time, then the normal review path |
 
 Gates are shown as **⛔ Gate: who**. An agent never passes a gate on its own
 behalf; it prepares what the human needs and stops.

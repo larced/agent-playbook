@@ -1,6 +1,7 @@
 ---
 name: band-config-author
-description: Turn one production metric (latency, error rate, queue depth, cost, conversion) into a detection band config - bands/<metric>.yaml with the query, thresholds, and a response tier per band that sets what an agent may do when it's breached (log only, diagnose read-only, or propose a fix via PR/runbook) - checked by a deterministic script, not the model. Use this whenever the user wants to "watch this metric", "set up an alert Claude can act on", "define what the agent may do when X breaches", or is wiring monitoring into the Maintain stage of the SDLC.
+description: "Define a metric band (bands/<metric>.yaml): thresholds and the response tier each band allows an agent, checked by a script."
+disable-model-invocation: true
 ---
 
 # Band config author

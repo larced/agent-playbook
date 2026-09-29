@@ -1,6 +1,6 @@
 ---
 name: hook-author
-description: Turn a rule that must always hold during agent work - never edit protected paths, always format after edits, never commit secrets, never mark an artifact accepted, run tests before stopping - into a Claude Code hook (a script under .claude/hooks/ plus its entry in .claude/settings.json), tested against sample input. Use this whenever the user says "make sure Claude never/always…", "enforce this", "add a guardrail", "block edits to X", or when a skill's "Advisory, not enforced" note names a rule that now needs to be enforced. For human approval gates (deploys, pushes to main, production changes) use gate-author instead.
+description: "Hook for a rule that must always hold during agent work (protected paths, formatting, secrets, no self-acceptance): script plus settings entry, tested. Use when the user says Claude must never or always do something. Approval routing is gate-author."
 ---
 
 # Hook author

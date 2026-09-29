@@ -1,6 +1,6 @@
 ---
 name: plan-slicer
-description: Break an accepted PLAN.md into small, self-contained vertical slices that smaller, cheaper models (Claude Haiku or similar) can implement one at a time or in parallel - writing the tests up front, scaffolding the shared interfaces, and producing SLICES.md plus one brief per slice with a file allowlist, frozen tests and a single done command. Use this whenever a plan is large enough that the user wants to "split this for Haiku", "slice the plan", "parallelise the build", "hand this to smaller models", or wants to cut implementation cost without losing quality. Runs on a strong model; slice-implementer and slice-integrator do the rest.
+description: "Slice an accepted PLAN.md for smaller models: scaffold interfaces, write frozen tests up front, and produce SLICES.md plus one self-contained brief per slice. Use when a large plan should be built by Haiku-class models or in parallel."
 ---
 
 # Plan slicer
@@ -43,7 +43,7 @@ Some work should stay on the strong model even in a sliced plan. Mark these `Mod
 2. **Design the cuts.** Map plan steps and requirements to slices within the size limits. Prefer vertical slices (one behaviour through all layers it needs) over horizontal ones (all models, then all controllers). Build the dependency graph; slices with no path between them can run in parallel.
 3. **Scaffold the seams (commit 1).** Where parallel slices meet (a function one calls and another implements, a shared type, a route), write the interface now: signatures, types, stubs that raise "not implemented", empty route handlers, config keys. After this commit, independent slices depend only on the scaffold, not on each other. Keep scaffold free of logic.
 4. **Write the tests (commit 2).** For each slice, write the tests that define its done-ness, following the repo's test style, covering the requirement's behaviour, edge cases the spec names, and error paths. Run them and confirm each fails *for the right reason* (not implemented / wrong behaviour, never a syntax error, import error or broken fixture in the test itself). These tests are frozen: small models may not edit them.
-5. **Write the slice briefs** (`slices/S<nn>-<name>.md`, template below). Inline everything: the exact signatures from the scaffold, excerpts of existing code to imitate (with paths and line numbers), the relevant spec requirement text, policy rules that apply. A small model should never need to go looking.
+5. **Write the slice briefs** (`slices/S<nn>-<name>.md`, template below), applying `writing-for-agents`: a small model follows them literally, so every step ends on a checkable criterion and every rule says what to do. Inline everything: the exact signatures from the scaffold, excerpts of existing code to imitate (with paths and line numbers), the relevant spec requirement text, policy rules that apply. A small model should never need to go looking.
 6. **Write `SLICES.md`** (template below) and check coverage: every plan step is in a slice (or marked done in the scaffold/tests commits, or `BLOCKED`); every requirement has at least one slice and frozen tests.
 7. **Validate each contract** by running `python3 .claude/skills/slice-implementer/scripts/slice_guard.py validate <slice file>`.
 8. **Commit** the briefs and index (commit 3), then hand off: number of slices, how many small vs strong, the parallel waves, and that `SLICES.md` is `draft`. The engineer who accepted the plan accepts `SLICES.md` too (the frozen tests are real design decisions). After that, `slice-integrator` runs the build.
@@ -88,10 +88,10 @@ Everything needed, inline:
 ## Tests
 What each frozen test checks, in a line each, so failures are interpretable.
 
-## Do not
-- Edit files outside `allow`, or any file in `frozen`.
-- Add dependencies, change configuration, or refactor code not named in Steps.
-- Guess when stuck.
+## Scope
+- Change only the files in `allow`; `frozen` tests are fixed, so make them pass by changing code.
+- Use the dependencies and configuration that exist; touch only code the Steps name.
+- When stuck, stop and report (below).
 
 ## If stuck
 After two honest attempts, stop and write `slices/S03-REPORT.md`: what you
@@ -147,7 +147,7 @@ Blocked steps (with the flagged concern) and anything left to the integrator.
 - **Inline, don't point.** "Follow the existing pattern" is exploration; a pasted 20-line example isn't.
 - **Seams in the scaffold.** Parallel slices that both need to invent the same interface will invent two different ones.
 - **No judgement in small slices.** If writing Steps requires "decide whether…", either decide it now or make it a strong slice.
-- **Never slice around a blocked step.** Unresolved flagged concerns stay `BLOCKED` in `SLICES.md`.
+- **Blocked steps stay blocked.** Work touching an unresolved flagged concern is listed as `BLOCKED` in `SLICES.md`, not sliced.
 - **Agents write `draft`.** The engineer accepts `SLICES.md` (see `artifact-conventions`).
 
 ## Advisory, not enforced

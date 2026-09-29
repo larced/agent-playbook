@@ -1,6 +1,6 @@
 ---
 name: scan-triage
-description: Triage security, dependency, license or static-analysis scan findings (Dependabot, Snyk, Trivy, CodeQL, Semgrep, npm/pip audit and similar) into three outcomes per finding - a PR-sized bounded fix that goes through normal review, an INTENT.md for anything wider, or a documented not-applicable/false-positive for a human to confirm - and write a triage report. Use this whenever the user pastes or links scan results, says "triage these vulnerabilities", "go through the scanner output", "which of these alerts matter", or a scheduled scan produces findings.
+description: "Triage security, dependency or static-analysis scan findings into bounded fixes, intents, or justified not-applicable proposals, in a triage report. Use when a scan produces findings."
 ---
 
 # Scan triage
@@ -49,7 +49,7 @@ Findings: <n raw> → <n after dedup>
 
 ## Rules of thumb (and why)
 
-- **Never dismiss or suppress.** Marking a finding not applicable in the scanner, or adding an ignore rule, is a human decision; write the justification, don't act on it.
+- **Dismissal is a human decision.** Write the justification with its evidence; a human marks the finding not applicable in the scanner or adds the ignore rule.
 - **Reachability needs evidence.** "Probably not used" isn't evidence; a grep with no hits, or the dependency being dev-only in the lockfile, is.
 - **Scanner severity is the input, not the verdict.** Record it as reported; say separately if reachability changes the practical risk.
 - **Bounded means bounded.** If the "small" upgrade needs code changes in several places, it's an intent.

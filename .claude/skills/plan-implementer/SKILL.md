@@ -1,6 +1,6 @@
 ---
 name: plan-implementer
-description: Implement an accepted PLAN.md as code - work its steps in dependency order with tests alongside, one commit per step tagged with ticket and requirement IDs, stop at blocked steps, record deviations with plan-sync and pause for re-approval when they're material, then hand off to verification-report. Also use it to address pr-reviewer findings on the same branch. Use this whenever the user says "implement the plan", "build PLAN.md", "start coding this", "work through the plan", "fix the review findings", or has an accepted plan and wants the code written.
+description: "Implement an accepted PLAN.md step by step: tests with each step, traceable commits, blocked steps left alone, deviations via plan-sync, checkpoint review before handoff. Also fixes review findings. Use when the plan is accepted and code should be written."
 ---
 
 # Plan implementer
@@ -35,8 +35,9 @@ For each step in *Order of work*, in dependency order:
 ## Finishing
 
 1. **Run the full check** (the plan's Verification commands plus the repo's standard pre-PR check).
-2. **Run `plan-sync`** one last time so `PLAN.md` matches what was built.
-3. **Hand off** with: steps done / blocked / remaining, deviations and whether re-approval is pending, check results, and the next step: `verification-report` (ideally in a fresh context or verifier subagent), then `pr-author`. Don't write `VERIFICATION.md` yourself; evidence from the author is weaker, and the skill says so.
+2. **Checkpoint review.** Run `change-review` (all three axes) against the branch base. Route the findings per its table: fix correctness issues; fix smells in the new code (refactor with the suite green; the checklist is `docs/references/code-smells.md`); fix missing or wrong requirements; remove scope creep or record it as a deviation. Commit the fixes. This is early feedback, not the gate: `pr-reviewer` still runs later in a fresh session. For long builds, also run it after any higher-risk step.
+3. **Run `plan-sync`** one last time so `PLAN.md` matches what was built.
+4. **Hand off** with: steps done / blocked / remaining, deviations and whether re-approval is pending, check results, checkpoint findings you chose not to fix (and why), and the next step: `verification-report` (ideally in a fresh context or verifier subagent), then `pr-author`. Don't write `VERIFICATION.md` yourself; evidence from the author is weaker, and the skill says so.
 
 ## Addressing review findings
 
@@ -53,8 +54,8 @@ When `pr-reviewer` (or a human) has left findings on the branch:
 - **Blocked means blocked.** Building on an unresolved decision produces code someone has to unpick when the owner decides the other way.
 - **Small, traceable commits.** Reviewers and `pr-reviewer` map commits to steps and requirements; a single giant commit defeats that.
 - **Tests with the code, not after.** The step isn't done until the requirement it serves has its test.
-- **Never weaken a test to get green**, never skip or disable one, and never edit a test written by `bugfix-test-first` to make it pass.
-- **Never mark the plan accepted, never merge.** Status and approvals belong to humans (see `artifact-conventions`).
+- **Make code pass the tests.** A failing test is fixed by changing production code. Weakening, skipping or disabling a test, or editing one from `bugfix-test-first`, is never the route to green.
+- **Humans accept and merge.** You leave `Status` as it is and stop at the PR (see `artifact-conventions`).
 - **Stop rather than guess.** When the plan and the code disagree in a way that matters, a question costs minutes; a wrong guess costs a review cycle.
 
 ## Choosing a model

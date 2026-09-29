@@ -1,6 +1,6 @@
 ---
 name: verification-report
-description: Produce VERIFICATION.md, the Test-stage evidence artifact - run the checks PLAN.md's Verification section names against the implemented change, and map every spec requirement to concrete evidence (command, result, commit SHA, screenshot) so the code owner reviews with evidence attached. Use this whenever implementation of a planned change is done and the user says "verify this", "prove it works", "write up the test evidence", "get this ready for review", or before opening a PR for work that has a PLAN.md.
+description: "Verification evidence: run the plan's checks on a pinned commit and map every spec requirement to evidence in VERIFICATION.md. Use when implementation is done and needs proving before review."
 ---
 
 # Verification report
@@ -61,10 +61,10 @@ Ticket IDs, INTENT/SPEC/PLAN paths.
 
 ## Rules of thumb (and why)
 
-- **Never report a result you didn't observe.** No "should pass", no pass inferred from a similar test. If you didn't run it, it goes under *Not run*.
+- **Report only what you observed.** Every result comes from a command you ran on the pinned commit; "should pass" is not a result. If you didn't run it, it goes under *Not run*.
 - **Evidence is reproducible.** Name the command and commit so a reviewer can re-run it.
 - **Unverified is a valid, useful answer.** It tells the code owner exactly where to spend their review time. Hiding it defeats the gate.
-- **Don't fix code while verifying.** If something fails, report it. Fixing is the author's job; a verifier that edits is an author.
+- **Report failures; the author fixes them.** If something fails, report it. Fixing is the author's job; a verifier that edits is an author.
 - **Re-run on new commits.** Evidence is for one SHA; if the branch moves, update the report.
 
 ## Advisory, not enforced

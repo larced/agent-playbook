@@ -4,6 +4,9 @@ The plays are modular, but some depend on others. This order front-loads the
 ones with no prerequisites and puts automation last, after the controls that
 make it safe exist.
 
+Steps 2, 4, 5, 6, 8 and 10 use user-invoked skills: type them as slash
+commands (`/verification-setup`, `/policy-author`, …).
+
 | Step | Skill | Produces | Why this position |
 |---|---|---|---|
 | 1 | `claude-md-author` | `CLAUDE.md` | Every later session reads it. No prerequisites. |

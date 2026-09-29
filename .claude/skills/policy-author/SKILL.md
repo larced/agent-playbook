@@ -1,6 +1,7 @@
 ---
 name: policy-author
-description: Turn a policy owner's source of truth - a security standard, brand guide, compliance control list, UX guidelines, API design guide, or a conversation with the owner - into a policy-<name> skill that spec-writer, plan-writer and pr-reviewer load as hard constraints. Use this whenever the user wants to "make our security policy something Claude applies", "encode the API guidelines", "add a policy skill", or pastes a standards document and wants agents to follow it consistently. Also use it to update an existing policy-* skill when the owner's source changes.
+description: "Encode a policy owner's standard as a policy-<name> skill with numbered MUST/SHOULD rules and a named owner."
+disable-model-invocation: true
 ---
 
 # Policy author
@@ -22,7 +23,7 @@ Without a policy skill, each spec re-derives "what does security want here" from
    - how to check it, if it's checkable (a grep, a lint rule, a test, a review question).
    Keep the owner's wording where it's precise. Drop rules that are really general engineering advice rather than this policy.
 4. **Scope it.** Say which kinds of change the policy applies to (e.g. "any endpoint that handles customer data", "any user-facing copy"), so `spec-writer` can decide relevance instead of loading every policy for every change.
-5. **Write the skill** using the template below. Name the folder `policy-<name>` in kebab-case. The `description` must say what kinds of change trigger it, because that's how it gets loaded.
+5. **Write the skill** using the template below. Apply `writing-for-agents`: an agent follows this document as instructions. Name the folder `policy-<name>` in kebab-case. The `description` must say what kinds of change trigger it, because that's how it gets loaded.
 6. **Report back:** path, number of MUST/SHOULD rules, rules you couldn't make checkable, and anything in the source that was ambiguous (listed in the skill's Open questions for the owner).
 
 If the same area has two sources that disagree (e.g. an old and new security standard), don't merge them silently: ask which is current, or list the conflict in Open questions.
@@ -64,7 +65,7 @@ Ambiguities found while encoding the source. "None" if none.
 
 ## Rules of thumb (and why)
 
-- **Never invent policy.** A plausible-sounding rule the owner never wrote will be enforced as if they did. If the source is silent, the policy is silent.
+- **Every rule traces to the owner.** Each rule comes from the source or the owner's own words; where the source is silent, the policy is silent. A plausible rule the owner never wrote gets enforced as if they had.
 - **Atomic, ID'd rules.** Flagged concerns and review findings need to cite something precise; "violates the security policy" is not actionable, "violates SEC-4 (PII at rest must be encrypted)" is.
 - **MUST vs SHOULD is the owner's call.** If the source doesn't make it clear, default to SHOULD and ask.
 - **Checkable beats aspirational.** For every MUST, try to name how it could be checked. The ones that can be checked deterministically are candidates for `hook-author` or CI; say so.

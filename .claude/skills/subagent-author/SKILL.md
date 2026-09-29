@@ -1,6 +1,7 @@
 ---
 name: subagent-author
-description: Turn a recurring job - verifying changes, simplifying a diff, researching a codebase question, reviewing a spec or PR, triaging CI - into a Claude Code subagent definition at .claude/agents/<name>.md with a clear delegation trigger, least-privilege tools and a fixed return format. Use this whenever the user says "make a subagent for X", "I keep asking Claude to do the same check", "create a verifier/reviewer/researcher agent", or when a workflow step needs a separate context (for example, separation of duties between author and reviewer).
+description: "Write a .claude/agents/<name>.md sub-agent: delegation trigger, least-privilege tools, fixed return format."
+disable-model-invocation: true
 ---
 
 # Subagent author
@@ -21,7 +22,7 @@ Produce `.claude/agents/<name>.md`: a subagent the main session delegates a well
    - Jobs that change code (simplifier, fixer): add `Edit, Write`.
    Omitting `tools` grants everything; don't omit it.
 3. **Write the description as a delegation trigger.** It's how the main session decides to call the subagent: say what it does and when to use it ("Use after implementing a change and before opening a PR to…"). Add "use proactively" only if it truly should run without being asked.
-4. **Write the system prompt:** role in one line, the steps, what not to do, and the exact return format. Point at existing skills (`pr-reviewer`, `ci-triage`, `verification-report`) rather than duplicating their content.
+4. **Write the system prompt:** role in one line, the steps, the guardrails (each paired with what to do instead), and the exact return format. Apply `writing-for-agents`. Point at existing skills (`pr-reviewer`, `ci-triage`, `verification-report`) rather than duplicating their content.
 5. **Save** to `.claude/agents/<name>.md` (project) unless the user wants it personal (`~/.claude/agents/`). Name in kebab-case, describing the job (`change-verifier`, not `helper`).
 6. **Report back:** path, tools granted and why, how to invoke it ("ask Claude to use the change-verifier subagent" or let it delegate from the description).
 
@@ -54,10 +55,13 @@ Return exactly:
 |---|---|---|
 | `change-verifier` | Read, Grep, Glob, Bash | Run the repo's verification commands against the current change and fill `VERIFICATION.md` via `verification-report`. Never edits code. |
 | `pr-review-agent` | Read, Grep, Glob, Bash (read-only git) | Apply `pr-reviewer` to a diff it didn't write. |
+| `review-correctness`, `review-standards`, `review-spec` | Read, Grep, Glob, Bash (read-only) | One `change-review` axis each, dispatched in parallel (definitions in that skill). |
 | `spec-review-agent` | Read, Grep, Glob | Apply `spec-reviewer` in a fresh context. |
 | `ci-triager` | Read, Grep, Glob, Bash (read-only) | Apply `ci-triage` to a failed log. |
 | `plan-builder` | Read, Grep, Glob, Bash, Edit, Write | Apply `plan-implementer` to an accepted plan in its own context. |
 | `slice-worker` | Read, Grep, Glob, Edit, Write, Bash; `model: haiku` | Apply `slice-implementer` to one slice brief (definition in that skill). |
+| `test-writer` | Read, Grep, Glob, Edit, Write, Bash | Apply `test-next`: one right-reason red test per run. |
+| `test-greener` | Read, Grep, Glob, Edit, Write, Bash; `model: haiku` | Apply `test-green` to the `next` case, with the slice guard active. |
 | `code-researcher` | Read, Grep, Glob | Answer "where/how does X work" with file:line references. |
 
 ## Rules of thumb (and why)

@@ -1,6 +1,6 @@
 ---
 name: artifact-conventions
-description: The shared rules every AI-native SDLC artifact follows - file names, where the chain for one piece of work lives, the header block (status, author, upstream link, source), the status vocabulary and who may change it, and slug naming. Use this whenever you are writing, moving, renaming, or changing the status of an INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md, POSTMORTEM.md or similar artifact, when another skill says "follow artifact-conventions", or when the user asks how artifacts should be named, where they go, or what a status means.
+description: "Naming, location, header, status vocabulary and slug rules for SDLC artifacts (INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md and the rest). Use when writing, moving or changing the status of an artifact, or when asked how artifacts are named or what a status means."
 ---
 
 # Artifact conventions
@@ -17,6 +17,7 @@ A repo may override any of this in its own `CLAUDE.md` or a `docs/sdlc-conventio
 | `SPEC.md` | Design | `spec-writer` | Product owner; policy owners clear their flags |
 | `SPEC-REVIEW.md` | Design | `spec-reviewer` | Nobody - review notes, not a gate artifact |
 | `PLAN.md` | Build | `plan-writer`, kept current by `plan-sync` | Engineer; tech lead for higher-risk changes |
+| `TEST_PLAN.md` | Build (optional, TDD loop) | `test-next`; `test-green` marks cases green and adds inbox items | Engineer, for the seeded backlog (recommended, not a hard gate; the loop's review pauses cover later cases) |
 | `SLICES.md` + `slices/S<nn>-<name>.md` | Build (optional) | `plan-slicer`; execution state kept by `slice-integrator` | Engineer who accepted the plan (the frozen tests are design decisions) |
 | `VERIFICATION.md` | Test | `verification-report` | Code owner, as part of PR review |
 | `POSTMORTEM.md` | Maintain | `postmortem-writer` | Service owner |
@@ -36,6 +37,7 @@ intent/<slug>/
   SPEC-REVIEW.md      (optional)
   PLAN.md
   SLICES.md          (sliced builds only)
+  TEST_PLAN.md       (TDD-loop builds only)
   slices/            (one brief per slice, plus any S<nn>-REPORT.md)
   VERIFICATION.md
   POSTMORTEM.md       (incidents only)
@@ -92,6 +94,7 @@ Rules:
 
 - Write `None` (or `None found` / `None stated` where the template says so) in empty sections, never delete the heading. Downstream readers need to tell "nothing here" from "forgot".
 - Every artifact ends with a `## Traceability` section (except `INTENT.md`, whose `Source` line plays that role) carrying ticket IDs and upstream paths forward. `traceability-linker` keeps these current.
+- **Names with IDs.** Wherever a human reads it (reports, summaries, PR descriptions, hand-offs), write an ID with its name: "R3 (EU VAT field shown)", "F1 (SEC-3 vs API-2)". Tables that carry the name in another column are fine as they are.
 - Keep the originator's wording visible where it matters; quote with the source in parentheses.
 
 ## Commits

@@ -1,6 +1,6 @@
 ---
 name: spec-writer
-description: Turn an accepted INTENT.md (plus codebase context and any policy-* skills) into a SPEC.md, the Design-stage artifact the plan stage reads. Use this whenever the user wants to turn an intent into a design, says things like "spec this out", "write the spec for INTENT.md", "what's the design for this", or has an accepted intent and wants requirements and design worked out before implementation starts. Use it even if they never say "SPEC.md".
+description: "Spec from an accepted INTENT.md: writes SPEC.md with numbered requirements, design, applied policy-* skills and flagged conflicts. Use when an intent needs a design before planning."
 ---
 
 # Spec writer
@@ -19,9 +19,9 @@ Produce a `SPEC.md` that says **what will be built and how**, given an `INTENT.m
 4. **Derive requirements.** One per checkable behaviour, numbered `R1`, `R2`, …, each tracing to the intent section (and quote/ticket) it comes from. Every intent constraint lands in at least one requirement, or in a flagged concern if it can't be met.
 5. **Design.** The approach at the depth the change needs: interfaces, data model changes, architecture, UX, integration points, migration/rollout if relevant. State which requirement each part serves.
 6. **Check for conflicts.** For each applicable policy rule and intent constraint, ask whether the design satisfies it. Where two can't both be satisfied, write a flagged concern (format below) and design only the parts that don't depend on the choice. Don't pick a side.
-7. **Decide whether to ask first.** Only when a decision is essential and truly undetermined by the intent, policies and codebase together. At most three short questions in one message. Everything else goes into the draft.
+7. **Decide whether to ask first.** Only when a decision is essential and truly undetermined by the intent, policies and codebase together. At most three short questions in one message. Ask them the way `grill-artifact` does: in dependency order, each with your recommended answer, and only for decisions; look facts up yourself (with a sub-agent if it takes digging). Everything else goes into the draft.
 8. **Write `SPEC.md`** next to its intent (per `artifact-conventions`), or where the user asks; default `SPEC.md` in the current directory.
-9. **Hand off.** Path, policies applied, flagged concerns with their owners, and that it stays `draft` until the product owner accepts it and policy owners clear their flags. For non-trivial specs, recommend `spec-reviewer` in a fresh session before the gate. After acceptance, the next step is `plan-writer`.
+9. **Hand off.** Path, policies applied, flagged concerns with their owners, and that it stays `draft` until the product owner accepts it and policy owners clear their flags. For non-trivial specs, recommend `spec-reviewer` in a fresh session before the gate. If the open questions or flagged concerns need answers before the gate, offer `grill-artifact`. After acceptance, the next step is `plan-writer`.
 
 ## Template
 
@@ -69,10 +69,10 @@ Ticket IDs and intent Source, carried forward.
 
 ## Rules of thumb (and why)
 
-- **Never resolve a genuine conflict yourself.** Two contradicting policies, or a policy against the intent, go to Flagged concerns with both sides and the owner named. Silently choosing takes the decision away from the people accountable for it.
+- **Conflicts go to their owners.** Two contradicting policies, or a policy against the intent, go to Flagged concerns with both sides and the owner named. Silently choosing takes the decision away from the people accountable for it.
 - **Checkable requirements.** "Fast" and "easy" can't be planned or verified; turn them into observable behaviour, or carry the measurement question forward.
 - **Keep requirements and design distinguishable.** Requirements say what must be true; design says how. Reviewers check both.
-- **Never invent the system.** No assumed endpoints, tables or services. Unconfirmed means open question.
+- **Design against what you confirmed.** Endpoints, tables and services come from the codebase; anything unconfirmed is an open question.
 - **Carry everything forward.** Every intent constraint, open question and out-of-scope item appears somewhere, answered or explicitly still open.
 - **Reference, don't restate, the intent.** Duplicated text drifts.
 - **`None` / `None found` in empty sections.** Never omit a heading.
