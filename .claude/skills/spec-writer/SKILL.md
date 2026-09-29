@@ -5,20 +5,23 @@ description: Turn an accepted INTENT.md (plus codebase context and any policy-* 
 
 # Spec writer
 
-Produce a `SPEC.md` that says **what will be built and how**, given an `INTENT.md` and whatever policy constraints apply. Requirements and design are worked out in one pass, but any contradiction the skill can't resolve on its own — between two policies, or between a policy and something the intent asked for — is a flagged concern for a human, not a silent pick.
+Produce a `SPEC.md` that says **what will be built and how**, given an `INTENT.md`, the codebase, and the policies that apply. Requirements and design are worked out in one pass. Every place the skill would have to choose between conflicting constraints (two policies, or a policy and the intent) becomes a flagged concern for a named human, not a silent pick.
 
 ## Why this artifact exists
 
-The next stage (plan) reads `SPEC.md` and treats it as the design of record. Anything invented or quietly decided here becomes the plan, the code and eventually production behavior. So this skill's two jobs are to turn the intent into a concrete, buildable design, and to make every place it had to choose between conflicting constraints visible instead of resolving it unilaterally.
+`plan-writer` treats `SPEC.md` as the design of record, `pr-reviewer` checks the diff against it, and `verification-report` proves each of its requirements. So requirements need stable IDs and must be checkable, design claims must be true of the real codebase, and conflicts must be visible at the design gate, where they're cheapest to resolve.
 
 ## Workflow
 
-1. **Find the upstream intent.** Look for `INTENT.md` (or a path the user gives) and read it in full. If there are several candidate intent files, ask which one. If the intent's `Status` is not `accepted`, say so and confirm the user still wants a spec drafted against it — proceed if they do, but note the status in the spec.
-2. **Load policy skills.** Look for `policy-*` skills available to you (in `.claude/skills/` or elsewhere in the session) that plausibly apply — security, brand, compliance, UX, API design, etc. Read each one that's relevant and treat it as a hard constraint. If none exist yet, say so in the spec rather than inventing policy content.
-3. **Gather codebase context.** Read enough of the target codebase (existing patterns, related modules, conventions in `CLAUDE.md`) to ground the design in what's actually there, rather than designing in a vacuum.
-4. **Decide whether to ask before writing.** Ask only when a design decision is essential and genuinely underdetermined by the intent, the policies, and the codebase — for example, two required policies that directly contradict with no reasonable reconciliation. Ask at most three short questions in one message. Everything else becomes a flagged concern or an open question in the draft; a spec with visible flags is more useful than an interview.
-5. **Write `SPEC.md`** using the template below. Save it next to the intent it came from, or where the user asks; default to `SPEC.md` in the current directory.
-6. **Report back briefly:** where the file is, which policies were applied, what's flagged for a human to resolve, and that it is `draft` until the product owner signs off and policy owners clear their flags.
+1. **Read the intent.** `INTENT.md` or the path given; if several candidates exist, ask which. If its `Status` isn't `accepted`, say so and confirm the user wants to proceed; if they do, add an open question recording that the intent was unaccepted.
+2. **Load applicable policies.** Find `policy-*` skills (in `.claude/skills/` or otherwise available). Load each whose *Applies to* matches this change, read it in full, and treat its MUST rules as hard constraints and SHOULD rules as defaults needing a reason to deviate. If none exist, say "None found" in the spec; never invent policy content.
+3. **Ground in the codebase.** Read `CLAUDE.md`, the modules the change touches, existing patterns for similar features, and data models. Design against what exists. Anything you'd need to assume about the system that you couldn't confirm becomes an open question.
+4. **Derive requirements.** One per checkable behaviour, numbered `R1`, `R2`, …, each tracing to the intent section (and quote/ticket) it comes from. Every intent constraint lands in at least one requirement, or in a flagged concern if it can't be met.
+5. **Design.** The approach at the depth the change needs: interfaces, data model changes, architecture, UX, integration points, migration/rollout if relevant. State which requirement each part serves.
+6. **Check for conflicts.** For each applicable policy rule and intent constraint, ask whether the design satisfies it. Where two can't both be satisfied, write a flagged concern (format below) and design only the parts that don't depend on the choice. Don't pick a side.
+7. **Decide whether to ask first.** Only when a decision is essential and truly undetermined by the intent, policies and codebase together. At most three short questions in one message. Everything else goes into the draft.
+8. **Write `SPEC.md`** next to its intent (per `artifact-conventions`), or where the user asks; default `SPEC.md` in the current directory.
+9. **Hand off.** Path, policies applied, flagged concerns with their owners, and that it stays `draft` until the product owner accepts it and policy owners clear their flags. For non-trivial specs, recommend `spec-reviewer` in a fresh session before the gate. After acceptance, the next step is `plan-writer`.
 
 ## Template
 
@@ -26,53 +29,56 @@ The next stage (plan) reads `SPEC.md` and treats it as the design of record. Any
 # Spec: <short title>
 Status: draft
 Intent: <path or link to INTENT.md>
-Author: <name / role, or "unknown">
+Author: <owner of the intent / spec, or "unknown">
 Date: <YYYY-MM-DD>
+Accepted-by:
 
 ## Summary
-One or two sentences on what is being built and why, drawn from the intent.
+One or two sentences: what is being built, pointing at the intent rather than
+restating it.
 
 ## Requirements
-The functional requirements this spec must satisfy, derived from the intent's
-desired outcome and constraints. Trace each back to the intent where useful.
+- **R1** <checkable behaviour>. (Intent: Desired outcome, "<quote>" PROJ-142)
+- **R2** ...
 
 ## Design
-The approach: interfaces, data model, architecture, UX, integration points —
-whatever level of detail the change needs. This is where solution decisions
-live; the intent deliberately did not make them.
+The approach, at the depth the change needs. Reference requirements by ID
+("Serves R1, R2"). Only name existing code you have confirmed exists; mark new
+components as new.
 
 ## Policies applied
-Which policy-* skills were loaded and the constraints each one added. "None
-found" if no policy skills exist yet — don't invent policy content.
+- `policy-<name>` (owner): rules <IDs> apply; how the design satisfies each.
+"None found" if no policy skills exist.
 
 ## Flagged concerns
-Contradictions this skill could not resolve on its own: between two policies,
-or between a policy and something the intent asked for. Each one names the
-conflict and who needs to resolve it (a policy owner, the product owner).
-"None" if there are none — don't leave this implicit.
+- **F1** <one-line conflict>. <Side A: rule/constraint and source.> <Side B:
+  rule/constraint and source.> Resolve: <owner(s)>. Blocks: <requirements or
+  design parts that depend on the answer>.
+"None" if there are none.
 
 ## Open questions
-Items carried forward from the intent's open questions that are still
-unresolved, plus any new ones the design surfaced.
+Intent questions carried forward by their IDs (Q1, …) with "answered in
+Design" or "still open", plus new ones.
 
 ## Out of scope
-Carried from the intent, refined further if the design narrows it.
+Carried from the intent, narrowed further if the design narrows it.
 
 ## Traceability
-Ticket IDs / intent source, carried forward from INTENT.md's Source line.
+Ticket IDs and intent Source, carried forward.
 ```
 
 ## Rules of thumb (and why)
 
-- **Requirements and design in one pass, but keep them distinguishable.** Readers need to see both what must be true and how it will be achieved; don't blur a requirement into an implementation detail or vice versa.
-- **Never resolve a genuine policy contradiction yourself.** If security policy and a stated constraint conflict, or two policies disagree, put it in Flagged concerns with both sides named. Silently picking one defeats the point of policy owners reviewing the gate.
-- **Don't restate the intent, reference it.** The Problem and Desired outcome already live in `INTENT.md`; Summary should be a pointer plus a sentence, not a copy.
-- **Never invent facts.** No made-up APIs, data shapes, or system behavior that you haven't confirmed exist in the codebase. If the codebase context doesn't answer a design question, put it in Open questions.
-- **Carry constraints forward, don't drop them.** Every constraint in the intent should show up satisfied somewhere in Design, or explicitly flagged if it can't be met as stated.
-- **Status is always `draft`.** A human (product owner) signs off, and policy owners resolve flags; the agent that wrote the spec must not mark either done.
-- **Use "None" or "None found" for empty sections** so downstream readers can tell "nothing here" from "forgot".
-- **Keep it proportional.** A spec for a one-file bugfix doesn't need an architecture diagram; a spec for a new subsystem does. Match the depth to the change, not a fixed template length.
+- **Never resolve a genuine conflict yourself.** Two contradicting policies, or a policy against the intent, go to Flagged concerns with both sides and the owner named. Silently choosing takes the decision away from the people accountable for it.
+- **Checkable requirements.** "Fast" and "easy" can't be planned or verified; turn them into observable behaviour, or carry the measurement question forward.
+- **Keep requirements and design distinguishable.** Requirements say what must be true; design says how. Reviewers check both.
+- **Never invent the system.** No assumed endpoints, tables or services. Unconfirmed means open question.
+- **Carry everything forward.** Every intent constraint, open question and out-of-scope item appears somewhere, answered or explicitly still open.
+- **Reference, don't restate, the intent.** Duplicated text drifts.
+- **`None` / `None found` in empty sections.** Never omit a heading.
+- **Status is always `draft`.** The product owner accepts; policy owners clear flags (see `artifact-conventions`).
+- **Proportional depth.** A one-file fix gets a short spec; a new subsystem gets a real design.
 
 ## Advisory, not enforced
 
-This skill makes a well-formed, policy-aware spec likely; it doesn't guarantee one. If specs must always have Flagged concerns resolved before plan work starts, or must always cite at least one applied policy, back that with a CI check or a human gate — not this skill alone.
+This makes a policy-aware spec likely, not guaranteed. If a spec must never be accepted with open flagged concerns, enforce it with a CI check or the design gate checklist, and consider `spec-reviewer` as a standard step.
