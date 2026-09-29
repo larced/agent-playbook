@@ -27,6 +27,7 @@ A slice is **ready** when every slice in its `depends_on` is `done`. Each wave i
    - `slice_guard.py check-diff <brief> <integration head>` passes (no file outside `allow`, no frozen file touched, including via shell).
    - The slice's `done` command passes.
    - The repo's fast check passes (catches breakage outside the slice's tests).
+   - For `Model: small` slices: a `change-review` of the slice's commit with the **standards** axis only (its frozen tests already pin correctness and scope). Findings go back to a fresh worker once, pasted into the brief under `## Review findings`; if they persist, fix them on integration. Smells never fail a slice on their own, but they count towards the lessons in the handoff.
 3. **Integrate passing slices.** Merge (or cherry-pick) each passing slice's commit onto the integration branch in dependency order, re-run the fast check after each merge, set `State: done` and record the commit. If two parallel slices conflict, that's a slicing error: resolve it yourself and note it for tuning.
 4. **Handle failures** (worker reported `stuck`, or any check failed):
    - **First failure:** read the report and output. If the brief was missing context, improve the brief (context, steps; never the frozen tests or allowlist without the rules below) and re-dispatch with a fresh worker.
@@ -41,8 +42,9 @@ Update `SLICES.md` after every state change, and commit it with the integration,
 
 1. Remove worktrees and `.slice-active` files.
 2. Run the full check (the plan's Verification commands and the standard pre-PR check).
-3. Run `plan-sync` so `PLAN.md` reflects what was built, including escalations.
-4. Hand off: slices done / escalated / blocked, first-pass success rate for small slices (`done` on attempt 1 ÷ small slices), any slicing lessons (briefs that lacked context, slices that were too big), and the next step: `verification-report` in a fresh context, then `pr-author`.
+3. Run `change-review` with all three axes against the branch base: seams between slices are where correctness and spec problems hide. Route findings as `plan-implementer` does; commit the fixes.
+4. Run `plan-sync` so `PLAN.md` reflects what was built, including escalations.
+5. Hand off: slices done / escalated / blocked, first-pass success rate for small slices (`done` on attempt 1 ÷ small slices), any slicing lessons (briefs that lacked context, slices that were too big), and the next step: `verification-report` in a fresh context, then `pr-author`.
 
 ## Rules of thumb (and why)
 

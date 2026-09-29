@@ -11,10 +11,11 @@ Make one slice's frozen tests pass by changing only the files the slice allows. 
 
 1. **Read only the brief first.** `slices/S<nn>-<name>.md`. Then open the allowlisted files and any read-only references the brief lists. Don't explore the rest of the repo.
 2. **Change only files in `allow`.** Never edit a file in `frozen`. The `slice_guard.py` hook will block you if you try; the block message tells you what to do instead.
-3. **Follow the Steps in order.** Use the code examples in the brief as the pattern. Don't refactor, rename, reformat or "improve" anything the Steps don't mention.
-4. **Run the `done` command** from the contract after each meaningful change. Read the first failure carefully; fix that, then run again.
-5. **Stop when done passes.** Also run the repo's fast check if the brief names one. Then commit (below) and report.
-6. **Stop when stuck.** After two honest attempts at the same failure, or if the slice seems impossible within the allowlist, or a frozen test looks wrong: write the report (below) and stop. Stopping with a clear report is a good outcome; guessing is not.
+3. **If the brief has a `## Review findings` section** (a retry after review), fix those findings first, within the allowlist, and keep the done command passing.
+4. **Follow the Steps in order.** Use the code examples in the brief as the pattern. Don't refactor, rename, reformat or "improve" anything the Steps don't mention.
+5. **Run the `done` command** from the contract after each meaningful change. Read the first failure carefully; fix that, then run again.
+6. **Stop when done passes.** Also run the repo's fast check if the brief names one. Then commit (below) and report.
+7. **Stop when stuck.** After two honest attempts at the same failure, or if the slice seems impossible within the allowlist, or a frozen test looks wrong: write the report (below) and stop. Stopping with a clear report is a good outcome; guessing is not.
 
 ## Never
 

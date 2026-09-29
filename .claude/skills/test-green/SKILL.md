@@ -19,7 +19,7 @@ You are the implementer in a red/green loop. A different agent wrote one failing
 2. **Confirm the red.** Run the `done` command: it should fail on the expected assertion or not-implemented stub. If it passes already, or fails for a different reason, stop and report that; don't "fix" the test.
 3. **Green.** Change production code until the `done` command passes. Then run the full test suite: nothing that was green may go red. If something does, fix your change, not the other test.
 4. **Refactor**, with the full suite green before and after each step:
-   - remove duplication, improve names, simplify structure in the code you just wrote and code it directly touches;
+   - check the code you just wrote and code it directly touches against the smell checklist in `docs/references/code-smells.md` (the repo's own standards win where they differ), and fix what you find: duplication, unclear names, long functions, speculative generality;
    - apply any `## Refactor notes` that concern this area, and remove the notes you applied;
    - if a refactoring step turns anything red, undo that step rather than patching around it.
    Don't reach further than directly touched code in this step; wider clean-ups go in the inbox for a human to schedule.

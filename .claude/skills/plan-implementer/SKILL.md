@@ -35,8 +35,9 @@ For each step in *Order of work*, in dependency order:
 ## Finishing
 
 1. **Run the full check** (the plan's Verification commands plus the repo's standard pre-PR check).
-2. **Run `plan-sync`** one last time so `PLAN.md` matches what was built.
-3. **Hand off** with: steps done / blocked / remaining, deviations and whether re-approval is pending, check results, and the next step: `verification-report` (ideally in a fresh context or verifier subagent), then `pr-author`. Don't write `VERIFICATION.md` yourself; evidence from the author is weaker, and the skill says so.
+2. **Checkpoint review.** Run `change-review` (all three axes) against the branch base. Route the findings per its table: fix correctness issues; fix smells in the new code (refactor with the suite green; the checklist is `docs/references/code-smells.md`); fix missing or wrong requirements; remove scope creep or record it as a deviation. Commit the fixes. This is early feedback, not the gate: `pr-reviewer` still runs later in a fresh session. For long builds, also run it after any higher-risk step.
+3. **Run `plan-sync`** one last time so `PLAN.md` matches what was built.
+4. **Hand off** with: steps done / blocked / remaining, deviations and whether re-approval is pending, check results, checkpoint findings you chose not to fix (and why), and the next step: `verification-report` (ideally in a fresh context or verifier subagent), then `pr-author`. Don't write `VERIFICATION.md` yourself; evidence from the author is weaker, and the skill says so.
 
 ## Addressing review findings
 

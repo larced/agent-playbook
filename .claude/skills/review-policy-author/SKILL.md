@@ -27,17 +27,29 @@ rank findings by the severity rules, and skip what's on the skip list.
 Owner: <name / role>
 
 ## Passes
+Grouped by the three `change-review` axes, which run separately and are
+reported side by side.
+
+**Correctness & security**
 1. **Correctness** - logic errors, unhandled cases, broken error handling,
    concurrency, data loss. Verify each finding by reading the surrounding code
    or running it; don't report a suspicion as a bug.
 2. **Security** - authn/authz, input validation, injection, secrets, PII
    handling, dependency risk. Apply `policy-security` if present.
-3. **Spec and plan compliance** - the diff implements the SPEC.md
+
+**Standards**
+3. **Repo standards** - the conventions below and in `CLAUDE.md`, plus the
+   smell baseline (`docs/references/code-smells.md`). Smells are judgement
+   calls; list any this repo endorses under *Skip* so they aren't flagged.
+4. **Policy** - applicable `policy-*` rules, cited by ID.
+
+**Spec**
+5. **Spec and plan compliance** - the diff implements the SPEC.md
    requirements it claims to; changes not in PLAN.md (or its Deviations) are
    called out; out-of-scope work is called out; VERIFICATION.md matches the
    head commit.
-4. **Policy** - applicable `policy-*` rules, cited by ID.
-<5. Repo-specific pass, if any.>
+
+<Repo-specific passes, each under the axis it belongs to.>
 
 ## Severity
 - **Blocking** - must be fixed before merge. <Repo examples: failing or
@@ -67,6 +79,7 @@ matters, and a suggested fix. End with a one-line verdict.
 
 - **The skip list matters as much as the passes.** Review that comments on everything trains authors to ignore it.
 - **Severity by example.** "Important" means nothing until it's anchored to cases from this repo.
+- **Keep the axes separate.** Put each pass under the axis it belongs to; `change-review` runs the axes in separate contexts so one can't mask another.
 - **Compliance is a pass, not an afterthought.** In the AI-native SDLC the reviewer checks the diff against what was approved (spec and plan), not just for bugs.
 - **Reference policies, don't copy them.** Copies drift from the owner's version.
 - **Short.** A reviewer applies it to every PR; keep it to what changes review behaviour.

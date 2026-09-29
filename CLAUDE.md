@@ -5,6 +5,7 @@ A public collection of agent skills and workflows. See `README.md` for layout.
 ## References
 
 - `docs/references/ai-native-sdlc-reference.md`: condensed notes on Anthropic's AI-native SDLC playbook, including the artifact chain and a candidate skill map. Read it before designing or changing skills and workflows that cover SDLC stages.
+- `docs/references/code-smells.md`: the smell baseline shared by `change-review` (standards axis) and the refactor steps of the build skills. Change it there, not in individual skills.
 - `.claude/skills/artifact-conventions/SKILL.md`: the naming, location, header and status rules every SDLC artifact follows. Other skills reference it instead of restating it; change it there first.
 
 ## Maintenance

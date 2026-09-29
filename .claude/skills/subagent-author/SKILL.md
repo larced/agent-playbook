@@ -54,6 +54,7 @@ Return exactly:
 |---|---|---|
 | `change-verifier` | Read, Grep, Glob, Bash | Run the repo's verification commands against the current change and fill `VERIFICATION.md` via `verification-report`. Never edits code. |
 | `pr-review-agent` | Read, Grep, Glob, Bash (read-only git) | Apply `pr-reviewer` to a diff it didn't write. |
+| `review-correctness`, `review-standards`, `review-spec` | Read, Grep, Glob, Bash (read-only) | One `change-review` axis each, dispatched in parallel (definitions in that skill). |
 | `spec-review-agent` | Read, Grep, Glob | Apply `spec-reviewer` in a fresh context. |
 | `ci-triager` | Read, Grep, Glob, Bash (read-only) | Apply `ci-triage` to a failed log. |
 | `plan-builder` | Read, Grep, Glob, Bash, Edit, Write | Apply `plan-implementer` to an accepted plan in its own context. |

@@ -15,7 +15,8 @@ accepted SPEC.md (and PLAN.md, if there is one)
   │   pick next case → write ONE test, red for the right reason → commit │
   │ test-green (small or strong model, fresh session, guard active)      │
   │   least code to green → full suite green → refactor → commit         │
-  │ you: review the diff (optional), drop findings into Review inbox     │
+  │ change-review of the green commit → Review inbox / Refactor notes    │
+  │ you: review the diff (optional), add your own findings               │
   └──────────────── repeat until the backlog is done ────────────────────┘
   → verification-report → pr-author → pr-reviewer   ⛔ Gate: code owner approves
 ```
@@ -48,8 +49,9 @@ trace to requirement IDs), and the same exit: `verification-report`,
    right-reason red and one failing test.
 2. `echo intent/<slug>/TEST_PLAN.md > .slice-active`, then a new session
    (a smaller model is fine): *"run test-green for intent/<slug>"*.
-3. Review the green commit if you want. Paste findings under
-   `## Review inbox` in `TEST_PLAN.md`; the next `test-next` routes them.
+3. Review the green commit: run `change-review` against the red commit
+   (`HEAD~1`) and paste its findings, or your own, under `## Review inbox` in
+   `TEST_PLAN.md`; the next `test-next` routes them.
 4. Repeat.
 
 ## Running it with a driver
@@ -61,8 +63,17 @@ A strong-model session can run the loop with fresh subagents per step
 - `test-greener` subagent (`model: haiku` or similar): applies `test-green`.
 
 The driver alternates them, writes `.slice-active` before each green step,
-runs `slice_guard.py check-diff` on each green commit, and stops for your
-review every N cycles (N=3 is a reasonable start) or immediately when:
+runs `slice_guard.py check-diff` on each green commit, then runs
+`change-review` on that commit (fixed point: the red commit before it; word
+limit 200 per axis). Its findings go into `TEST_PLAN.md`: correctness and spec
+findings into `## Review inbox`, standards findings into `## Refactor notes`.
+The next `test-next` routes the inbox, so the automated review does what your
+manual review between cycles did, and you can still add your own findings.
+To save cost, review every K cycles instead (fixed point: the last reviewed
+commit); K=1 is the default.
+
+The driver stops for your review every N cycles (N=3 is a reasonable start)
+or immediately when:
 
 - a green step stops (thinks the test is wrong, or can't make it pass),
 - the same case fails green twice (escalate that case to a strong model),

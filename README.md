@@ -7,7 +7,7 @@ A public collection of agent skills and workflows.
 ```
 .claude/skills/<skill-name>/SKILL.md   # reusable skills (Agent Skills format)
 workflows/                             # how the skills chain for common kinds of work
-docs/references/                       # source notes the skills were designed from
+docs/references/                       # source notes and shared references (e.g. the code smell baseline)
 docs/examples/                         # filled-in examples (not loaded as skills)
 docs/metrics.md                        # measuring each stage from git history
 ```
@@ -62,7 +62,8 @@ produces the next one, with a human gate in between. Every artifact follows
 | Test | [`eval-builder`](.claude/skills/eval-builder/SKILL.md) | incident / recurring agent failure → eval case in `evals/*.json` |
 | Deploy | [`review-policy-author`](.claude/skills/review-policy-author/SKILL.md) | team standards → `REVIEW.md` |
 | Deploy | [`pr-author`](.claude/skills/pr-author/SKILL.md) | branch + artifact chain → PR with chain links, requirement coverage and verification result |
-| Deploy | [`pr-reviewer`](.claude/skills/pr-reviewer/SKILL.md) | PR + `REVIEW.md` + `SPEC.md` + `PLAN.md` + `VERIFICATION.md` → ranked findings |
+| Deploy | [`change-review`](.claude/skills/change-review/SKILL.md) | committed diff since a fixed point → three separate axis reports (correctness & security, standards + smell baseline, spec); checkpoint for the build skills and core of `pr-reviewer` |
+| Deploy | [`pr-reviewer`](.claude/skills/pr-reviewer/SKILL.md) | PR + `REVIEW.md` + `SPEC.md` + `PLAN.md` + `VERIFICATION.md` → `change-review` axes + evidence check + verdict |
 | Deploy | [`gate-author`](.claude/skills/gate-author/SKILL.md) | required approvals → approval-gate hooks + CODEOWNERS / branch-protection settings |
 | Deploy | [`ci-triage`](.claude/skills/ci-triage/SKILL.md) | failed CI log → short read-only diagnosis |
 | Maintain | [`band-config-author`](.claude/skills/band-config-author/SKILL.md) | one metric → `bands/<metric>.yaml` (+ deterministic checker script) |
@@ -92,7 +93,10 @@ the slicing trio `plan-slicer` / `slice-implementer` / `slice-integrator`
 (a strong model writes tests and interfaces up front so smaller models can
 build self-contained vertical slices, in parallel where independent), and the
 TDD pair `test-next` / `test-green` (a two-agent red/green loop for designs
-that emerge as you go).
+that emerge as you go). `change-review` adapts the two-axis review from Matt
+Pocock's [`code-review`](https://github.com/mattpocock/skills) skill (MIT),
+adding a correctness & security axis; its smell baseline lives in
+[`docs/references/code-smells.md`](docs/references/code-smells.md).
 
 ## Workflows
 

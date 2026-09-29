@@ -18,7 +18,7 @@ If the work folder (per `artifact-conventions`) has no `TEST_PLAN.md`, create it
 ## Workflow
 
 1. **Read** `TEST_PLAN.md`, `SPEC.md`, and whatever architecture/decision notes the repo keeps (the plan's references, `CLAUDE.md`). Check that the previous cycle closed: no case is still marked `next`. If one is, stop and say so; the green step hasn't run or didn't finish.
-2. **Triage the review inbox.** For each item under `## Review inbox`, and any findings the user pasted:
+2. **Triage the review inbox.** For each item under `## Review inbox` (from you, from `test-green`, or from a `change-review` of the last green commit: its correctness and spec findings land here, its standards findings go straight to refactor notes), and any findings the user pasted:
    - wrong or missing behaviour → a new case in the right section, `Source: review <date>`, `Kind: bug` if it's a defect in existing behaviour;
    - code smell or design issue → move to `## Refactor notes` (the next green step picks it up);
    - spec gap, ambiguity, or a finding that would need a guess → move to `## Questions`, naming who should answer.
