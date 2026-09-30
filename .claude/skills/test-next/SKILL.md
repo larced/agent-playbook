@@ -13,7 +13,7 @@ The loop only works if the backlog is honest (every finding lands somewhere), th
 
 ## First run: create TEST_PLAN.md
 
-If the work folder (per `artifact-conventions`) has no `TEST_PLAN.md`, create it from `SPEC.md` requirements (and `PLAN.md` Verification, if there is one): one section per area, cases in the order you'd build them, simplest first, each tracing to a requirement ID. Then continue with the normal run. Tell the user the seeded backlog is `draft` and worth a quick look at their next review pause: the cases define what "done" means.
+If the work folder (per `artifact-conventions`) has no `TEST_PLAN.md`, create it from `SPEC.md` requirements (and `PLAN.md` Verification, if there is one): one section per area, cases in the order you'd build them, simplest first, each tracing to a requirement ID. If there is no `PLAN.md`, also promote the accepted spec's `## Terms` and `## Decisions` into the glossary and `docs/adr/`. Do it as `plan-writer` would (see `artifact-conventions`), in its own commit. Then continue with the normal run. Tell the user the seeded backlog is `draft` and worth a quick look at their next review pause: the cases define what "done" means.
 
 ## Workflow
 

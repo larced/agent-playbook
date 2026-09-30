@@ -66,6 +66,7 @@ These run only when a person types them, so they cost no context in everyday ses
 |---|---|
 | `docs/sdlc-conventions.md` (tracker, artifact location, who accepts), or a check on adoption status | `/sdlc-setup` |
 | Reliable build/test commands | `/verification-setup` |
+| A domain glossary (`GLOSSARY.md`), or one that has drifted | `/glossary-author` |
 | A policy an owner wants enforced | `/policy-author` |
 | `REVIEW.md` | `/review-policy-author` |
 | A reviewer, verifier or worker sub-agent | `/subagent-author` |

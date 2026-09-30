@@ -63,6 +63,7 @@ What the input explicitly excludes. "None stated" if nothing is.
 
 - **Only facts from the input.** Metrics, deadlines, users, volumes and systems come from the input or a lookup. "Slow" stays "slow", and "how slow, and what's the target?" goes in Open questions. An invented number looks exactly like a real one downstream.
 - **Keep the originator's words visible.** Quote or closely paraphrase the phrases that carry nuance, with the ticket ID. Generic requirements language loses exactly the detail a spec author needs.
+- **Your own sentences use the glossary's terms** (`GLOSSARY.md` by default, per `artifact-conventions`); quotes stay verbatim. When a quote uses a word the glossary lists under `_Avoid_`, add the canonical term once in brackets: "customers [Account] can't download invoices". The spec then starts from one vocabulary.
 - **Problem, not solution.** Proposed solutions from the input are hints, not requirements. Mention them in Open questions ("PROJ-158 suggests a download button; is that a requirement or an idea?") unless they are a real constraint.
 - **Constraints are limits, not wishes.** "Must pass the Q3 audit" is a constraint; "would be nice on mobile" is a desired outcome.
 - **Credit every originator.** With several tickets or people, list them all under Author; Source lists every ticket.

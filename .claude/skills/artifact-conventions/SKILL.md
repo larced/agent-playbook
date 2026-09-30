@@ -22,7 +22,7 @@ A repo may override any of this in `docs/sdlc-conventions.md` (written by `/sdlc
 | `VERIFICATION.md` | Test | `verification-report` | Code owner, as part of PR review |
 | `POSTMORTEM.md` | Maintain | `postmortem-writer` | Service owner |
 
-Repo-level, long-lived documents: `AGENTS.md`/`CLAUDE.md` (`claude-md-author`), `REVIEW.md` (`review-policy-author`), `LESSONS.md` (`postmortem-writer`), `bands/*.yaml` (`band-config-author`), `.claude/skills/policy-*/` (`policy-author`).
+Repo-level, long-lived documents: `AGENTS.md`/`CLAUDE.md` (`claude-md-author`), `GLOSSARY.md` (`glossary-author`, then promoted from specs), `docs/adr/NNNN-<slug>.md` (promoted from specs; see *Domain language and decisions*), `REVIEW.md` (`review-policy-author`), `LESSONS.md` (`postmortem-writer`), `bands/*.yaml` (`band-config-author`), `.claude/skills/policy-*/` (`policy-author`).
 
 Artifact file names are UPPERCASE with a `.md` extension so they stand out in a directory listing.
 
@@ -96,6 +96,42 @@ Rules:
 - Every artifact ends with a `## Traceability` section (except `INTENT.md`, whose `Source` line plays that role) carrying ticket IDs and upstream paths forward. `traceability-linker` keeps these current.
 - **Names with IDs.** Wherever a human reads it (reports, summaries, PR descriptions, hand-offs), write an ID with its name: "R3 (EU VAT field shown)", "F1 (SEC-3 vs API-2)". Tables that carry the name in another column are fine as they are.
 - Keep the originator's wording visible where it matters; quote with the source in parentheses.
+
+## Domain language and decisions
+
+Two repo-level documents outlive any one work folder: the glossary (what the domain's words mean) and ADRs (decisions a later change must not silently undo). Their location is `Glossary:` and `ADRs:` in `docs/sdlc-conventions.md`; the defaults are `GLOSSARY.md` and `docs/adr/`. A repo with several bounded contexts has a `GLOSSARY-MAP.md` at the root listing each context's glossary, its code path and how the contexts relate; use the glossary of the context the change touches.
+
+**Glossary entry:**
+
+```markdown
+**Account**:
+The billing relationship between us and one paying organisation; it owns invoices and users.
+_Avoid_: customer, client, tenant
+_In code_: `Account` (app/models/account.rb)
+```
+
+- One or two sentences saying what the thing **is**, not what the system does with it.
+- Project-specific terms only; general programming words don't belong.
+- Be opinionated: when several words name one concept, pick one and list the rest under `_Avoid_`.
+- `_In code_` is optional and the only implementation detail allowed: the identifier that names the concept, so reviewers can check names against it.
+
+**ADR:** `docs/adr/NNNN-<slug>.md`, numbered in order. Write one only when a decision is all three of: hard to reverse, surprising to a later reader without context, and the result of a real trade-off. Anything else stays in its `SPEC.md`.
+
+```markdown
+# ADR 0007: Invoices are immutable once issued
+Decided-by: Dana Kim, 2026-06-12 (at the spec gate of intent/proj-142-self-serve-invoices/SPEC.md)
+Superseded-by:
+
+Corrections are credit notes, not edits, because finance reconciles against issued PDFs and the auditors require an unaltered record. We rejected editable drafts-after-issue (simpler UI) for that reason.
+```
+
+One paragraph is enough; add *Considered options* or *Consequences* only when they earn their place.
+
+**How they change:**
+- Specs propose: new or changed terms in `## Terms`, and ADR candidates in `## Decisions`.
+- After the spec is accepted, the first build skill promotes them into the glossary and `docs/adr/` in their own commit. That's `plan-writer`, or `test-next` when seeding `TEST_PLAN.md` without a plan. The change's PR carries them to review.
+- An ADR records a decision a human already made at a gate. It names who decided (`Decided-by`) and carries no `Status`. To reverse it, write a new ADR through the same route, and fill the old one's `Superseded-by`.
+- A spec that contradicts an ADR or redefines a glossary term does so in a Flagged concern, never silently.
 
 ## Commits
 

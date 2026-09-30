@@ -213,5 +213,10 @@
     "id": "user-setup",
     "prompt": "we just cloned the playbook skills into our repo, how do we get it configured for our jira and team?",
     "expect": "none|sdlc-orchestrator"
+  },
+  {
+    "id": "user-glossary",
+    "prompt": "half the team says customer, the code says Account and the tickets say client. can we get one agreed vocabulary written down for this repo",
+    "expect": "none|sdlc-orchestrator"
   }
 ]
