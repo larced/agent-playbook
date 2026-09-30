@@ -1,6 +1,6 @@
 ---
 name: verification-report
-description: "Verification evidence: run the plan's checks on a pinned commit and map every spec requirement to evidence in VERIFICATION.md. Use when implementation is done and needs proving before review."
+description: "Prove the spec is met: run the plan's checks on a pinned commit and map every requirement to evidence in VERIFICATION.md. Use when implementation is done and needs proof before review."
 ---
 
 # Verification report
@@ -13,7 +13,7 @@ Best run by a session or subagent that didn't write the code (see `subagent-auth
 
 ## Workflow
 
-1. **Read the chain.** `PLAN.md` (its *Verification* section and *Deviations*), the `SPEC.md` it points at (its *Requirements*), and the Verification block in `CLAUDE.md` for how to run things.
+1. **Read the chain.** `PLAN.md` (its *Verification* section and *Deviations*), the `SPEC.md` it points at (its *Requirements*), and the Verification block in `AGENTS.md`/`CLAUDE.md` for how to run things.
 2. **Pin the commit.** Record `git rev-parse HEAD`. If the working tree has uncommitted changes, say so; evidence against uncommitted code can't be reproduced.
 3. **Run the checks.** Every command the plan's Verification section names, plus the repo's fast check. Capture pass/fail counts and the tail of any failure. Run UI checks if the plan calls for them and look at the screenshots.
 4. **Map requirements to evidence.** For each spec requirement: which test(s) or check(s) cover it, and their result. If a requirement has no automated coverage, record the manual check performed (what you did and what you saw) or mark it **unverified**.

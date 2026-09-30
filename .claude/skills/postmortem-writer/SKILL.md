@@ -1,6 +1,6 @@
 ---
 name: postmortem-writer
-description: "Postmortem from an incident thread: blameless POSTMORTEM.md, a LESSONS.md entry, and follow-up INTENT.md drafts. Use when an incident is resolved."
+description: "Postmortem after an incident or outage: blameless POSTMORTEM.md, a LESSONS.md entry and follow-up INTENT.md drafts. Use when an incident is over and needs a write-up."
 ---
 
 # Postmortem writer

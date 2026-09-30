@@ -1,6 +1,6 @@
 ---
 name: pr-reviewer
-description: "Review a PR at the code-owner gate: change-review's three axes plus evidence for the head commit, severity per REVIEW.md, compliance table and verdict. Use when asked to review a PR or branch; never for a change written in the same session."
+description: "Review a PR or someone else's branch at the code-owner gate: three axes, head-commit evidence, severity per REVIEW.md, verdict. Use when asked to review, approve or block a PR; never for a change written in this session."
 ---
 
 # PR reviewer

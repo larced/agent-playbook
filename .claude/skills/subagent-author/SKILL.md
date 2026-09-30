@@ -1,17 +1,21 @@
 ---
 name: subagent-author
-description: "Write a .claude/agents/<name>.md sub-agent: delegation trigger, least-privilege tools, fixed return format."
+description: "Write a sub-agent (.claude/agents/<name>.md and/or .github/agents/<name>.agent.md): delegation trigger, least-privilege tools, fixed return format."
 disable-model-invocation: true
 ---
 
 # Subagent author
 
-Produce `.claude/agents/<name>.md`: a subagent the main session delegates a well-defined job to. Subagents run in their own context, which is what makes them useful for two things in this playbook: keeping noisy work (searching, log reading) out of the main context, and separation of duties (a reviewer or verifier that didn't write the change).
+Produce a subagent the main session delegates a well-defined job to:
+- `.claude/agents/<name>.md` for Claude Code. VS Code's Copilot agent reads this too.
+- `.github/agents/<name>.agent.md` for Copilot's cloud agent and CLI.
+
+Write one file per harness listed under `Harnesses:` in `docs/sdlc-conventions.md`, or both when unsure. The body is the same; only the frontmatter differs. Subagents run in their own context, which is what makes them useful for two things in this playbook: keeping noisy work (searching, log reading) out of the main context, and separation of duties (a reviewer or verifier that didn't write the change).
 
 ## When a subagent is the right tool
 
 - **Yes:** a recurring, bounded job with a clear input and a short answer; work that should not share the author's context (review, verification); fan-out research.
-- **No:** knowledge that should shape the main session's own work (that's a skill or `CLAUDE.md`); something that must always happen (that's a hook); a one-off (that's a prompt).
+- **No:** knowledge that should shape the main session's own work (that's a skill or the instruction file, `AGENTS.md` / `CLAUDE.md`); something that must always happen (that's a hook); a one-off (that's a prompt).
 
 ## Workflow
 
@@ -20,11 +24,15 @@ Produce `.claude/agents/<name>.md`: a subagent the main session delegates a well
    - Read-only jobs (review, research, triage): `Read, Grep, Glob`, plus `Bash` only if it must run commands (and then say which ones in the prompt).
    - Verifiers that run tests: `Read, Grep, Glob, Bash`. No `Edit`/`Write`: a verifier that can fix things stops being a verifier.
    - Jobs that change code (simplifier, fixer): add `Edit, Write`.
-   Omitting `tools` grants everything; don't omit it.
+   Omitting `tools` grants everything in both harnesses; don't omit it. Copilot names tools by alias; map them as in the tool mapping table below.
 3. **Write the description as a delegation trigger.** It's how the main session decides to call the subagent: say what it does and when to use it ("Use after implementing a change and before opening a PR to…"). Add "use proactively" only if it truly should run without being asked.
-4. **Write the system prompt:** role in one line, the steps, the guardrails (each paired with what to do instead), and the exact return format. Apply `writing-for-agents`. Point at existing skills (`pr-reviewer`, `ci-triage`, `verification-report`) rather than duplicating their content.
-5. **Save** to `.claude/agents/<name>.md` (project) unless the user wants it personal (`~/.claude/agents/`). Name in kebab-case, describing the job (`change-verifier`, not `helper`).
-6. **Report back:** path, tools granted and why, how to invoke it ("ask Claude to use the change-verifier subagent" or let it delegate from the description).
+4. **Write the system prompt:** role in one line, the steps, the guardrails (each paired with what to do instead), and the exact return format. Apply `writing-for-agents`. Point at existing skills (`pr-reviewer`, `ci-triage`, `verification-report`) rather than duplicating their content. When the subagent runs a skill, name its file: "Read `.claude/skills/<skill>/SKILL.md` and follow it". A path works in every harness and for user-invoked skills, and a small model follows a named file more reliably than it discovers a skill.
+5. **Save** each harness's file:
+   - **Claude Code:** `.claude/agents/<name>.md` in the project, or `~/.claude/agents/` if the user wants it personal.
+   - **Copilot:** `.github/agents/<name>.agent.md` in the project, or `~/.copilot/agents/` for a personal one.
+
+   Name in kebab-case, describing the job (`change-verifier`, not `helper`). Use the same name in both.
+6. **Report back:** paths, tools granted and why, and how to invoke it in each harness ("ask Claude to use the change-verifier subagent"; in Copilot, pick the agent or name it in the task), or let it delegate from the description.
 
 ## Template
 
@@ -48,6 +56,26 @@ Do not:
 Return exactly:
 <fixed format - a short table, a verdict line plus bullets, etc.>
 ```
+
+Copilot, `.github/agents/<name>.agent.md`: the same body, with this frontmatter.
+
+```markdown
+---
+name: <kebab-case-name>
+description: <same as above>
+tools: ["read", "search"]
+---
+```
+
+Tool mapping:
+
+| Claude Code | Copilot alias |
+|---|---|
+| `Read`, `Grep`, `Glob` | `read`, `search` |
+| `Bash` | `shell` |
+| `Edit`, `Write` | `edit` |
+
+Not every Copilot surface reads a `model` field. Where a starter below says `model: haiku`, choose the small model in the Copilot surface you dispatch from.
 
 ## Starter subagents worth having
 
@@ -73,4 +101,4 @@ Return exactly:
 
 ## Advisory, not enforced
 
-Tool restrictions in the frontmatter are enforced by Claude Code; everything in the prompt is advisory. If the subagent must never touch certain paths or commands even with the tools it has, add a hook.
+Tool restrictions in the frontmatter are enforced by the harness (Claude Code, Copilot); everything in the prompt is advisory. If the subagent must never touch certain paths or commands even with the tools it has, add a hook.

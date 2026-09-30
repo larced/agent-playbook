@@ -1,6 +1,6 @@
 ---
 name: intent-writer
-description: "Intent from an idea, request or ticket(s): writes INTENT.md, the problem statement the spec stage reads. Use when the user wants to capture what to build or fix before design, or pastes a ticket or feature idea to shape."
+description: "Idea, feature request or ticket -> INTENT.md, the problem statement before design. Use when the user pastes a ticket or idea to write up or shape. Operational signals go to intent-from-signal."
 ---
 
 # Intent writer

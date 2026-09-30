@@ -1,13 +1,13 @@
 ---
 name: artifact-conventions
-description: "Naming, location, header, status vocabulary and slug rules for SDLC artifacts (INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md and the rest). Use when writing, moving or changing the status of an artifact, or when asked how artifacts are named or what a status means."
+description: "Artifact naming, location, header, status and slug rules (INTENT.md, SPEC.md, PLAN.md, VERIFICATION.md and the rest). Use when asked how an artifact is named, where it lives or what a status means; skills that write artifacts load it by name."
 ---
 
 # Artifact conventions
 
 The single source of truth for how SDLC artifacts are named, located, and labelled. Every other skill in this playbook writes artifacts that follow these rules, so downstream skills (and `sdlc-orchestrator`) can find them and tell whether they are allowed to proceed.
 
-A repo may override any of this in its own `CLAUDE.md` or a `docs/sdlc-conventions.md`. If it does, the repo wins; say which rule you followed.
+A repo may override any of this in `docs/sdlc-conventions.md` (written by `/sdlc-setup`) or its instruction file (`AGENTS.md` or `CLAUDE.md`). If it does, the repo wins; say which rule you followed.
 
 ## The artifacts
 
@@ -22,7 +22,7 @@ A repo may override any of this in its own `CLAUDE.md` or a `docs/sdlc-conventio
 | `VERIFICATION.md` | Test | `verification-report` | Code owner, as part of PR review |
 | `POSTMORTEM.md` | Maintain | `postmortem-writer` | Service owner |
 
-Repo-level, long-lived documents: `CLAUDE.md` (`claude-md-author`), `REVIEW.md` (`review-policy-author`), `LESSONS.md` (`postmortem-writer`), `bands/*.yaml` (`band-config-author`), `.claude/skills/policy-*/` (`policy-author`).
+Repo-level, long-lived documents: `AGENTS.md`/`CLAUDE.md` (`claude-md-author`), `REVIEW.md` (`review-policy-author`), `LESSONS.md` (`postmortem-writer`), `bands/*.yaml` (`band-config-author`), `.claude/skills/policy-*/` (`policy-author`).
 
 Artifact file names are UPPERCASE with a `.md` extension so they stand out in a directory listing.
 

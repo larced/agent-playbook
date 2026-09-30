@@ -1,6 +1,6 @@
 ---
 name: bugfix-test-first
-description: "Bugfix, test first: reproduce the bug as a failing test, commit it, then fix without touching the test. Use when the user reports a bug or regression, or pastes a bug ticket or stack trace."
+description: "Bug or regression reported (error, stack trace, bug ticket): reproduce it as a failing test, commit it, then fix without touching the test. Use before reading or editing code for a reported bug."
 ---
 
 # Bugfix, test first
@@ -10,7 +10,7 @@ Turn a bug report into a failing test, then a fix. The test proves the bug exist
 ## Workflow
 
 1. **Understand the report.** Expected vs actual behaviour, inputs, environment, stack trace. If you can't state both "expected" and "actual" in one line each, ask (at most three questions) before writing anything.
-2. **Find where the test belongs.** The existing test file for the affected module, following the repo's test style. Use the single-test command from `CLAUDE.md`'s Verification block (see `verification-setup`).
+2. **Find where the test belongs.** The existing test file for the affected module, following the repo's test style. Use the single-test command from the Verification block in `AGENTS.md`/`CLAUDE.md` (see `verification-setup`).
 3. **Write the smallest test that reproduces it.** Assert the *expected* behaviour from the report, at the lowest level that reproduces the bug (unit before integration before end-to-end).
 4. **Run it and check it fails for the right reason.** The failure must be the reported wrong behaviour, not an import error, typo, missing fixture, or a different bug. If it passes, you haven't reproduced the bug: revisit step 1 rather than proceeding. Show the failure output.
 5. **Commit the failing test** on its own (`test: reproduce <bug> (<ticket>)`), unless the repo forbids failing commits on branches; then keep it as a separate commit locally and squash later only if the user wants.

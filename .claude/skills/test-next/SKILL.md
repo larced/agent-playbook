@@ -1,6 +1,6 @@
 ---
 name: test-next
-description: "Red step of the TDD loop: triage the review inbox, pick the next case in TEST_PLAN.md, and write one test that fails for the right reason. Seeds TEST_PLAN.md from SPEC.md on first run. Use when running the TDD loop."
+description: "Next red test (TDD red step): triage the review inbox, pick the next TEST_PLAN.md case, write one test that fails for the right reason; seeds TEST_PLAN.md from SPEC.md. Use when running the TDD loop."
 ---
 
 # Test next (red)
@@ -17,7 +17,7 @@ If the work folder (per `artifact-conventions`) has no `TEST_PLAN.md`, create it
 
 ## Workflow
 
-1. **Read** `TEST_PLAN.md`, `SPEC.md`, and whatever architecture/decision notes the repo keeps (the plan's references, `CLAUDE.md`). Check that the previous cycle closed: no case is still marked `next`. If one is, stop and say so; the green step hasn't run or didn't finish.
+1. **Read** `TEST_PLAN.md`, `SPEC.md`, and whatever architecture/decision notes the repo keeps (the plan's references, `AGENTS.md`/`CLAUDE.md`). Check that the previous cycle closed: no case is still marked `next`. If one is, stop and say so; the green step hasn't run or didn't finish.
 2. **Triage the review inbox.** For each item under `## Review inbox` (from you, from `test-green`, or from a `change-review` of the last green commit: its correctness and spec findings land here, its standards findings go straight to refactor notes), and any findings the user pasted:
    - wrong or missing behaviour → a new case in the right section, `Source: review <date>`, `Kind: bug` if it's a defect in existing behaviour;
    - code smell or design issue → move to `## Refactor notes` (the next green step picks it up);

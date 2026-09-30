@@ -1,6 +1,6 @@
 ---
 name: spec-writer
-description: "Spec from an accepted INTENT.md: writes SPEC.md with numbered requirements, design, applied policy-* skills and flagged conflicts. Use when an intent needs a design before planning."
+description: "SPEC.md from an accepted INTENT.md: numbered requirements, design, applied policy-* skills, flagged conflicts. Use when an accepted intent needs designing."
 ---
 
 # Spec writer
@@ -15,7 +15,7 @@ Produce a `SPEC.md` that says **what will be built and how**, given an `INTENT.m
 
 1. **Read the intent.** `INTENT.md` or the path given; if several candidates exist, ask which. If its `Status` isn't `accepted`, say so and confirm the user wants to proceed; if they do, add an open question recording that the intent was unaccepted.
 2. **Load applicable policies.** Find `policy-*` skills (in `.claude/skills/` or otherwise available). Load each whose *Applies to* matches this change, read it in full, and treat its MUST rules as hard constraints and SHOULD rules as defaults needing a reason to deviate. If none exist, say "None found" in the spec; never invent policy content.
-3. **Ground in the codebase.** Read `CLAUDE.md`, the modules the change touches, existing patterns for similar features, and data models. Design against what exists. Anything you'd need to assume about the system that you couldn't confirm becomes an open question.
+3. **Ground in the codebase.** Read `AGENTS.md`/`CLAUDE.md`, the modules the change touches, existing patterns for similar features, and data models. Design against what exists. Anything you'd need to assume about the system that you couldn't confirm becomes an open question.
 4. **Derive requirements.** One per checkable behaviour, numbered `R1`, `R2`, …, each tracing to the intent section (and quote/ticket) it comes from. Every intent constraint lands in at least one requirement, or in a flagged concern if it can't be met.
 5. **Design.** The approach at the depth the change needs: interfaces, data model changes, architecture, UX, integration points, migration/rollout if relevant. State which requirement each part serves.
 6. **Check for conflicts.** For each applicable policy rule and intent constraint, ask whether the design satisfies it. Where two can't both be satisfied, write a flagged concern (format below) and design only the parts that don't depend on the choice. Don't pick a side.

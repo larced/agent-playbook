@@ -1,6 +1,6 @@
 ---
 name: verification-setup
-description: "Set up one-command build/test/lint/visual checks and record them in CLAUDE.md's Verification block."
+description: "Set up one-command build/test/lint/visual checks and record them in the Verification block of AGENTS.md or CLAUDE.md."
 disable-model-invocation: true
 ---
 
@@ -10,7 +10,7 @@ Make "did it work?" a one-command question in this repo, and write the answer do
 
 ## Workflow
 
-1. **Inventory what exists.** Read build files (`package.json` scripts, `Makefile`, `justfile`, `pyproject.toml`, `Cargo.toml`, `go.mod`, Gradle/Maven), CI workflows, and `CLAUDE.md`. CI config is the best evidence of what "passing" means for this repo.
+1. **Inventory what exists.** Read build files (`package.json` scripts, `Makefile`, `justfile`, `pyproject.toml`, `Cargo.toml`, `go.mod`, Gradle/Maven), CI workflows, and the instruction file (`AGENTS.md` or `CLAUDE.md`). CI config is the best evidence of what "passing" means for this repo.
 2. **Run each candidate.** Build, tests, lint, typecheck. Record time taken and whether it passes on a clean checkout. Note anything needing services (DB, network), secrets, or special setup.
 3. **Define the targets.** Aim for these, reusing existing commands wherever they exist:
 
@@ -22,8 +22,8 @@ Make "did it work?" a one-command question in this repo, and write the answer do
    | `visual` (UI repos) | Start the app and capture screenshots of changed pages (e.g. a Playwright script), so a session can look at its UI change. | Under a few minutes |
 
    If a target doesn't exist and is cheap to add (a script alias, a Makefile rule), propose adding it. Don't restructure the build system.
-4. **Write the Verification block** into `CLAUDE.md` (create a minimal `CLAUDE.md` if none exists, or hand off to `claude-md-author`). Replace an existing Verification block rather than adding a second one.
-5. **Optionally enforce.** If the user wants sessions to never stop with failing checks, hand off to `hook-author` for a `Stop` hook running the fast target.
+4. **Write the Verification block** into the instruction file. That's `Instruction-file:` in `docs/sdlc-conventions.md`; otherwise `AGENTS.md` if it exists, then `CLAUDE.md`; if neither exists, create a minimal `AGENTS.md` or hand off to `claude-md-author`. Replace an existing Verification block rather than adding a second one.
+5. **Optionally enforce.** If the user wants sessions to never stop with failing checks, hand off to `hook-author` for a `Stop` hook running the fast target in Claude Code. Copilot has no blocking stop event, so make the same target a required CI check.
 6. **Report back:** each command, whether it passed, how long it took, what's needed to run it, and anything you couldn't make work locally (with the error).
 
 ## Verification block

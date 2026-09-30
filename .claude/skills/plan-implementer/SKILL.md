@@ -1,6 +1,6 @@
 ---
 name: plan-implementer
-description: "Implement an accepted PLAN.md step by step: tests with each step, traceable commits, blocked steps left alone, deviations via plan-sync, checkpoint review before handoff. Also fixes review findings. Use when the plan is accepted and code should be written."
+description: "Write the code for an accepted PLAN.md step by step, with tests and traceable commits; also fixes review findings. Use when the plan is approved and coding should start."
 ---
 
 # Plan implementer
@@ -13,7 +13,7 @@ Turn an accepted `PLAN.md` into commits on a branch, in a way the rest of the ch
 
 ## Before you start
 
-1. **Read the chain.** `PLAN.md` in full (including *Risks*, *Open questions*, any existing *Deviations*), the `SPEC.md` it points at (requirements by ID, flagged concerns), and `CLAUDE.md` (conventions and the Verification block). Load applicable `policy-*` skills; their MUST rules apply to code, not only specs.
+1. **Read the chain.** `PLAN.md` in full (including *Risks*, *Open questions*, any existing *Deviations*), the `SPEC.md` it points at (requirements by ID, flagged concerns), and `AGENTS.md`/`CLAUDE.md` (conventions and the Verification block). Load applicable `policy-*` skills; their MUST rules apply to code, not only specs.
 2. **Check the gate.** If the plan isn't `accepted` (per `artifact-conventions`), stop and say so. Proceed only if the user explicitly says to, and record that in the first commit message and in the plan's Deviations table.
 3. **Check the ground.** Working tree clean, on a feature branch (create `<type>/<slug>` from the default branch if needed; never commit to the default branch), fast check passing *before* you change anything. A red baseline means failures you'll later be blamed for; report it and ask.
 4. **Pick up where it stands.** If some steps are already marked `[x]` in Order of work (a resumed build), verify the code for them exists and continue from the first unfinished step.
@@ -25,7 +25,7 @@ For each step in *Order of work*, in dependency order:
 1. **Skip if blocked.** A step marked `BLOCKED on F<n>` or depending on one is not started. Note it and move to the next independent step. Never pick a side of the underlying concern to unblock yourself.
 2. **Implement the step** as the plan describes, touching the files the plan lists for it. Follow repo conventions and applicable policies.
 3. **Add or update tests** named in the plan's Verification for the requirements this step serves. Where the plan names a test, write that test; don't substitute a weaker one.
-4. **Run the fast check** (from `CLAUDE.md`). Fix failures you caused before moving on. If a failure isn't yours, stop and report it instead of working around it.
+4. **Run the fast check** (from the Verification block in `AGENTS.md`/`CLAUDE.md`). Fix failures you caused before moving on. If a failure isn't yours, stop and report it instead of working around it.
 5. **Handle deviations as they happen.** If the step can't be done as planned (the code isn't shaped as the plan assumed, an extra file is needed, the approach doesn't work):
    - **minor** (helper file, rename, test split): do it, and record it via `plan-sync`;
    - **material** (dropped/replaced step, new dependency, interface/data model/migration change, new risk): stop, record it via `plan-sync` (which resets the plan to `draft`), and ask the user for re-approval before continuing;

@@ -1,6 +1,6 @@
 ---
 name: slice-integrator
-description: "Run a sliced build: dispatch ready slices to small-model workers, check each result deterministically, merge in dependency order, escalate failures, review, then plan-sync. Use when SLICES.md is accepted."
+description: "Start the sliced build: dispatch slices to small-model workers, check each result, merge in dependency order, escalate, review, plan-sync. Use when SLICES.md is accepted."
 ---
 
 # Slice integrator
@@ -19,7 +19,7 @@ Coordinate a sliced build. The small models write the code; this skill decides w
 A slice is **ready** when every slice in its `depends_on` is `done`. Each wave is the set of ready slices.
 
 1. **Dispatch the wave.** For each ready slice:
-   - `Model: small` → a small-model worker applying `slice-implementer` (in Claude Code, the `slice-worker` subagent with `model: haiku`; elsewhere, the equivalent CLI/agent).
+   - `Model: small` → a small-model worker applying `slice-implementer` (the `slice-worker` subagent defined in `slice-implementer`, for Claude Code or Copilot, on a small model; elsewhere, the equivalent CLI/agent).
    - `Model: strong` → implement it yourself with `plan-implementer` discipline, or a strong-model worker.
    - Each slice gets its own worktree and branch off the current integration head (`git worktree add ../wt-S03 -b slice/<slug>/S03`), with `.slice-active` written at its root. Slices in the same wave run in parallel; if parallel workers aren't available, run them one after another.
    - Set `State: running`, increment `Attempts`.

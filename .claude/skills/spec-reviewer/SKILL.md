@@ -1,6 +1,6 @@
 ---
 name: spec-reviewer
-description: "Spec review against its INTENT.md and policies, before the design gate: writes SPEC-REVIEW.md with ranked findings. Use when asked to review or check a spec; run in a fresh session."
+description: "Review SPEC.md against its INTENT.md and policies before the design gate; writes SPEC-REVIEW.md with ranked findings. Use when asked to review or check a spec; run in a fresh session."
 ---
 
 # Spec reviewer

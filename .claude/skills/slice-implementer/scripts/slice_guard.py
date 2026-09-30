@@ -22,15 +22,19 @@ Modes:
   check-diff <slice-file> <base>    Check every file changed since <base>
                                     (committed or not) is allowed and no
                                     frozen file changed. For the integrator.
-  hook                              Claude Code PreToolUse hook. Reads the event
-                                    JSON on stdin. Active only when a slice is
-                                    set via $SLICE_FILE or a .slice-active file
-                                    (containing the slice path) at the repo
-                                    root; otherwise allows everything.
+  hook                              Pre-tool-use hook for Claude Code
+                                    (PreToolUse, .claude/settings.json) and
+                                    GitHub Copilot (preToolUse,
+                                    .github/hooks/*.json). Reads the event JSON
+                                    on stdin and answers in the calling
+                                    harness's format. Active only when a slice
+                                    is set via $SLICE_FILE or a .slice-active
+                                    file (containing the slice path) at the
+                                    repo root; otherwise allows everything.
 
 Exit codes: 0 ok, 1 violation (check-diff), 2 bad input / blocked (hook).
-The hook fails closed: if a slice is active but its contract can't be read,
-edits are denied.
+The hook fails closed: if a slice is active but its contract or the event
+can't be read, edits are denied.
 """
 import fnmatch
 import json
@@ -134,7 +138,21 @@ def active_slice(root):
     return path if os.path.isabs(path) else os.path.join(root, path)
 
 
-def deny(reason):
+PATH_KEYS = ("file_path", "notebook_path", "path", "filePath")
+
+
+def is_copilot(event):
+    """Copilot sends toolName/toolArgs; Claude Code sends tool_name/tool_input."""
+    return isinstance(event, dict) and ("toolName" in event or "toolArgs" in event)
+
+
+def deny(reason, copilot):
+    if copilot:
+        # Copilot: permissionDecision on stdout; exit 2 also denies on its own.
+        print(json.dumps({"permissionDecision": "deny",
+                          "permissionDecisionReason": reason}))
+        print(reason, file=sys.stderr)
+        sys.exit(2)
     print(json.dumps({"hookSpecificOutput": {
         "hookEventName": "PreToolUse",
         "permissionDecision": "deny",
@@ -143,28 +161,50 @@ def deny(reason):
     sys.exit(0)
 
 
+def tool_args(event):
+    """The tool's arguments as a dict, from either harness's payload."""
+    if is_copilot(event):
+        args = event.get("toolArgs", event.get("toolInput"))
+        if isinstance(args, str):
+            args = json.loads(args) if args.strip() else {}
+    else:
+        args = event.get("tool_input")
+    if args is None:
+        return {}
+    if not isinstance(args, dict):
+        raise ValueError(f"tool arguments are not an object: {args!r}")
+    return args
+
+
 def cmd_hook():
     root = repo_root()
     slice_file = active_slice(root)
     if slice_file is None:
         sys.exit(0)  # not in slice mode
+    raw = sys.stdin.read()
     try:
-        event = json.load(sys.stdin)
+        event = json.loads(raw)
+    except json.JSONDecodeError as e:
+        # Unknown harness: answer in both shapes' common denominator.
+        deny(f"slice_guard: slice mode is active but the hook input can't be "
+             f"read ({e}); blocking edits to be safe.", copilot=True)
+    copilot = is_copilot(event)
+    try:
         contract = parse_contract(slice_file)
+        args = tool_args(event)
     except (ValueError, OSError, json.JSONDecodeError) as e:
         deny(f"slice_guard: slice mode is active but the contract or hook input "
-             f"can't be read ({e}); blocking edits to be safe.")
-    tool_input = event.get("tool_input") or {}
-    target = tool_input.get("file_path") or tool_input.get("notebook_path")
+             f"can't be read ({e}); blocking edits to be safe.", copilot)
+    target = next((args[k] for k in PATH_KEYS if isinstance(args.get(k), str) and args[k]), None)
     if not target:
         sys.exit(0)  # not a file edit (Bash is covered by check-diff)
     abs_target = os.path.realpath(target if os.path.isabs(target) else os.path.join(root, target))
     rel = os.path.relpath(abs_target, root)
     if rel.startswith(".."):
-        deny(f"{target} is outside the repository; slices only change allowlisted files.")
+        deny(f"{target} is outside the repository; slices only change allowlisted files.", copilot)
     reason = verdict(rel, contract, report_path(slice_file, contract, root))
     if reason:
-        deny(reason)
+        deny(reason, copilot)
     sys.exit(0)
 
 

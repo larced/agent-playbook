@@ -1,6 +1,6 @@
 ---
 name: plan-slicer
-description: "Slice an accepted PLAN.md for smaller models: scaffold interfaces, write frozen tests up front, and produce SLICES.md plus one self-contained brief per slice. Use when a large plan should be built by Haiku-class models or in parallel."
+description: "Split an accepted PLAN.md into slices for small-model or parallel workers: interfaces, frozen tests, SLICES.md and one brief per slice. Use when a large plan should be farmed out."
 ---
 
 # Plan slicer

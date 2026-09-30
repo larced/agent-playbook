@@ -10,7 +10,7 @@ Smell names are Martin Fowler's (*Refactoring*, 2nd ed., ch. 3); sources in `ACK
 ## Two rules
 
 1. **The repo overrides the baseline.** A documented standard (`REVIEW.md`,
-   `CLAUDE.md`, `CONTRIBUTING.md`, a `policy-*` skill) always wins. Where it
+   `AGENTS.md`/`CLAUDE.md`, `CONTRIBUTING.md`, a `policy-*` skill) always wins. Where it
    endorses something the baseline would flag, don't flag it. Anything
    tooling already enforces (formatter, linter) is skipped.
 2. **A smell is a judgement call, never a violation.** Report it as "possible

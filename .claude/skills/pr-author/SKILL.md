@@ -1,6 +1,6 @@
 ---
 name: pr-author
-description: "Open or update a PR carrying the artifact chain, requirement coverage and the verification result; draft when not ready. Use when implementation and verification are done."
+description: "Open or update a PR carrying the artifact chain, requirement coverage and verification result; draft when not ready. Use when the code and verification are done and the change should go up for review."
 ---
 
 # PR author

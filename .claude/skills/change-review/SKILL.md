@@ -1,6 +1,6 @@
 ---
 name: change-review
-description: "Review committed changes since a fixed point on three separate axes - correctness & security, standards (with the smell baseline), spec - in parallel read-only sub-agents, reported side by side. Use for review checkpoints in builds or when asked to review work since a commit."
+description: "Review commits since a SHA or checkpoint on three axes - correctness & security, standards, spec - in parallel read-only sub-agents. Use for 'review my commits since X' and build checkpoints; for a PR or someone else's branch use pr-reviewer."
 ---
 
 # Change review
@@ -10,7 +10,7 @@ Review a committed diff along three axes, each in its own context, and report th
 | Axis | Question | Sources |
 |---|---|---|
 | **Correctness & security** | Does the code work, and is it safe? | The diff, surrounding code, tests; `policy-security` if present |
-| **Standards** | Does it follow how this repo writes code? | `REVIEW.md`, `CLAUDE.md`, `CONTRIBUTING.md`, applicable `policy-*` skills, plus the smell baseline in `docs/references/code-smells.md` |
+| **Standards** | Does it follow how this repo writes code? | `REVIEW.md`, `AGENTS.md`/`CLAUDE.md`, `CONTRIBUTING.md`, applicable `policy-*` skills, plus the smell baseline in `docs/references/code-smells.md` |
 | **Spec** | Does it do what was asked, only that, and correctly? | `SPEC.md` requirements, `PLAN.md` (files, deviations), and the unit of work: a slice brief or `TEST_PLAN.md` case |
 
 This skill is **not** the merge gate. As a checkpoint it gives cheap, early feedback during a build; `pr-reviewer` uses it at the gate in a fresh session, adds verification evidence and a verdict, and the code owner decides.
@@ -79,7 +79,7 @@ Read-only-ness is enforced by the sub-agents' tool lists. Whether checkpoints ac
 
 ## Sub-agent definitions
 
-For Claude Code, three definitions in `.claude/agents/` (see `subagent-author`); each system prompt is the axis brief above plus "Return only your findings in the format given; don't edit files."
+Three subagent definitions, in `.claude/agents/` for Claude Code and `.github/agents/` for Copilot (see `subagent-author`); each system prompt is the axis brief above plus "Return only your findings in the format given; don't edit files."
 
 ```markdown
 ---
