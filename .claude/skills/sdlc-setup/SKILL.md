@@ -27,7 +27,8 @@ This skill records decisions and points to next steps. Policies, review rules an
      - hook entries in `.claude/settings.json`;
      - `CODEOWNERS`;
      - `bands/`;
-     - an `intent/` folder and the ticket IDs in its slugs.
+     - an `intent/` folder and the ticket IDs in its slugs;
+     - a glossary (`GLOSSARY.md`, `GLOSSARY-MAP.md`, or a `CONTEXT.md`) and `docs/adr/`.
 
    Done when you can fill every row of the status table in step 6 from evidence.
 2. **Choose the instruction file** with this table. Ask only in the rows marked *ask*, with the recommended answer first.
@@ -76,6 +77,8 @@ Source-of-truth: linkage
 ## Artifacts
 Location: intent/<slug>/
 Slug: ticket ID first, kebab-case, under ~40 characters
+Glossary: GLOSSARY.md
+ADRs: docs/adr/
 
 ## Gates
 | Artifact | Accepted by |
@@ -102,6 +105,8 @@ Every skill that follows `artifact-conventions` picks these up as overrides. The
 | `Tracker-URL` | prefix a ticket ID is appended to | Links from artifacts and PRs to tickets. |
 | `Ticket-ID` | one example ID; its shape is the pattern | Slugs and commit messages lead with IDs of this shape. |
 | `Source-of-truth` | `repo`, `tracker`, `linkage` | `traceability-linker`: which side holds the content. |
+| `Glossary` | `GLOSSARY.md`, or `GLOSSARY-MAP.md` when there is one glossary per bounded context | Where specs, reviews and slice briefs look up domain terms; written by `/glossary-author`. |
+| `ADRs` | folder, default `docs/adr/` | Where `plan-writer` records decisions promoted from accepted specs. |
 | `Location` | work-folder path with `<slug>` | Where every artifact writer puts the chain and `sdlc-orchestrator` looks for it. |
 | Gates table | role, optionally with a name | Who `sdlc-orchestrator` says a gate waits on; handoff lines. |
 
@@ -124,6 +129,7 @@ List only the user-invoked skills this repo has installed.
 | Instructions | `AGENTS.md` or `CLAUDE.md` with build and layout notes | `claude-md-author` |
 | Verification | `## Verification` block | `/verification-setup` |
 | Conventions | `docs/sdlc-conventions.md` | this skill |
+| Domain language | the glossary named by `Glossary:` | `/glossary-author` |
 | Policies | `.claude/skills/policy-*/` | `/policy-author`, per policy owner |
 | Review rules | `REVIEW.md` | `/review-policy-author` |
 | Sub-agents | a reviewer or verifier in `.claude/agents/` or `.github/agents/`, for each harness in use | `/subagent-author` |

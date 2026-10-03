@@ -21,6 +21,11 @@ The build executes against `PLAN.md`; `plan-sync` measures drift from it; `pr-re
 6. **Assess risk.** Blast radius, rollback path, data migration, backward compatibility, security sensitivity, performance. Decide whether the plan looks **higher-risk** (tech lead review) or **standard** (engineer approval), and say why.
 7. **Decide whether to ask first.** Only when something essential is ambiguous across spec and codebase together (e.g. two modules could own a responsibility and the spec doesn't say). At most three short questions. Ask them the way `grill-artifact` does: in dependency order, each with your recommended answer, and only for decisions; look facts up yourself (with a sub-agent if it takes digging). Everything else becomes a risk or open question.
 8. **Write `PLAN.md`** next to its spec (per `artifact-conventions`), or where the user asks; default `PLAN.md` in the current directory. In Claude Code plan mode, the plan you present for approval is this document.
+   **Promote the spec's domain language**, only if the spec is `accepted`:
+   - add its `## Terms` to the glossary, replacing the entries they change. If the repo has no glossary, leave the terms in the spec and suggest `/glossary-author` rather than starting one from a single feature's words;
+   - write each `## Decisions` item as the next ADR, with `Decided-by` taken from the spec's `Accepted-by`.
+
+   Use the formats and locations in `artifact-conventions`, and commit this separately (`docs(<slug>): glossary and ADRs from SPEC.md`). For an unaccepted spec, leave them in the spec and say so.
 9. **Hand off.** Path, risk level and recommended approver, blocked steps if any, and that it stays `draft` until accepted. If blocked steps or open questions need answers before the gate, offer `grill-artifact`. During the build, run `plan-sync` when the code departs from the plan; when done, `verification-report`.
 
 ## Blocked work

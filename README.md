@@ -85,6 +85,7 @@ produces the next one, with a human gate in between. Every artifact follows
 | Maintain | [`band-config-author`](.claude/skills/band-config-author/SKILL.md) | one metric → `bands/<metric>.yaml` (+ deterministic checker script) |
 | Maintain | [`postmortem-writer`](.claude/skills/postmortem-writer/SKILL.md) | incident thread → `POSTMORTEM.md` + `LESSONS.md` entry + follow-up `INTENT.md`s |
 | Maintain | [`scan-triage`](.claude/skills/scan-triage/SKILL.md) | scan findings → triage report, bounded-fix PRs or `INTENT.md`s |
+| Cross-cutting | [`glossary-author`](.claude/skills/glossary-author/SKILL.md) | code + docs → `GLOSSARY.md` (one name per domain concept, `_Avoid_` synonyms), kept current afterwards through specs' `## Terms`; decisions go to `docs/adr/` |
 | Cross-cutting | [`sdlc-setup`](.claude/skills/sdlc-setup/SKILL.md) | repo → `docs/sdlc-conventions.md` (tracker, artifact location, who accepts) + Agent skills block in `AGENTS.md`/`CLAUDE.md` + adoption status |
 | Cross-cutting | [`artifact-conventions`](.claude/skills/artifact-conventions/SKILL.md) | — → shared naming, location, header and status rules |
 | Cross-cutting | [`traceability-linker`](.claude/skills/traceability-linker/SKILL.md) | ticket / artifacts / commits / PR → cross-links in both directions |
@@ -95,10 +96,10 @@ produces the next one, with a human gate in between. Every artifact follows
 yours with `policy-author` (see [`docs/examples/policy-api-design.md`](docs/examples/policy-api-design.md)
 for the shape).
 
-Seven setup skills are user-invoked (`disable-model-invocation: true`) so they
+Eight setup skills are user-invoked (`disable-model-invocation: true`) so they
 cost no context in everyday sessions: `sdlc-setup`, `verification-setup`,
-`policy-author`, `review-policy-author`, `subagent-author`, `gate-author`,
-`band-config-author`. Start a new repo with `/sdlc-setup`.
+`glossary-author`, `policy-author`, `review-policy-author`, `subagent-author`,
+`gate-author`, `band-config-author`. Start a new repo with `/sdlc-setup`.
 Type them as slash commands; `sdlc-orchestrator` and
 [`workflows/adoption.md`](workflows/adoption.md) say when.
 

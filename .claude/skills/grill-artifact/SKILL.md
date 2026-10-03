@@ -18,7 +18,7 @@ Treat the artifact's questions and concerns as a tree: some can't be answered un
 
 ## Workflow
 
-1. **Load the artifact** and its upstream (the spec for a plan, the intent for a spec) and any `CONTEXT.md` glossary. Collect every open item: Open questions, Flagged concerns, `BLOCKED` steps, `## Questions` in `TEST_PLAN.md`, and `Blocks:` notes.
+1. **Load the artifact** and its upstream (the spec for a plan, the intent for a spec), the glossary and the ADRs (per `artifact-conventions`). Collect every open item: Open questions, Flagged concerns, `BLOCKED` steps, `## Questions` in `TEST_PLAN.md`, and `Blocks:` notes. Add any term conflict you notice as an item: a word used against its glossary meaning, or two words for one concept. Which word wins is a decision. Recommend the glossary's term unless the artifact shows the glossary is wrong, and write the answer into the artifact's `## Terms`.
 2. **Settle the facts first.** For each item that a lookup can settle, dispatch a sub-agent (or look yourself), in parallel with asking the rest. Items waiting on a lookup stay out of the round until it reports.
 3. **Check who decides.** Flagged concerns name an owner (a policy owner, the product owner). If the person in front of you isn't that owner, you can still work the item with them, but record the answer as a *proposal* for the owner, not a decision.
 4. **Ask a round**: the whole frontier, numbered, each with your recommended answer and a one-line reason, in this shape:

@@ -14,7 +14,7 @@ If you wrote this spec in the current session, say so and recommend running the 
 ## Workflow
 
 1. **Read both artifacts in full.** Find `SPEC.md` and the intent named on its `Intent:` line. If the intent can't be found, review the spec on its own and make "intent missing" the first finding.
-2. **Load applicable policies.** Read the `policy-*` skills whose *Applies to* matches the change, whether or not the spec listed them.
+2. **Load applicable policies, the glossary and the ADRs.** Read the `policy-*` skills whose *Applies to* matches the change, whether or not the spec listed them. Also read the glossary and `docs/adr/` (locations per `artifact-conventions`).
 3. **Run the checks** below. For each problem, capture the location (section and a short quote), what's wrong, and why it matters.
 4. **Verify before reporting.** Re-read the spec for each candidate finding; drop it if the spec handles it elsewhere. A false finding costs the owner more time than a missed nit.
 5. **Rank and write** `SPEC-REVIEW.md` next to the spec using the template.
@@ -30,13 +30,15 @@ If you wrote this spec in the current session, say so and recommend running the 
 | Scope | Design doesn't build things the intent put *Out of scope*, and doesn't quietly shrink the scope either. |
 | Policy conflicts | Any applicable MUST rule the design violates without a Flagged concern; any conflict the spec resolved itself instead of flagging. |
 | Invented facts | APIs, tables, services or behaviours the spec asserts exist. Spot-check against the codebase. |
+| Domain language | Terms used with a meaning different from the glossary; words the glossary lists under `_Avoid_`; one concept under two names; new concepts missing from `## Terms`. |
+| Past decisions | Design that contradicts an ADR without a Flagged concern; `## Decisions` items that fail the three ADR tests, or real ones left out. |
 | Buildability | Requirements specific enough that a plan can cover and a test can verify them ("fast", "intuitive" without a measure). |
 | Conventions | Status is `draft`, header links to the intent, empty sections say `None`, Traceability present (per `artifact-conventions`). |
 
 ## Severity
 
-- **Blocking**: the spec shouldn't be accepted as is (doesn't solve the problem, violates a MUST policy unflagged, drops a constraint, invents a dependency).
-- **Should fix**: would cause rework in plan or build (vague requirement, dropped open question with low stakes).
+- **Blocking**: the spec shouldn't be accepted as is (doesn't solve the problem, violates a MUST policy unflagged, drops a constraint, invents a dependency, contradicts an ADR or redefines a glossary term unflagged).
+- **Should fix**: would cause rework in plan or build (vague requirement, dropped open question with low stakes, an `_Avoid_` word or a second name for one concept).
 - **Nit**: wording, format, conventions.
 
 ## Template

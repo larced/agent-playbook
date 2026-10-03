@@ -2,7 +2,7 @@
 
 Tests whether each model-invoked skill's `description` makes a realistic prompt pick it **first**. Each case is one headless turn (`claude -p ... --max-turns 1 --output-format stream-json`) in a throwaway copy of the repo; `got` is the first `Skill` tool call, or `none` if the first tool call is anything else (or there is none). Skill bodies never run.
 
-- Cases: `evals/triggering.json` (28 skills × 1 prompt, 9 near-misses, 3 negatives, 3 aimed at user-invoked skills = 43; `user-setup` was added after these runs).
+- Cases: `evals/triggering.json` (28 skills × 1 prompt, 9 near-misses, 3 negatives, 4 aimed at user-invoked skills = 44; `user-setup` and `user-glossary` were added after these runs).
 - Runner: `evals/run_triggering.sh [--model M] [--only-failures results.csv] [--out file.csv]`.
 - Results: `triggering-results.csv` (Haiku, all cases) and `triggering-results-sonnet.csv` (Sonnet, Haiku's failures only), on the current descriptions. The `*-before.csv` files are the first run on the original descriptions.
 - `expect` may list alternatives with `|` (the user-invoked cases accept `none|sdlc-orchestrator`).

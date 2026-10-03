@@ -79,6 +79,8 @@ Everything needed, inline:
 - Existing code to imitate: `app/controllers/orders_controller.rb:12-40`
   (pasted below) shows how this repo scopes queries to the current customer.
 - The requirement text from SPEC.md, and any policy rules that apply (by ID).
+- The glossary entries for the domain terms this slice touches, so new names
+  match (use the `_In code_` name; never an `_Avoid_` word).
 - Read-only references the model may open, if any.
 
 ## Steps
