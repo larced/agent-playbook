@@ -129,7 +129,7 @@ One paragraph is enough; add *Considered options* or *Consequences* only when th
 
 **How they change:**
 - Specs propose: new or changed terms in `## Terms`, and ADR candidates in `## Decisions`.
-- After the spec is accepted, the first build skill promotes them into the glossary and `docs/adr/` in their own commit. That's `plan-writer`, or `test-next` when seeding `TEST_PLAN.md` without a plan. The change's PR carries them to review.
+- After the spec is accepted, the first build skill promotes them into the glossary and `docs/adr/` in their own commit. That's `plan-writer`, or `test-next` when seeding `TEST_PLAN.md` without a plan. Terms are promoted only into an existing glossary; the first glossary comes from `/glossary-author`, so its synonyms get settled. `docs/adr/` is created with its first ADR. The change's PR carries them to review.
 - An ADR records a decision a human already made at a gate. It names who decided (`Decided-by`) and carries no `Status`. To reverse it, write a new ADR through the same route, and fill the old one's `Superseded-by`.
 - A spec that contradicts an ADR or redefines a glossary term does so in a Flagged concern, never silently.
 
